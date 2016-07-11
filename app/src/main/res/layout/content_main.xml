@@ -12,8 +12,17 @@
     tools:context="com.example.jucc.summertraining.MainActivity"
     tools:showIn="@layout/activity_main">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Hello World!" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="张琳钰是我儿子"/>
+    </LinearLayout>
 </RelativeLayout>
