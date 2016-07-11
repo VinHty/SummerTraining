@@ -1,2 +1,0 @@
-# SummerTraining
-Summer Training Projects
