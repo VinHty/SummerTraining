@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.jucc.summertraining">
-
+    <uses-permission android:name="android.permission.RECEIVE_USER_PRESENT"/>
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -25,7 +25,7 @@
         <activity android:name=".ShopActivity" />
         <activity android:name=".ExecutionActivity" />
         <activity
-            android:name=".AppUsageAmount"
+            android:name=".AppUsageAmountAcitivity"
             android:label="@string/title_activity_app_usage_amount"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
