@@ -31,7 +31,6 @@ public class MainActivity extends AppCompatActivity {
                 Intent intent = new Intent();
                 intent.setClass(MainActivity.this, JobDetailsAcitiviy.class);
                 MainActivity.this.startActivity(intent);
-                MainActivity.this.finish();
             }
         });
         queryTiming.setOnClickListener(new View.OnClickListener() {
@@ -39,7 +38,6 @@ public class MainActivity extends AppCompatActivity {
                 Intent intent = new Intent();
                 intent.setClass(MainActivity.this, AppUsageAmountAcitivity.class);
                 MainActivity.this.startActivity(intent);
-                MainActivity.this.finish();
             }
         });
         setting.setOnClickListener(new View.OnClickListener() {
@@ -47,7 +45,6 @@ public class MainActivity extends AppCompatActivity {
                 Intent intent = new Intent();
                 intent.setClass(MainActivity.this, SettingsActivity.class);
                 MainActivity.this.startActivity(intent);
-                MainActivity.this.finish();
             }
         });
         shop.setOnClickListener(new View.OnClickListener() {
@@ -55,7 +52,6 @@ public class MainActivity extends AppCompatActivity {
                 Intent intent = new Intent();
                 intent.setClass(MainActivity.this, ShopActivity.class);
                 MainActivity.this.startActivity(intent);
-                MainActivity.this.finish();
             }
         });
         
