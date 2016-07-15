@@ -76,4 +76,11 @@
     <string name="pref_title_vibrate">Vibrate</string>
     <string name="title_activity_app_usage_amount">AppUsageAmount</string>
     <string name="section_format">Hello World from section: %1$d</string>
+
+    <!-- JobDetailsActivity -->
+    <string name="JobDetails_Button_Return">Return</string>
+    <string name="JobDetails_Button_Add">Add</string>
+    <string name="JobDetails_Button_Edit">Edit</string>
+    <string name="JobDetails_Button_Start">Start</string>
+
 </resources>
