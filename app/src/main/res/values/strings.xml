@@ -2,7 +2,7 @@
     <string name="app_name">SummerTraining</string>
     <string name="action_settings">Settings</string>
     <string name="title_activity_settings">Settings</string>
-
+    <string name="title">时间管理</string>
     <!-- Strings related to Settings -->
 
     <!-- Example General settings -->
