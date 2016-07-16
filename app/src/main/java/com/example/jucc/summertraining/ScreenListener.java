@@ -11,7 +11,7 @@ import android.content.IntentFilter;
 import android.os.PowerManager;
 
 /**
- * Created by Vin on 2016/6/15.
+ * Created by Vin on 2016/7/15.
  */
 public class ScreenListener {
     private Context mContext;

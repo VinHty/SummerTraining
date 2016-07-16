@@ -12,6 +12,9 @@ import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import static com.example.jucc.summertraining.R.styleable.ActionBar;
+import static com.example.jucc.summertraining.R.styleable.Toolbar;
+
 /**
  * A {@link android.preference.PreferenceActivity} which implements and proxies the necessary calls
  * to be used with AppCompat.
