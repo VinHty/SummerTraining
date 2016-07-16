@@ -11,18 +11,18 @@ import android.database.sqlite.SQLiteOpenHelper;
 public class MyDatabaseHelper extends SQLiteOpenHelper {
 
 
-
-    private Context mContext;
-    public MyDatabaseHelper(Context context,String name,SQLiteDatabase.CursorFactory factory,int version){
-        super(context,name,factory,version);
-        mContext=context;
+    public  MyDatabaseHelper(Context context) {
+        super(context, "TimerManagerDataBase", null, 1);
     }
+
     @Override
     public void onCreate(SQLiteDatabase db) {
-
+        db.execSQL("create table   usetime( app_name TEXT not null,use_time INTEGER,use_date TEXT not null,PRIMARY KEY(app_name,use_date))");
+        db.execSQL("create table   now_usetime( app_name TEXT not null PRIMARY KEY,now_use_time INTEGER,ini_use_time INTEGER not null)");
+        db.execSQL("create table   job( set_time TEXT NOT NULL PRIMARY KEY,job_name TEXT not null ,last_time INTEGER,start_time TEXT ,is_suc INTEGER ,alert_time TEXT)");
     }
 
-    @Override
+
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 
     }
