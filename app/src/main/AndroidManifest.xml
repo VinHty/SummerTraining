@@ -25,7 +25,7 @@
         <activity android:name=".ShopActivity" />
         <activity android:name=".ExecutionActivity" />
         <activity
-            android:name=".AppUsageAmountAcitivity"
+            android:name=".AppUsageAmountActivity"
             android:label="@string/title_activity_app_usage_amount"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>

@@ -76,4 +76,7 @@
     <string name="pref_title_vibrate">Vibrate</string>
     <string name="title_activity_app_usage_amount">AppUsageAmount</string>
     <string name="section_format">Hello World from section: %1$d</string>
+    <string name="todayUsage">Today Usage</string>
+    <string name="yesterdayUsage">Yesterday Usage</string>
+    <string name="weeklyUsage">Week Usage</string>
 </resources>

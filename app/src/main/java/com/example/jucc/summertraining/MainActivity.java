@@ -36,7 +36,7 @@ private Button queryJob;
         queryTiming.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Intent intent = new Intent();
-                intent.setClass(MainActivity.this, AppUsageAmountAcitivity.class);
+                intent.setClass(MainActivity.this, AppUsageAmountActivity.class);
                 MainActivity.this.startActivity(intent);
                 MainActivity.this.finish();
             }
