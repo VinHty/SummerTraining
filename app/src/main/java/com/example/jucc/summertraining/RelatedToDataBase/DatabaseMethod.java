@@ -114,7 +114,7 @@ public class DatabaseMethod {
 
 
         /*
-    **将当前日期转化为string，精确到天1
+    **将当前日期转化为string，精确到天
     */
     public static String getStringDate() {
         Date currentTime = new Date();
