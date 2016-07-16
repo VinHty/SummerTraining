@@ -1,7 +1,11 @@
 package com.example.jucc.summertraining;
+/*
+/author  VinHty on 16-7-16
+ */
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.RemoteException;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
@@ -12,8 +16,11 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class AppUsageAmountActivity extends FragmentActivity {
 
@@ -67,9 +74,9 @@ public class AppUsageAmountActivity extends FragmentActivity {
 
     private void init() {
         //初始化fragment 每个页面的fragment 存入list中
-        mTodayFg= new MyFragment();
+        mTodayFg = new MyFragment();
         mYesterdayFg = new MyFragment();
-        mWeekFg= new MyFragment();
+        mWeekFg = new MyFragment();
         mFragmentList.add(mTodayFg);
         mFragmentList.add(mYesterdayFg);
         mFragmentList.add(mWeekFg);
@@ -85,7 +92,7 @@ public class AppUsageAmountActivity extends FragmentActivity {
                 this.getSupportFragmentManager(), mFragmentList);
         mPageVp.setAdapter(mFragmentAdapter);
         mPageVp.setCurrentItem(0);
-        listener =new ViewPager.OnPageChangeListener() {
+        listener = new ViewPager.OnPageChangeListener() {
 
             /**
              * state滑动中的状态 有三种状态（0，1，2） 1：正在滑动 2：滑动完毕 0：什么都没做。
@@ -179,11 +186,12 @@ public class AppUsageAmountActivity extends FragmentActivity {
         mTabYesterdayTv.setTextColor(Color.BLACK);
         mTabWeekTv.setTextColor(Color.BLACK);
     }
-    private class MyOnClickListener implements View.OnClickListener{
+
+    private class MyOnClickListener implements View.OnClickListener {
 
         @Override
         public void onClick(View v) {
-            switch (v.getId()){
+            switch (v.getId()) {
                 case R.id.today:
                     mPageVp.setCurrentItem(0);
                     break;
@@ -193,10 +201,50 @@ public class AppUsageAmountActivity extends FragmentActivity {
                 case R.id.week:
                     mPageVp.setCurrentItem(2);
                     break;
-                default:break;
+                default:
+                    break;
 
             }
         }
+    }
+
+    private void getInfo() throws ClassNotFoundException, NoSuchMethodException, InvocationTargetException, IllegalAccessException, NoSuchFieldException {
+        //相当于：IBinder oRemoteService = ServiceManager.getService("usagestats");
+        Class<?> cServiceManager = Class.forName("android.os.ServiceManager");
+        Method mGetService = cServiceManager.getMethod("getService", java.lang.String.class);
+        Object oRemoteService = mGetService.invoke(null, "usagestats");
+
+        // 相当于:IUsageStats mUsageStatsService = IUsageStats.Stub.asInterface(oRemoteService)
+        Class<?> cStub = Class.forName("com.android.internal.app.IUsageStats$Stub");
+        Method mUsageStatsService = cStub.getMethod("asInterface", android.os.IBinder.class);
+        Object oIUsageStats = mUsageStatsService.invoke(null, oRemoteService);
+
+        // 相当于:PkgUsageStats[] oPkgUsageStatsArray =mUsageStatsService.getAllPkgUsageStats();
+        Class<?> cIUsageStatus = Class.forName("com.android.internal.app.IUsageStats");
+        Method mGetAllPkgUsageStats = cIUsageStatus.getMethod("getAllPkgUsageStats", (Class[]) null);
+        Object[] oPkgUsageStatsArray = (Object[]) mGetAllPkgUsageStats.invoke(oIUsageStats, (Object[]) null);
+
+        //相当于
+        //for (PkgUsageStats pkgUsageStats: oPkgUsageStatsArray)
+        //{
+        //  当前APP的包名：
+        //  packageName = pkgUsageStats.packageName
+        //  当前APP的启动次数
+        //  launchCount = pkgUsageStats.launchCount
+        //  当前APP的累计使用时间：
+        //  usageTime = pkgUsageStats.usageTime
+        //  当前APP的每个Activity的最后启动时间
+        //  componentResumeTimes = pkgUsageStats.componentResumeTimes
+        //}
+        Class<?> cPkgUsageStats = Class.forName("com.android.internal.os.PkgUsageStats");
+        for (Object pkgUsageStats : oPkgUsageStatsArray) {
+            String packageName = (String) cPkgUsageStats.getDeclaredField("packageName").get(pkgUsageStats);
+            int launchCount = cPkgUsageStats.getDeclaredField("launchCount").getInt(pkgUsageStats);
+            long usageTime = cPkgUsageStats.getDeclaredField("usageTime").getLong(pkgUsageStats);
+            Map<String, Long> componentResumeMap = (Map<String, Long>) cPkgUsageStats.getDeclaredField("componentResumeTimes").get(pkgUsageStats);
+        }
+
+
     }
 
 }

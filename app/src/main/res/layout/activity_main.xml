@@ -1,18 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:circle="http://schemas.android.com/apk/res/com.example.jucc.summertraining"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:fitsSystemWindows="true"
+        tools:context="com.example.jucc.summertraining.MainActivity">
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="523dp"
+        android:orientation="vertical">
+
+        <com.example.jucc.summertraining.CircleTimePiker
+            android:id="@+id/circleSelect"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            circle:circle_center_radius="0"
+            circle:circle_center_color="#FFFF3500"
+            circle:circle_point_width="0"
+            circle:circle_point_color="#FF00FFFF"
+            circle:circle_target_radius="25"
+            circle:circle_target_color="#4169E1"
+            />
+        <TextView
+            android:id="@+id/circleSelectTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            />
+
+        <Button
+            android:id="@+id/start_timing"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/starttiming" />
+
+
+    </LinearLayout>
+
+
+    <LinearLayout
+    android:gravity="bottom"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
-    tools:context="com.example.jucc.summertraining.MainActivity">
-
-
-
-<LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+        android:id="@+id/circleselect">
     <Button
         android:id="@+id/job_query"
         android:layout_width="wrap_content"
@@ -36,7 +75,6 @@
 
 
 </LinearLayout>
+    </LinearLayout>
 
 
-
-</android.support.design.widget.CoordinatorLayout>
