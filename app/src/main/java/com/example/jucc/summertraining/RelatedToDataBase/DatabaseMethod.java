@@ -27,7 +27,7 @@ public class DatabaseMethod {
 
 
     /*
-    **插入今天的实时使用时间1
+    **插入今天的实时使用时间
      */
     public void insert_nowusetime(Context context,String appName,int nowUse,int iniUse){
         String sqlinsert;
