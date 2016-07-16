@@ -48,6 +48,24 @@ public class JobDetailsAcitiviy extends ListActivity {
             @Override
             public void onClick(View v) {
 
+                LayoutInflater inflater = getLayoutInflater();
+                View layout = inflater.inflate(R.layout.activity_job_details_dialog,
+                        (ViewGroup)findViewById(R.id.activity_job_details_dialog));
+                new AlertDialog.Builder(JobDetailsAcitiviy.this).setTitle("建立任务").setView(layout)
+                        .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+
+                            }
+                        })
+                        .setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+
+                            }
+                        })
+                        .show();
+
             }
         });
 
