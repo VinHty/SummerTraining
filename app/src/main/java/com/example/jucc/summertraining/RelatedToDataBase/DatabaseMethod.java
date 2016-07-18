@@ -32,7 +32,7 @@ public class DatabaseMethod {
     public void insert_nowusetime(Context context,String appName,int nowUse,int iniUse){
         String sqlinsert;
         sqlinsert="insert into now_usetime( app_name ,now_use_time,ini_use_time) values('"+appName+"','"+nowUse+"','"+iniUse+"')";
-        db.execSQL(sqlinsert);
+//        db.execSQL(sqlinsert);
     }
     /*
     **将今天的使用时间插入到总的时间记录表中
