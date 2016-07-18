@@ -4,6 +4,7 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 /**
@@ -29,7 +30,7 @@ public class DatabaseMethod {
     /*
     **插入今天的实时使用时间1
      */
-    public void insert_nowusetime(Context context,String appName,int nowUse,int iniUse){
+    public void insert_nowusetime(String appName,int nowUse,int iniUse){
         String sqlinsert;
         sqlinsert="insert into now_usetime( app_name ,now_use_time,ini_use_time) values('"+appName+"','"+nowUse+"','"+iniUse+"')";
         db.execSQL(sqlinsert);
@@ -107,12 +108,8 @@ public class DatabaseMethod {
     */
     public void update_jobWhenFinish(String timeStamp,boolean isSuc){
         String sqlupdate;
-        int i;
-        if(isSuc=true){
-            i=1;
-        }
-        else
-        i=0;
+        int i=0;
+        if(isSuc==true) i=1;
         sqlupdate="update job set is_suc='"+i+"' where set_time='"+timeStamp+"'";
         db.execSQL(sqlupdate);
     }
@@ -129,8 +126,8 @@ public class DatabaseMethod {
         /*
     **将当前日期转化为string，精确到天
     */
-    public static String getStringDate() {
-        Date currentTime = new Date();
+    public static String getStringYesterday() {
+        Date currentTime = new Date(System.currentTimeMillis()-24*60*60*1000);
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
         String dateString = formatter.format(currentTime);
         return dateString;

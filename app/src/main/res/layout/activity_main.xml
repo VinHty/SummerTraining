@@ -3,7 +3,7 @@
     <LinearLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:circle="http://schemas.android.com/apk/res/com.example.jucc.summertraining"
+        xmlns:circle_Picker="http://schemas.android.com/apk/res/com.example.jucc.summertraining"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -22,25 +22,24 @@
             android:id="@+id/circleSelect"
             android:layout_width="wrap_content"
             android:layout_height="312dp"
-            circle:circle_center_radius="0"
-            circle:circle_center_color="#FFFF3500"
-            circle:circle_point_width="0"
-            circle:circle_point_color="#FF00FFFF"
-            circle:circle_target_radius="25"
-            circle:circle_target_color="#4169E1"
+            circle_Picker:circle_center_radius="0"
+            circle_Picker:circle_center_color="#FFFF3500"
+            circle_Picker:circle_point_width="0"
+            circle_Picker:circle_point_color="#FF00FFFF"
+            circle_Picker:circle_target_radius="25"
+            circle_Picker:circle_target_color="#4169E1"
             />
         <TextView
             android:id="@+id/circleSelectTv"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-
             />
 
         <Button
             android:id="@+id/start_timing"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/starttiming" />
+            android:text="@string/start_timing" />
 
 
     </LinearLayout>

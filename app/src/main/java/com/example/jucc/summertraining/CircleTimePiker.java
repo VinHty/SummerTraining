@@ -206,7 +206,7 @@ public class CircleTimePiker extends View {
      * @param y
      * @return
      */
-    private int getTouchPositionFromPoint(float x, float y) {
+    public int getTouchPositionFromPoint(float x, float y) {
         double radians = getRadian(x, y);
         System.out.println("===radians===" + radians);
 
@@ -240,7 +240,7 @@ public class CircleTimePiker extends View {
         if (mSelectionChangeListener != null) {
             mSelectionChangeListener
                     .onPositionChange(position, mSelectPosition);
-        }
+    }
         mSelectPosition = position;
         invalidate();
     }
