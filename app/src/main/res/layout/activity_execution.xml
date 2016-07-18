@@ -1,10 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:circle_Progress="http://schemas.android.com/apk/res/com.example.jucc.summertraining"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/activity_execution"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="com.example.jucc.summertraining.ExecutionActivity">
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:fitsSystemWindows="true"
+    tools:context="com.example.jucc.summertraining.MainActivity">
 
-</android.support.constraint.ConstraintLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="451dp"
+        android:orientation="vertical">
+
+        <com.example.jucc.summertraining.CircleProgressBar
+            android:id="@+id/circleProgerss"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            circle_Progress:backColor="#ffffff"
+            circle_Progress:startAngle="-90"
+            circle_Progress:roundColor="#D1D1D1"
+            circle_Progress:roundProgressColor="@android:color/holo_blue_bright"
+            circle_Progress:roundWidth="5dp"
+            circle_Progress:textColor="#000000"
+            circle_Progress:textSize="18sp"
+            />
+
+
+        <Button
+            android:id="@+id/give_up"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/give_up" />
+
+
+    </LinearLayout>
+
+
+
+</LinearLayout>
+
