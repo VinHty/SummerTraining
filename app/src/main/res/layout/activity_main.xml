@@ -15,13 +15,13 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="523dp"
+        android:layout_height="451dp"
         android:orientation="vertical">
 
         <com.example.jucc.summertraining.CircleTimePiker
             android:id="@+id/circleSelect"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="312dp"
             circle:circle_center_radius="0"
             circle:circle_center_color="#FFFF3500"
             circle:circle_point_width="0"
@@ -49,7 +49,7 @@
     <LinearLayout
     android:gravity="bottom"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="51dp"
     android:orientation="horizontal"
         android:id="@+id/circleselect">
     <Button

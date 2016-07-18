@@ -18,7 +18,7 @@ import com.example.jucc.summertraining.RelatedToDataBase.DatabaseMethod;
 public class MainActivity extends AppCompatActivity implements CircleTimePiker.TimeAdapter, CircleTimePiker.OnSelectionChangeListener {
     private CircleTimePiker circleSelect;
     private TextView circleSelectTv;
-    private Context context;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,7 +27,7 @@ public class MainActivity extends AppCompatActivity implements CircleTimePiker.T
         circleSelectTv = (TextView) findViewById(R.id.circleSelectTv);
         circleSelect.setAdapter(this);
         circleSelect.setOnSelectionChangeListener(this);
-    context=getApplicationContext();
+
         Button queryJob = (Button)findViewById(R.id.job_query);
         Button queryTiming = (Button)findViewById(R.id.timing_query);
         Button shop = (Button)findViewById(R.id.shop);
@@ -61,8 +61,6 @@ public class MainActivity extends AppCompatActivity implements CircleTimePiker.T
                 MainActivity.this.startActivity(intent);
             }
         });
-        DatabaseMethod a=new DatabaseMethod(context);
-        a.insert_nowusetime(context,"5",1,1);
     }
 
 
