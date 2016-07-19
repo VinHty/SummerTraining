@@ -10,6 +10,7 @@ import android.widget.SimpleAdapter;
 
 import com.example.jucc.summertraining.Entity.UseTime;
 
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -32,7 +33,12 @@ public class YesterdayFragment extends MyFragment {
         List<UseTime> list = method.getYesterdayList();
         for(int a=0;a<list.size();a++){
             UseTime useTime= list.get(a);
-
+            HashMap<String,Object> map = new HashMap<>();
+            String name =useTime.getAppName();
+            int time = useTime.getUseTime();
+            map.put("title",name);
+            map.put("time",time);
+            this.list.add(map);
         }
     }
 }
