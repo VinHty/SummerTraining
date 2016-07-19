@@ -96,12 +96,12 @@ public class AppUsageAmountActivity extends FragmentActivity {
         listener.begin(new MyListener.afterReceive() {
             @Override
             public void insertIntoDB() {
-                for(int a = 0;a<mTodayFg.list.size();a++){
-                String date = DatabaseMethod.getStringDate();
-                HashMap map = mTodayFg.list.get(a);
-                String appName= (String) map.get("title");
-                int useTime= (int) map.get("time");
-                    method.insert_usetime(appName,useTime,date);
+                for (int a = 0; a < mTodayFg.list.size(); a++) {
+                    String date = DatabaseMethod.getStringYesterday();
+                    HashMap map = mTodayFg.list.get(a);
+                    String appName = (String) map.get("title");
+                    int useTime = (int) map.get("time");
+                    method.insert_usetime(appName, useTime, date);
                 }
             }
         });

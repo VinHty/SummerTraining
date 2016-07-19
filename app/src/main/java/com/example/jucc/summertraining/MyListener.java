@@ -3,6 +3,7 @@ package com.example.jucc.summertraining;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 
 import com.example.jucc.summertraining.RelatedToDataBase.DatabaseMethod;
 
@@ -41,8 +42,14 @@ public class MyListener {
      */
     public void begin(afterReceive listener) {
         afterReceive = listener;
+        registerListener();
 
 
+    }
+    private void registerListener() {
+        IntentFilter filter = new IntentFilter();
+        filter.addAction("android.intent.action.DATE_CHANGED");
+        mContext.registerReceiver(mReceiver, filter);
     }
 
     /**
