@@ -8,6 +8,7 @@ public  class UseTime {
     private String appName;
     private int useTime;
     private String useDate;
+    private int total;
     public String getAppName() {
         return appName;
     }
@@ -32,12 +33,20 @@ public  class UseTime {
         this.useDate = useDate;
     }
 
+    public int getTotal() {
+        return total;
+    }
+
+    public void setTotal(int total) {
+        this.total = total;
+    }
 
 
-    public UseTime(String appName,int useTime,String useDate){
+    public UseTime(String appName,int useTime,int total){
         this.appName=appName;
         this.useTime=useTime;
-        this.useDate=useDate;
+        this.total=total;
+
     }
 
 }

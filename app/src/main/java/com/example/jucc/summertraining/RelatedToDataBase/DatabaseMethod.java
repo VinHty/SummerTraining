@@ -142,9 +142,9 @@ public class DatabaseMethod {
         Date currentTime = new Date(System.currentTimeMillis()-24*60*60*1000);
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
         String dateString = formatter.format(currentTime);
-        Cursor cu=db.rawQuery("select app_name,use_time,use_date from usetime where use_date='"+dateString+"'",null);
+        Cursor cu=db.rawQuery("select app_name,use_time,use_date,count(use_time) as total from usetime where use_date='"+dateString+"' group by app_name,use_date",null);
         while (cu.moveToNext()){
-        yesterdayList.add(new UseTime(cu.getString(cu.getColumnIndex("app_name")),cu.getInt(cu.getColumnIndex("use_time")),cu.getString(cu.getColumnIndex("use_date"))));
+        yesterdayList.add(new UseTime(cu.getString(cu.getColumnIndex("app_name")),cu.getInt(cu.getColumnIndex("use_time")),cu.getInt(cu.getColumnIndex("total"))));
         }
 
         return yesterdayList;
