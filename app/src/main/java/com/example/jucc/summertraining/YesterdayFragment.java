@@ -8,6 +8,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.SimpleAdapter;
 
+import com.example.jucc.summertraining.Entity.UseTime;
+
+import java.util.List;
+
 /**
  * Created by Vin on 2016/7/18.
  */
@@ -25,6 +29,10 @@ public class YesterdayFragment extends MyFragment {
 
     @Override
     public void getUsageAmountFromDatabase() {
+        List<UseTime> list = method.getYesterdayList();
+        for(int a=0;a<list.size();a++){
+            UseTime useTime= list.get(a);
 
+        }
     }
 }
