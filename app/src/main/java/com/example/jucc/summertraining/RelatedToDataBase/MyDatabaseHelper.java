@@ -19,7 +19,7 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         db.execSQL("create table   usetime( app_name TEXT not null,use_time INTEGER,use_date TEXT not null,PRIMARY KEY(app_name,use_date))");
         db.execSQL("create table   now_usetime( app_name TEXT not null PRIMARY KEY,now_use_time INTEGER,ini_use_time INTEGER not null)");
-        db.execSQL("create table   job( set_time TEXT NOT NULL PRIMARY KEY,job_name TEXT not null ,last_time INTEGER,start_time TEXT ,is_suc INTEGER ,alert_time TEXT)");
+        db.execSQL("create table   job( set_time TEXT NOT NULL PRIMARY KEY,job_name TEXT not null ,last_time INTEGER,start_time TEXT ,is_suc INTEGER ,alert_time TEXT,is_alert INTEGER)");
     }
 
 
