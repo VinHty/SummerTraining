@@ -1,10 +1,20 @@
 package com.example.jucc.summertraining.RelatedToDataBase;
 
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.widget.SimpleCursorAdapter;
+
+import com.example.jucc.summertraining.Entity.UseTime;
+import com.example.jucc.summertraining.R;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 
 /**
  * Created by Vin on 2016/7/14.
@@ -29,7 +39,7 @@ public class DatabaseMethod {
     /*
     **插入今天的实时使用时间1
      */
-    public void insert_nowusetime(Context context,String appName,int nowUse,int iniUse){
+    public void insert_nowusetime(String appName,int nowUse,int iniUse){
         String sqlinsert;
         sqlinsert="insert into now_usetime( app_name ,now_use_time,ini_use_time) values('"+appName+"','"+nowUse+"','"+iniUse+"')";
 //        db.execSQL(sqlinsert);
@@ -107,12 +117,8 @@ public class DatabaseMethod {
     */
     public void update_jobWhenFinish(String timeStamp,boolean isSuc){
         String sqlupdate;
-        int i;
-        if(isSuc=true){
-            i=1;
-        }
-        else
-        i=0;
+        int i=0;
+        if(isSuc==true) i=1;
         sqlupdate="update job set is_suc='"+i+"' where set_time='"+timeStamp+"'";
         db.execSQL(sqlupdate);
     }
@@ -125,12 +131,46 @@ public class DatabaseMethod {
         db.execSQL(sqldelete);
     }
 
+    /*
+    **获取昨天用量
+    */
 
+    public List<UseTime> getYesterdayList(){
+
+        List<UseTime> yesterdayList=new ArrayList<UseTime>();
+        db=helper.getReadableDatabase();
+        Date currentTime = new Date(System.currentTimeMillis()-24*60*60*1000);
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+        String dateString = formatter.format(currentTime);
+        Cursor cu=db.rawQuery("select app_name,use_time,use_date,SUM(use_time) as total from usetime where use_date='"+dateString+"' group by app_name,use_date",null);
+        while (cu.moveToNext()){
+        yesterdayList.add(new UseTime(cu.getString(cu.getColumnIndex("app_name")),cu.getInt(cu.getColumnIndex("use_time")),cu.getInt(cu.getColumnIndex("total"))));
+        }
+
+        return yesterdayList;
+    }
+
+    /*
+    **获取上周
+    */
+
+    public Cursor getLastWeek(){
+
+        db=helper.getReadableDatabase();
+        Date currentTime = new Date(System.currentTimeMillis()-24*60*60*1000);
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+        String dateString = formatter.format(currentTime);
+        Date beforeTime = new Date(System.currentTimeMillis()-7*24*60*60*1000);
+        SimpleDateFormat formatter2 = new SimpleDateFormat("yyyy-MM-dd");
+        String dateString2 = formatter.format(beforeTime);
+        Cursor cu=db.rawQuery("select _id,app_name,use_time from usetime where use_date<='"+dateString+"'and use_time>='"+dateString2+"'",null);
+        return cu;
+    }
         /*
     **将当前日期转化为string，精确到天
     */
-    public static String getStringDate() {
-        Date currentTime = new Date();
+    public static String getStringYesterday() {
+        Date currentTime = new Date(System.currentTimeMillis()-24*60*60*1000);
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
         String dateString = formatter.format(currentTime);
         return dateString;

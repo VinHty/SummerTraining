@@ -14,11 +14,14 @@ import android.widget.TextView;
 
 import com.example.jucc.summertraining.RelatedToDataBase.DatabaseMethod;
 
+import static com.example.jucc.summertraining.RelatedToDataBase.DatabaseMethod.getStringTime;
+
 
 public class MainActivity extends AppCompatActivity implements CircleTimePiker.TimeAdapter, CircleTimePiker.OnSelectionChangeListener {
     private CircleTimePiker circleSelect;
     private TextView circleSelectTv;
-    private Context context;
+    public final Bundle bundle=new Bundle();
+    private Context mContext;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,12 +30,11 @@ public class MainActivity extends AppCompatActivity implements CircleTimePiker.T
         circleSelectTv = (TextView) findViewById(R.id.circleSelectTv);
         circleSelect.setAdapter(this);
         circleSelect.setOnSelectionChangeListener(this);
-    context=getApplicationContext();
         Button queryJob = (Button)findViewById(R.id.job_query);
         Button queryTiming = (Button)findViewById(R.id.timing_query);
         Button shop = (Button)findViewById(R.id.shop);
         Button setting = (Button)findViewById(R.id.setting);
-
+        Button start =(Button)findViewById(R.id.start_timing);
         queryJob.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Intent intent = new Intent();
@@ -61,8 +63,15 @@ public class MainActivity extends AppCompatActivity implements CircleTimePiker.T
                 MainActivity.this.startActivity(intent);
             }
         });
-        DatabaseMethod a=new DatabaseMethod(context);
-//        a.insert_nowusetime(context,"5",1,1);
+        start.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+
+                Intent intent = new Intent();
+                intent.putExtras(bundle);
+                intent.setClass(MainActivity.this, ExecutionActivity.class);
+                MainActivity.this.startActivity(intent);
+            }
+        });
     }
 
 
@@ -91,6 +100,7 @@ public class MainActivity extends AppCompatActivity implements CircleTimePiker.T
     @Override
     public void onPositionChange(int newPositoin, int oldPosition) {
         circleSelectTv.setText("当前位置为：" + newPositoin);
+        bundle.putInt("lastTime",newPositoin);
     }
 
     @Override
