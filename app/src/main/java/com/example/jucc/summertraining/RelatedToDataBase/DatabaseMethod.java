@@ -84,7 +84,7 @@ public class DatabaseMethod {
     */
     public void insert_jobWithoutAlert(String timeStamp,String jobName,String alertTime){
         String sqlinsert;
-        sqlinsert="insert into job( set_time,job_name,last_time,start_time,is_suc,alert_time) values('"+timeStamp+"','"+jobName+"','NULL','NULL','"+alertTime+"','NULL','0')";
+        sqlinsert="insert into job( set_time,job_name,last_time,start_time,is_suc,alert_time,is_alert) values('"+timeStamp+"','"+jobName+"','NULL','NULL','NULL','"+alertTime+"','0')";
         db.execSQL(sqlinsert);
     }
 
@@ -93,7 +93,7 @@ public class DatabaseMethod {
     */
     public void insert_jobWithAlert(String timeStamp,String jobName,String alertTime){
         String sqlinsert;
-        sqlinsert="insert into job( set_time,job_name,last_time,start_time,is_suc,alert_time) values('"+timeStamp+"','"+jobName+"','NULL','NULL','NULL','"+alertTime+"','1')";
+        sqlinsert="insert into job( set_time,job_name,last_time,start_time,is_suc,alert_time,is_alert) values('"+timeStamp+"','"+jobName+"','NULL','NULL','NULL','"+alertTime+"','1')";
         db.execSQL(sqlinsert);
     }
 

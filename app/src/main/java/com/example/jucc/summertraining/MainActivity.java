@@ -24,9 +24,6 @@ public class MainActivity extends AppCompatActivity implements CircleTimePiker.T
         setContentView(R.layout.activity_main);
         initButton();
         initSelector();
-
-
-
     }
 
 
