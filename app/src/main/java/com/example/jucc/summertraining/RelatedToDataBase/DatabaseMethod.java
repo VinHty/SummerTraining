@@ -76,7 +76,7 @@ public class DatabaseMethod {
     */
     public void insert_quickjob(String timeStamp,String jobName,int lastTime,String startTime){
         String sqlinsert;
-        sqlinsert="insert into job( set_time,job_name,last_time,start_time,is_suc,alert_time) values('"+timeStamp+"','"+jobName+"','"+lastTime+"','"+startTime+"','NULL','NULL')";
+        sqlinsert="insert into job( set_time,job_name,last_time,start_time,is_suc,alert_time，is_alert) values('"+timeStamp+"','"+jobName+"','"+lastTime+"','"+startTime+"','NULL','NULL','NULL')";
         db.execSQL(sqlinsert);
     }
     /*
@@ -232,6 +232,15 @@ public class DatabaseMethod {
     public static String getStringTime() {
         Date currentTime = new Date();
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+        String timeString = formatter.format(currentTime);
+        return timeString;
+    }
+    /*
+**将当前日期时间转化为string，精确到苗
+*/
+    public static String getStringSecond() {
+        Date currentTime = new Date();
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm：ss");
         String timeString = formatter.format(currentTime);
         return timeString;
     }
