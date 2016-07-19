@@ -76,7 +76,7 @@ public class DatabaseMethod {
     */
     public void insert_quickjob(String timeStamp,String jobName,int lastTime,String startTime){
         String sqlinsert;
-        sqlinsert="insert into job( set_time,job_name,last_time,start_time,is_suc,alert_time) values('"+timeStamp+"','"+jobName+"','"+lastTime+"','"+startTime+"','NULL','NULL')";
+        sqlinsert="insert into job( set_time,job_name,last_time,start_time,is_suc,alert_time，is_alert) values('"+timeStamp+"','"+jobName+"','"+lastTime+"','"+startTime+"','NULL','NULL','NULL')";
         db.execSQL(sqlinsert);
     }
     /*
@@ -84,7 +84,7 @@ public class DatabaseMethod {
     */
     public void insert_jobWithoutAlert(String timeStamp,String jobName,String alertTime){
         String sqlinsert;
-        sqlinsert="insert into job( set_time,job_name,last_time,start_time,is_suc,alert_time) values('"+timeStamp+"','"+jobName+"','NULL','NULL','"+alertTime+"','NULL','0')";
+        sqlinsert="insert into job( set_time,job_name,last_time,start_time,is_suc,alert_time,is_alert) values('"+timeStamp+"','"+jobName+"','NULL','NULL','NULL','"+alertTime+"','0')";
         db.execSQL(sqlinsert);
     }
 
@@ -93,7 +93,7 @@ public class DatabaseMethod {
     */
     public void insert_jobWithAlert(String timeStamp,String jobName,String alertTime){
         String sqlinsert;
-        sqlinsert="insert into job( set_time,job_name,last_time,start_time,is_suc,alert_time) values('"+timeStamp+"','"+jobName+"','NULL','NULL','NULL','"+alertTime+"','1')";
+        sqlinsert="insert into job( set_time,job_name,last_time,start_time,is_suc,alert_time,is_alert) values('"+timeStamp+"','"+jobName+"','NULL','NULL','NULL','"+alertTime+"','1')";
         db.execSQL(sqlinsert);
     }
 
@@ -139,16 +139,21 @@ public class DatabaseMethod {
     */
 
     public List<UseTime> getYesterdayList(){
-
+        int i=0;
         List<UseTime> yesterdayList=new ArrayList<UseTime>();
         Date currentTime = new Date(System.currentTimeMillis()-24*60*60*1000);
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
         String dateString = formatter.format(currentTime);
         Cursor cu=db.rawQuery("select app_name,use_time,use_date,SUM(use_time) as total from usetime where use_date='"+dateString+"' group by app_name,use_date",null);
-        while (cu.moveToNext()){
-        yesterdayList.add(new UseTime(cu.getString(cu.getColumnIndex("app_name")),cu.getInt(cu.getColumnIndex("use_time")),cu.getInt(cu.getColumnIndex("total"))));
-        }
 
+        while (cu.moveToNext()){
+
+            i=i+cu.getInt(cu.getColumnIndex("total"));
+        }
+        while (cu.moveToNext()){
+            yesterdayList.add(new UseTime(cu.getString(cu.getColumnIndex("app_name")),cu.getInt(cu.getColumnIndex("use_time")),i));
+        }
+        cu.close();
         return yesterdayList;
     }
 
@@ -167,8 +172,9 @@ public class DatabaseMethod {
         String dateString2 = formatter2.format(beforeTime);
         Cursor cu=db.rawQuery("select app_name,use_time,SUM(use_time) as total from usetime where use_date<='"+dateString+"'and use_time>='"+dateString2+"' group by app_name",null);
         while (cu.moveToNext()){
-           lastWeekList.add(new UseTime(cu.getString(cu.getColumnIndex("app_name")),cu.getInt(cu.getColumnIndex("use_time")),cu.getInt(cu.getColumnIndex("total"))));
+            lastWeekList.add(new UseTime(cu.getString(cu.getColumnIndex("app_name")),cu.getInt(cu.getColumnIndex("use_time")),cu.getInt(cu.getColumnIndex("total"))));
         }
+        cu.close();
         return lastWeekList;
     }
 
@@ -182,8 +188,8 @@ public class DatabaseMethod {
         while (cu.moveToNext()){
             jobs.add(new Job(cu.getString(cu.getColumnIndex("set_time")),cu.getString(cu.getColumnIndex("job_name")),cu.getString(cu.getColumnIndex("alert_time"))));
         }
-
-        return getUnfinishJob();
+        cu.close();
+        return jobs;
     }
 
     /*
@@ -198,8 +204,8 @@ public class DatabaseMethod {
         while (cu.moveToNext()){
             jobs.add(new Job(cu.getString(cu.getColumnIndex("start_time")),cu.getString(cu.getColumnIndex("job_name")),cu.getString(cu.getColumnIndex("alert_time")),cu.getInt(cu.getColumnIndex("is_suc"))));
         }
-
-        return getUnfinishJob();
+        cu.close();
+        return jobs;
     }
 
     /*
@@ -212,8 +218,8 @@ public class DatabaseMethod {
         while (cu.moveToNext()){
             jobs.add(new Job(cu.getString(cu.getColumnIndex("job_name")),cu.getString(cu.getColumnIndex("alert_time")),cu.getInt(cu.getColumnIndex("is_alert"))));
         }
-
-        return getUnfinishJob();
+        cu.close();
+        return jobs;
     }
 
         /*
@@ -231,6 +237,15 @@ public class DatabaseMethod {
     public static String getStringTime() {
         Date currentTime = new Date();
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+        String timeString = formatter.format(currentTime);
+        return timeString;
+    }
+    /*
+**将当前日期时间转化为string，精确到苗
+*/
+    public static String getStringSecond() {
+        Date currentTime = new Date();
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm：ss");
         String timeString = formatter.format(currentTime);
         return timeString;
     }

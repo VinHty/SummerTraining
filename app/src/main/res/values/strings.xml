@@ -87,5 +87,6 @@
     <string name="JobDetails_Button_Add">Add</string>
     <string name="JobDetails_Button_Edit">Edit</string>
     <string name="JobDetails_Button_Start">Start</string>
+    <string name="title_activity_add_job">AddJobActivity</string>
 
 </resources>
