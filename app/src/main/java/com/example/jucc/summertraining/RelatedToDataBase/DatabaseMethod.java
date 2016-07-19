@@ -139,14 +139,19 @@ public class DatabaseMethod {
     */
 
     public List<UseTime> getYesterdayList(){
-
+        int i=0;
         List<UseTime> yesterdayList=new ArrayList<UseTime>();
         Date currentTime = new Date(System.currentTimeMillis()-24*60*60*1000);
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
         String dateString = formatter.format(currentTime);
         Cursor cu=db.rawQuery("select app_name,use_time,use_date,SUM(use_time) as total from usetime where use_date='"+dateString+"' group by app_name,use_date",null);
+
         while (cu.moveToNext()){
-            yesterdayList.add(new UseTime(cu.getString(cu.getColumnIndex("app_name")),cu.getInt(cu.getColumnIndex("use_time")),cu.getInt(cu.getColumnIndex("total"))));
+
+            i=i+cu.getInt(cu.getColumnIndex("total"));
+        }
+        while (cu.moveToNext()){
+            yesterdayList.add(new UseTime(cu.getString(cu.getColumnIndex("app_name")),cu.getInt(cu.getColumnIndex("use_time")),i));
         }
         cu.close();
         return yesterdayList;
