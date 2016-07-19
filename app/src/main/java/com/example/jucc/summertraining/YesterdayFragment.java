@@ -36,8 +36,11 @@ public class YesterdayFragment extends MyFragment {
             HashMap<String,Object> map = new HashMap<>();
             String name =useTime.getAppName();
             int time = useTime.getUseTime();
+            long totalTime=useTime.getTotal();
+            long percent = time/totalTime;
             map.put("title",name);
             map.put("time",time);
+            map.put("percent",percent);
             this.list.add(map);
         }
     }

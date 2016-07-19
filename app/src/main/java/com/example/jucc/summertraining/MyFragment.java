@@ -36,7 +36,6 @@ public class MyFragment extends Fragment {
         return view;
     }
     public void getUsageAmountFromDatabase(){};
-    public void getUsageAmountFromSDK () throws ClassNotFoundException, NoSuchMethodException, InvocationTargetException, IllegalAccessException, NoSuchFieldException{}
 
     public void update() {}
 }

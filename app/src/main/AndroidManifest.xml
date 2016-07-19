@@ -11,7 +11,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         >
-        <receiver android:name=".MyListener$MyReceiver">
+        <receiver android:name=".AppUsageAmountActivity$MyReceiver">
             <intent-filter >
                 <action android:name="android.intent.action.DATE_CHANGED"></action>
             </intent-filter>
