@@ -5,6 +5,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.widget.SimpleCursorAdapter;
 
+import com.example.jucc.summertraining.Entity.Job;
 import com.example.jucc.summertraining.Entity.UseTime;
 import com.example.jucc.summertraining.R;
 
@@ -81,9 +82,9 @@ public class DatabaseMethod {
     /*
     **添加没有提醒任务时插入
     */
-    public void insert_jobWithoutAlert(String timeStamp,String jobName){
+    public void insert_jobWithoutAlert(String timeStamp,String jobName,String alertTime){
         String sqlinsert;
-        sqlinsert="insert into job( set_time,job_name,last_time,start_time,is_suc,alert_time) values('"+timeStamp+"','"+jobName+"','NULL','NULL','NULL','NULL')";
+        sqlinsert="insert into job( set_time,job_name,last_time,start_time,is_suc,alert_time) values('"+timeStamp+"','"+jobName+"','NULL','NULL','"+alertTime+"','NULL','0')";
         db.execSQL(sqlinsert);
     }
 
@@ -92,16 +93,18 @@ public class DatabaseMethod {
     */
     public void insert_jobWithAlert(String timeStamp,String jobName,String alertTime){
         String sqlinsert;
-        sqlinsert="insert into job( set_time,job_name,last_time,start_time,is_suc,alert_time) values('"+timeStamp+"','"+jobName+"','NULL','NULL','NULL','"+alertTime+"')";
+        sqlinsert="insert into job( set_time,job_name,last_time,start_time,is_suc,alert_time) values('"+timeStamp+"','"+jobName+"','NULL','NULL','NULL','"+alertTime+"','1')";
         db.execSQL(sqlinsert);
     }
 
     /*
     **编辑任务时更新
     */
-    public void update_jobWhenEdit(String timeStamp,String jobName,String alertTime){
+    public void update_jobWhenEdit(String timeStamp,String jobName,String alertTime,boolean isAlert){
         String sqlupdate;
-        sqlupdate="update job set job_name='"+jobName+"',alert_time='"+alertTime+"' where set_time='"+timeStamp+"'";
+        int i=0;
+        if(isAlert==true) i=1;
+        sqlupdate="update job set job_name='"+jobName+"',alert_time='"+alertTime+"',is_alert='"+i+"' where set_time='"+timeStamp+"'";
         db.execSQL(sqlupdate);
     }
     /*
@@ -138,7 +141,6 @@ public class DatabaseMethod {
     public List<UseTime> getYesterdayList(){
 
         List<UseTime> yesterdayList=new ArrayList<UseTime>();
-        db=helper.getReadableDatabase();
         Date currentTime = new Date(System.currentTimeMillis()-24*60*60*1000);
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
         String dateString = formatter.format(currentTime);
@@ -154,18 +156,66 @@ public class DatabaseMethod {
     **获取上周
     */
 
-    public Cursor getLastWeek(){
+    public List<UseTime> getLastWeek(){
 
-        db=helper.getReadableDatabase();
+        List<UseTime> lastWeekList=new ArrayList<UseTime>();
         Date currentTime = new Date(System.currentTimeMillis()-24*60*60*1000);
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
         String dateString = formatter.format(currentTime);
         Date beforeTime = new Date(System.currentTimeMillis()-7*24*60*60*1000);
         SimpleDateFormat formatter2 = new SimpleDateFormat("yyyy-MM-dd");
-        String dateString2 = formatter.format(beforeTime);
-        Cursor cu=db.rawQuery("select _id,app_name,use_time from usetime where use_date<='"+dateString+"'and use_time>='"+dateString2+"'",null);
-        return cu;
+        String dateString2 = formatter2.format(beforeTime);
+        Cursor cu=db.rawQuery("select app_name,use_time,SUM(use_time) as total from usetime where use_date<='"+dateString+"'and use_time>='"+dateString2+"' group by app_name",null);
+        while (cu.moveToNext()){
+           lastWeekList.add(new UseTime(cu.getString(cu.getColumnIndex("app_name")),cu.getInt(cu.getColumnIndex("use_time")),cu.getInt(cu.getColumnIndex("total"))));
+        }
+        return lastWeekList;
     }
+
+    /*
+    **获取未完成任务列表
+    */
+    public List<Job> getUnfinishJob(){
+
+        List<Job> jobs=new ArrayList<Job>();
+        Cursor cu=db.rawQuery("select set_time,job_name,alert_time from job where is_suc='NULL' order by alert_time ",null);
+        while (cu.moveToNext()){
+            jobs.add(new Job(cu.getString(cu.getColumnIndex("set_time")),cu.getString(cu.getColumnIndex("job_name")),cu.getString(cu.getColumnIndex("alert_time"))));
+        }
+
+        return getUnfinishJob();
+    }
+
+    /*
+    **获取成功/失败任务列表
+    */
+    public List<Job> getFinishJob(boolean isSuc){
+
+        List<Job> jobs=new ArrayList<Job>();
+        int i=0;
+        if(isSuc==true) i=1;
+        Cursor cu=db.rawQuery("select start_time,job_name,is_suc,last_time from job where is_suc='"+i+"' order by start_time DESE ",null);
+        while (cu.moveToNext()){
+            jobs.add(new Job(cu.getString(cu.getColumnIndex("start_time")),cu.getString(cu.getColumnIndex("job_name")),cu.getString(cu.getColumnIndex("alert_time")),cu.getInt(cu.getColumnIndex("is_suc"))));
+        }
+
+        return getUnfinishJob();
+    }
+
+    /*
+    **获取需要编辑的任务列表
+    */
+    public List<Job> getJobWhenEdit(String timeStamp){
+
+        List<Job> jobs=new ArrayList<Job>();
+        Cursor cu=db.rawQuery("select job_name,is_alert,alert_time from job where set_time='"+timeStamp+"' ",null);
+        while (cu.moveToNext()){
+            jobs.add(new Job(cu.getString(cu.getColumnIndex("job_name")),cu.getString(cu.getColumnIndex("alert_time")),cu.getInt(cu.getColumnIndex("is_alert"))));
+        }
+
+        return getUnfinishJob();
+    }
+
         /*
     **将当前日期转化为string，精确到天
     */

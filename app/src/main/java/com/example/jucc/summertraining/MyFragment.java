@@ -32,6 +32,7 @@ public class MyFragment extends Fragment {
         super.onCreateView(inflater, container, savedInstanceState);
         View view = inflater.inflate(R.layout.fragment_app_usage_amount,container,false);
         listView = (ListView) view.findViewById(R.id.listView);
+        method=new DatabaseMethod(getContext());
         return view;
     }
     public void getUsageAmountFromDatabase(){};
