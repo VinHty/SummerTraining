@@ -1,11 +1,20 @@
 package com.example.jucc.summertraining.RelatedToDataBase;
 
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.widget.SimpleCursorAdapter;
+
+import com.example.jucc.summertraining.Entity.UseTime;
+import com.example.jucc.summertraining.R;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 
 /**
  * Created by Vin on 2016/7/14.
@@ -122,7 +131,41 @@ public class DatabaseMethod {
         db.execSQL(sqldelete);
     }
 
+    /*
+    **获取昨天用量
+    */
 
+    public List<UseTime> getYesterdayList(){
+
+        List<UseTime> yesterdayList=new ArrayList<UseTime>();
+        db=helper.getReadableDatabase();
+        Date currentTime = new Date(System.currentTimeMillis()-24*60*60*1000);
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+        String dateString = formatter.format(currentTime);
+        Cursor cu=db.rawQuery("select _id,app_name,use_time from usetime where use_date='"+dateString+"'",null);
+        while (cu.moveToNext()){
+        yesterdayList.add(new UseTime(cu.getString(cu.getColumnIndex("app_name")),cu.getInt(cu.getColumnIndex("use_time")),cu.getString(cu.getColumnIndex("use_date"))));
+        }
+
+        return yesterdayList;
+    }
+
+    /*
+    **获取上周
+    */
+
+    public Cursor getLastWeek(){
+
+        db=helper.getReadableDatabase();
+        Date currentTime = new Date(System.currentTimeMillis()-24*60*60*1000);
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+        String dateString = formatter.format(currentTime);
+        Date beforeTime = new Date(System.currentTimeMillis()-7*24*60*60*1000);
+        SimpleDateFormat formatter2 = new SimpleDateFormat("yyyy-MM-dd");
+        String dateString2 = formatter.format(beforeTime);
+        Cursor cu=db.rawQuery("select _id,app_name,use_time from usetime where use_date<='"+dateString+"'and use_time>='"+dateString2+"'",null);
+        return cu;
+    }
         /*
     **将当前日期转化为string，精确到天
     */
