@@ -72,6 +72,10 @@ public class MainActivity extends AppCompatActivity implements CircleTimePiker.T
                 MainActivity.this.startActivity(intent);
             }
         });
+//        Context context=getBaseContext();
+//        DatabaseMethod databaseMethod=new DatabaseMethod(context);
+//        databaseMethod.insert_jobWithoutAlert(getStringTime(),"5",getStringTime());
+
     }
 
 

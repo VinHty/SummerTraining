@@ -12,6 +12,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.jucc.summertraining.RelatedToDataBase.DatabaseMethod;
 
@@ -85,6 +86,7 @@ public  class TodayFragment extends MyFragment  {
             //Map<String, Long> componentResumeMap = (Map<String, Long>) cPkgUsageStats.getDeclaredField("componentResumeTimes").get(pkgUsageStats);
             map.put("title",packageName);
             map.put("time",usageTime);
+            Toast.makeText(getContext(),"title is "+packageName+"time is "+usageTime,Toast.LENGTH_LONG).show();
             totalUseTime+=usageTime;
             list.add(map);
         }

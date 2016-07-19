@@ -43,7 +43,7 @@ public class DatabaseMethod {
     public void insert_nowusetime(String appName,int nowUse,int iniUse){
         String sqlinsert;
         sqlinsert="insert into now_usetime( app_name ,now_use_time,ini_use_time) values('"+appName+"','"+nowUse+"','"+iniUse+"')";
-//        db.execSQL(sqlinsert);
+        db.execSQL(sqlinsert);
     }
     /*
     **将今天的使用时间插入到总的时间记录表中
@@ -71,9 +71,9 @@ public class DatabaseMethod {
     }
     */
 
-            /*
-    **开始自定义任务时插入
-    */
+    /*
+**开始自定义任务时插入
+*/
     public void insert_quickjob(String timeStamp,String jobName,int lastTime,String startTime){
         String sqlinsert;
         sqlinsert="insert into job( set_time,job_name,last_time,start_time,is_suc,alert_time) values('"+timeStamp+"','"+jobName+"','"+lastTime+"','"+startTime+"','NULL','NULL')";
@@ -146,9 +146,9 @@ public class DatabaseMethod {
         String dateString = formatter.format(currentTime);
         Cursor cu=db.rawQuery("select app_name,use_time,use_date,SUM(use_time) as total from usetime where use_date='"+dateString+"' group by app_name,use_date",null);
         while (cu.moveToNext()){
-        yesterdayList.add(new UseTime(cu.getString(cu.getColumnIndex("app_name")),cu.getInt(cu.getColumnIndex("use_time")),cu.getInt(cu.getColumnIndex("total"))));
+            yesterdayList.add(new UseTime(cu.getString(cu.getColumnIndex("app_name")),cu.getInt(cu.getColumnIndex("use_time")),cu.getInt(cu.getColumnIndex("total"))));
         }
-
+        cu.close();
         return yesterdayList;
     }
 
@@ -167,8 +167,9 @@ public class DatabaseMethod {
         String dateString2 = formatter2.format(beforeTime);
         Cursor cu=db.rawQuery("select app_name,use_time,SUM(use_time) as total from usetime where use_date<='"+dateString+"'and use_time>='"+dateString2+"' group by app_name",null);
         while (cu.moveToNext()){
-           lastWeekList.add(new UseTime(cu.getString(cu.getColumnIndex("app_name")),cu.getInt(cu.getColumnIndex("use_time")),cu.getInt(cu.getColumnIndex("total"))));
+            lastWeekList.add(new UseTime(cu.getString(cu.getColumnIndex("app_name")),cu.getInt(cu.getColumnIndex("use_time")),cu.getInt(cu.getColumnIndex("total"))));
         }
+        cu.close();
         return lastWeekList;
     }
 
@@ -182,8 +183,8 @@ public class DatabaseMethod {
         while (cu.moveToNext()){
             jobs.add(new Job(cu.getString(cu.getColumnIndex("set_time")),cu.getString(cu.getColumnIndex("job_name")),cu.getString(cu.getColumnIndex("alert_time"))));
         }
-
-        return getUnfinishJob();
+        cu.close();
+        return jobs;
     }
 
     /*
@@ -198,7 +199,7 @@ public class DatabaseMethod {
         while (cu.moveToNext()){
             jobs.add(new Job(cu.getString(cu.getColumnIndex("start_time")),cu.getString(cu.getColumnIndex("job_name")),cu.getString(cu.getColumnIndex("alert_time")),cu.getInt(cu.getColumnIndex("is_suc"))));
         }
-
+        cu.close();
         return getUnfinishJob();
     }
 
@@ -212,13 +213,13 @@ public class DatabaseMethod {
         while (cu.moveToNext()){
             jobs.add(new Job(cu.getString(cu.getColumnIndex("job_name")),cu.getString(cu.getColumnIndex("alert_time")),cu.getInt(cu.getColumnIndex("is_alert"))));
         }
-
+        cu.close();
         return getUnfinishJob();
     }
 
-        /*
-    **将当前日期转化为string，精确到天
-    */
+    /*
+**将当前日期转化为string，精确到天
+*/
     public static String getStringYesterday() {
         Date currentTime = new Date(System.currentTimeMillis()-24*60*60*1000);
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
