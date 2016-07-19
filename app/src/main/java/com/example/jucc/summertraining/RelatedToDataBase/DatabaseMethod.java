@@ -71,9 +71,9 @@ public class DatabaseMethod {
     }
     */
 
-    /*
-**开始自定义任务时插入
-*/
+            /*
+    **开始自定义任务时插入
+    */
     public void insert_quickjob(String timeStamp,String jobName,int lastTime,String startTime){
         String sqlinsert;
         sqlinsert="insert into job( set_time,job_name,last_time,start_time,is_suc,alert_time) values('"+timeStamp+"','"+jobName+"','"+lastTime+"','"+startTime+"','NULL','NULL')";
@@ -200,7 +200,7 @@ public class DatabaseMethod {
             jobs.add(new Job(cu.getString(cu.getColumnIndex("start_time")),cu.getString(cu.getColumnIndex("job_name")),cu.getString(cu.getColumnIndex("alert_time")),cu.getInt(cu.getColumnIndex("is_suc"))));
         }
         cu.close();
-        return getUnfinishJob();
+        return jobs;
     }
 
     /*
@@ -214,12 +214,12 @@ public class DatabaseMethod {
             jobs.add(new Job(cu.getString(cu.getColumnIndex("job_name")),cu.getString(cu.getColumnIndex("alert_time")),cu.getInt(cu.getColumnIndex("is_alert"))));
         }
         cu.close();
-        return getUnfinishJob();
+        return jobs;
     }
 
-    /*
-**将当前日期转化为string，精确到天
-*/
+        /*
+    **将当前日期转化为string，精确到天
+    */
     public static String getStringYesterday() {
         Date currentTime = new Date(System.currentTimeMillis()-24*60*60*1000);
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
