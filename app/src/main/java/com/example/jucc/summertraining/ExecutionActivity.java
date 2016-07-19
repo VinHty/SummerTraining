@@ -46,9 +46,7 @@ public class ExecutionActivity extends Activity {
         giveUp.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 new AlertDialog.Builder(ExecutionActivity.this).setTitle("放弃任务？")//设置对话框标题
-
                         .setMessage("放弃任务将会记录为失败")//设置显示的内容
-
                         .setPositiveButton("确定",new DialogInterface.OnClickListener() {//添加确定按钮
 
 
@@ -57,8 +55,6 @@ public class ExecutionActivity extends Activity {
 
                             public void onClick(DialogInterface dialog, int which) {//确定按钮的响应事件
                                     giveUpJob();
-
-
                             }
 
                         }).setNegativeButton("返回",new DialogInterface.OnClickListener() {//添加返回按钮
@@ -69,15 +65,9 @@ public class ExecutionActivity extends Activity {
 
                     public void onClick(DialogInterface dialog, int which) {//响应事件
 
-                        // TODO Auto-generated method stub
-
-                        Log.i("alertdialog"," 请保存数据！");
-
                     }
 
                 }).show();//在按键响应事件中显示此对话框
-
-
             }
         });
     }
@@ -116,6 +106,32 @@ public class ExecutionActivity extends Activity {
                 mContext=getBaseContext();
                 DatabaseMethod quickJobFinish=new DatabaseMethod(mContext);
                quickJobFinish.update_jobWhenFinish(timeStamp,true);
+                new AlertDialog.Builder(ExecutionActivity.this).setTitle("成功")//设置对话框标题
+                        .setMessage("任务成功")//设置显示的内容
+                        .setPositiveButton("分享",new DialogInterface.OnClickListener() {//添加确定按钮
+
+
+
+                            @Override
+
+                            public void onClick(DialogInterface dialog, int which) {//确定按钮的响应事件
+
+                            }
+
+                        }).setNegativeButton("回主界面",new DialogInterface.OnClickListener() {//添加返回按钮
+
+
+
+                    @Override
+
+                    public void onClick(DialogInterface dialog, int which) {//响应事件
+                        Intent intent = new Intent();
+                        intent.setClass(ExecutionActivity.this,MainActivity.class);
+                        ExecutionActivity.this.startActivity(intent);
+                        finish();
+                    }
+
+                }).show();//在按键响应事件中显示此对话框
             }
         };
     }

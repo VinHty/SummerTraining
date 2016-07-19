@@ -148,7 +148,7 @@ public class DatabaseMethod {
         while (cu.moveToNext()){
         yesterdayList.add(new UseTime(cu.getString(cu.getColumnIndex("app_name")),cu.getInt(cu.getColumnIndex("use_time")),cu.getInt(cu.getColumnIndex("total"))));
         }
-
+        cu.close();
         return yesterdayList;
     }
 
@@ -169,6 +169,7 @@ public class DatabaseMethod {
         while (cu.moveToNext()){
            lastWeekList.add(new UseTime(cu.getString(cu.getColumnIndex("app_name")),cu.getInt(cu.getColumnIndex("use_time")),cu.getInt(cu.getColumnIndex("total"))));
         }
+        cu.close();
         return lastWeekList;
     }
 
@@ -182,8 +183,8 @@ public class DatabaseMethod {
         while (cu.moveToNext()){
             jobs.add(new Job(cu.getString(cu.getColumnIndex("set_time")),cu.getString(cu.getColumnIndex("job_name")),cu.getString(cu.getColumnIndex("alert_time"))));
         }
-
-        return getUnfinishJob();
+        cu.close();
+        return jobs;
     }
 
     /*
@@ -198,8 +199,8 @@ public class DatabaseMethod {
         while (cu.moveToNext()){
             jobs.add(new Job(cu.getString(cu.getColumnIndex("start_time")),cu.getString(cu.getColumnIndex("job_name")),cu.getString(cu.getColumnIndex("alert_time")),cu.getInt(cu.getColumnIndex("is_suc"))));
         }
-
-        return getUnfinishJob();
+        cu.close();
+        return jobs;
     }
 
     /*
@@ -212,8 +213,8 @@ public class DatabaseMethod {
         while (cu.moveToNext()){
             jobs.add(new Job(cu.getString(cu.getColumnIndex("job_name")),cu.getString(cu.getColumnIndex("alert_time")),cu.getInt(cu.getColumnIndex("is_alert"))));
         }
-
-        return getUnfinishJob();
+        cu.close();
+        return jobs;
     }
 
         /*
