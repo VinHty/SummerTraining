@@ -33,11 +33,11 @@ public class ScreenListener {
         public void onReceive(Context context, Intent intent) {
             action = intent.getAction();
             if (Intent.ACTION_SCREEN_ON.equals(action)) { // 开屏
-                mScreenStateListener.onScreenOn();
+                //mScreenStateListener.onScreenOn();
             } else if (Intent.ACTION_SCREEN_OFF.equals(action)) { // 锁屏
-                mScreenStateListener.onScreenOff();
+                //mScreenStateListener.onScreenOff();
             } else if (Intent.ACTION_USER_PRESENT.equals(action)) { // 解锁
-                mScreenStateListener.onUserPresent();
+                //mScreenStateListener.onUserPresent();
             }
         }
     }

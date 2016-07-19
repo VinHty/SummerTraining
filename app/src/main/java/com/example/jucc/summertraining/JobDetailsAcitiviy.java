@@ -5,19 +5,33 @@ import android.app.ListActivity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.provider.ContactsContract;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.NumberPicker;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
+import android.widget.TimePicker;
+import android.widget.Toast;
 
+import com.example.jucc.summertraining.Entity.Job;
+import com.example.jucc.summertraining.RelatedToDataBase.DatabaseMethod;
+
+import java.sql.Time;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -28,6 +42,7 @@ public class JobDetailsAcitiviy extends ListActivity {
     private Button button_return;
     private Button button_add;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,6 +50,7 @@ public class JobDetailsAcitiviy extends ListActivity {
 
         button_return = (Button)findViewById(R.id.activity_job_details_return);
         button_add = (Button) findViewById(R.id.activity_job_details_add);
+
 
         button_return.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -47,6 +63,8 @@ public class JobDetailsAcitiviy extends ListActivity {
         button_add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Intent addJobActivity = new Intent(JobDetailsAcitiviy.this,AddJobActivity.class);
+                startActivity(addJobActivity);
 
             }
         });
@@ -60,7 +78,19 @@ public class JobDetailsAcitiviy extends ListActivity {
     private List<Map<String, Object>> getData() {
         List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
 
-        Map<String, Object> map = new HashMap<String, Object>();
+        DatabaseMethod dbMethod = new DatabaseMethod(this);
+        List<Job> myJobs = dbMethod.getUnfinishJob();  //从数据库读取未完成的任务,以list的形式
+        for(int i = 0; i < myJobs.size(); i++){
+            Map<String,Object> map = new HashMap<String,Object>();
+            map.put("title",myJobs.get(i).getTitle());
+            map.put("timeStamp",myJobs.get(i).getTimeStamp());
+            map.put("alertTime",myJobs.get(i).getRemindTime());
+            map.put("edit","edit" + i);
+            map.put("start","start" + i);
+            list.add(map);
+        }
+
+       /* Map<String, Object> map = new HashMap<String, Object>();
         map.put("title", "Math");
         map.put("edit", "edit1");
         map.put("start", "start1");
@@ -77,9 +107,21 @@ public class JobDetailsAcitiviy extends ListActivity {
         map.put("edit", "edit2");
         map.put("start", "start2");
         list.add(map);
+        */
 
         return list;
     }
+
+    public String getCurrentTime(){
+        Calendar c = Calendar.getInstance();
+        int year = c.get(Calendar.YEAR);
+        int month = c.get(Calendar.MONTH);
+        int date = c.get(Calendar.DATE);
+        int hour = c.get(Calendar.HOUR);
+        int minute = c.get(Calendar.MINUTE);
+        String currentTime = "" + year + "-" + month + "-" + date + " " + hour + ":" + minute;
+        return currentTime;
+     }
 
     public final class ViewHolder{
         public TextView title;
@@ -155,6 +197,7 @@ public class JobDetailsAcitiviy extends ListActivity {
 
         @Override
         public void onClick(View v) {
+          //  if(v.getId() == R.id.activity_job_details_edit)
             Log.v("MyListView-click", "line:" + m_position + ":"+ v.getTag());
         }
     }

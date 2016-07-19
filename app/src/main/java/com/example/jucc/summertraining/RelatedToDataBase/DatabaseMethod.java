@@ -146,7 +146,7 @@ public class DatabaseMethod {
         String dateString = formatter.format(currentTime);
         Cursor cu=db.rawQuery("select app_name,use_time,use_date,SUM(use_time) as total from usetime where use_date='"+dateString+"' group by app_name,use_date",null);
         while (cu.moveToNext()){
-        yesterdayList.add(new UseTime(cu.getString(cu.getColumnIndex("app_name")),cu.getInt(cu.getColumnIndex("use_time")),cu.getInt(cu.getColumnIndex("total"))));
+            yesterdayList.add(new UseTime(cu.getString(cu.getColumnIndex("app_name")),cu.getInt(cu.getColumnIndex("use_time")),cu.getInt(cu.getColumnIndex("total"))));
         }
         cu.close();
         return yesterdayList;
@@ -167,7 +167,7 @@ public class DatabaseMethod {
         String dateString2 = formatter2.format(beforeTime);
         Cursor cu=db.rawQuery("select app_name,use_time,SUM(use_time) as total from usetime where use_date<='"+dateString+"'and use_time>='"+dateString2+"' group by app_name",null);
         while (cu.moveToNext()){
-           lastWeekList.add(new UseTime(cu.getString(cu.getColumnIndex("app_name")),cu.getInt(cu.getColumnIndex("use_time")),cu.getInt(cu.getColumnIndex("total"))));
+            lastWeekList.add(new UseTime(cu.getString(cu.getColumnIndex("app_name")),cu.getInt(cu.getColumnIndex("use_time")),cu.getInt(cu.getColumnIndex("total"))));
         }
         cu.close();
         return lastWeekList;

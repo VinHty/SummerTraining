@@ -4,6 +4,7 @@ import android.app.ActionBar;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -103,6 +104,10 @@ public class MainActivity extends AppCompatActivity implements CircleTimePiker.T
                 MainActivity.this.startActivity(intent);
             }
         });
+//        Context context=getBaseContext();
+//        DatabaseMethod databaseMethod=new DatabaseMethod(context);
+//        databaseMethod.insert_jobWithoutAlert(getStringTime(),"5",getStringTime());
+
     }
 
     public void initSelector(){
