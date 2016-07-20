@@ -21,6 +21,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import static com.example.jucc.summertraining.RelatedToDataBase.DatabaseMethod.getInstance;
+import static com.example.jucc.summertraining.RelatedToDataBase.DatabaseMethod.getStringSecond;
 import static com.example.jucc.summertraining.RelatedToDataBase.DatabaseMethod.getStringTime;
 
 public class ExecutionActivity extends Activity {
@@ -32,7 +33,7 @@ public class ExecutionActivity extends Activity {
     private float lastTime;
     private Context mContext;
     private CountDownTimer timer;
-    private String timeStamp;
+    private String timeStampJob;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,22 +87,25 @@ public class ExecutionActivity extends Activity {
     private void initJob(){
         Intent intent=this.getIntent();
         Bundle bundle=intent.getExtras();
-        String timeStamp=bundle.getString("timeStamp");
+        String timeStamp1=bundle.getString("timeStamp");
         long lastTime2=bundle.getLong("lastTime")*60000;
         String title=bundle.getString("title");
         int lastTime1 = bundle.getInt("lastTime")*60000;
         mContext=getBaseContext();
-        if(timeStamp==null){
+        if(timeStamp1==null){
         DatabaseMethod quickJob=getInstance(mContext);
-        timeStamp=getStringTime();
         int i=new Float(lastTime1/60000).intValue();
-        quickJob.insert_quickjob(timeStamp,"自定义任务",i,timeStamp);
-        lastTime=lastTime1;}
+        String timeStamp=getStringSecond();
+        quickJob.insert_quickjob(timeStamp,"自定义任务",i,getStringTime());
+        lastTime=lastTime1;
+        timeStampJob=timeStamp;
+        }
         else{
             DatabaseMethod doJob=getInstance(mContext);
             int i=new Long(lastTime2/60000).intValue();
-            doJob.update_jobWhenStart(title,i,getStringTime(),timeStamp);
+            doJob.update_jobWhenStart(title,i,getStringTime(),timeStamp1);
             lastTime=lastTime2;
+            timeStampJob=timeStamp1;
         }
     }
     private void startCounting(){
@@ -118,7 +122,7 @@ public class ExecutionActivity extends Activity {
             public void onFinish() {
                 mContext=getBaseContext();
                 DatabaseMethod quickJobFinish= DatabaseMethod.getInstance(mContext);
-               quickJobFinish.update_jobWhenFinish(timeStamp,true);
+               quickJobFinish.update_jobWhenFinish(timeStampJob,true);
                 new AlertDialog.Builder(ExecutionActivity.this).setTitle("成功")//设置对话框标题
                         .setMessage("任务成功")//设置显示的内容
                         .setPositiveButton("分享",new DialogInterface.OnClickListener() {//添加确定按钮
@@ -152,7 +156,7 @@ public class ExecutionActivity extends Activity {
         timer.cancel();
         mContext=getBaseContext();
         DatabaseMethod quickJobGiveUp=DatabaseMethod.getInstance(mContext);
-        quickJobGiveUp.update_jobWhenFinish(timeStamp,false);
+        quickJobGiveUp.update_jobWhenFinish(timeStampJob,false);
         Intent intent = new Intent();
         intent.setClass(ExecutionActivity.this,MainActivity.class);
         ExecutionActivity.this.startActivity(intent);
