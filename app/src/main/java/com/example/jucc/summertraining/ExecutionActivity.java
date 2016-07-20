@@ -20,6 +20,7 @@ import com.example.jucc.summertraining.RelatedToDataBase.MyDatabaseHelper;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import static com.example.jucc.summertraining.RelatedToDataBase.DatabaseMethod.getInstance;
 import static com.example.jucc.summertraining.RelatedToDataBase.DatabaseMethod.getStringTime;
 
 public class ExecutionActivity extends Activity {
@@ -92,13 +93,13 @@ public class ExecutionActivity extends Activity {
         mContext=getBaseContext();
         DatabaseMethod quickJob=DatabaseMethod.getInstance(mContext);
         if(timeStamp==null){
-        DatabaseMethod quickJob=new DatabaseMethod(mContext);
+         quickJob=getInstance(mContext);
         timeStamp=getStringTime();
         int i=new Float(lastTime1/60000).intValue();
         quickJob.insert_quickjob(timeStamp,"自定义任务",i,timeStamp);
         lastTime=lastTime1;}
         else{
-            DatabaseMethod doJob=new DatabaseMethod(mContext);
+            DatabaseMethod doJob=getInstance(mContext);
             int i=new Long(lastTime2/60000).intValue();
             doJob.update_jobWhenStart(timeStamp,i,getStringTime());
             lastTime=lastTime2;
