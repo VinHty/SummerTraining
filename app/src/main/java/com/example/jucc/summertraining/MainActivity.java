@@ -1,11 +1,9 @@
 package com.example.jucc.summertraining;
 
-import android.app.ActionBar;
-import android.content.Context;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -17,7 +15,8 @@ import android.widget.TextView;
 public class MainActivity extends AppCompatActivity implements CircleTimePiker.TimeAdapter, CircleTimePiker.OnSelectionChangeListener {
     private CircleTimePiker circleSelect;
     private TextView circleSelectTv;
-    public final Bundle bundle=new Bundle();
+    public  Bundle bundle=new Bundle();
+    private CircleTimePiker.OnSelectionChangeListener mSelectionChangeListener;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,6 +50,7 @@ public class MainActivity extends AppCompatActivity implements CircleTimePiker.T
 
     @Override
     public void onPositionChange(int newPositoin, int oldPosition) {
+
         circleSelectTv.setText("设定时长为" + newPositoin+"分钟");
         bundle.putInt("lastTime",newPositoin);
     }

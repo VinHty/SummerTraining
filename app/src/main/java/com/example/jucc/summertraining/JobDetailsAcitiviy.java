@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -41,6 +42,8 @@ public class JobDetailsAcitiviy extends ListActivity {
     private List<Map<String, Object>> mData;
     private Button button_return;
     private Button button_add;
+    private DatabaseMethod dbMethod;
+    private MyAdapter adapter;
 
 
     @Override
@@ -48,6 +51,7 @@ public class JobDetailsAcitiviy extends ListActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_job_details_acitiviy);
 
+        dbMethod = DatabaseMethod.getInstance(this);
         button_return = (Button)findViewById(R.id.activity_job_details_return);
         button_add = (Button) findViewById(R.id.activity_job_details_add);
 
@@ -70,7 +74,8 @@ public class JobDetailsAcitiviy extends ListActivity {
         });
 
         mData = getData();
-        MyAdapter adapter = new MyAdapter(this);
+        adapter = new MyAdapter(this);
+
         setListAdapter(adapter);
 
     }
@@ -87,6 +92,7 @@ public class JobDetailsAcitiviy extends ListActivity {
             map.put("alertTime",myJobs.get(i).getRemindTime());
             map.put("edit","edit" + i);
             map.put("start","start" + i);
+            map.put("delete","delete" + i);
             list.add(map);
         }
 
@@ -113,20 +119,25 @@ public class JobDetailsAcitiviy extends ListActivity {
     }
 
     public String getCurrentTime(){
-        Calendar c = Calendar.getInstance();
+     /*   Calendar c = Calendar.getInstance();
         int year = c.get(Calendar.YEAR);
         int month = c.get(Calendar.MONTH);
         int date = c.get(Calendar.DATE);
         int hour = c.get(Calendar.HOUR);
         int minute = c.get(Calendar.MINUTE);
-        String currentTime = "" + year + "-" + month + "-" + date + " " + hour + ":" + minute;
-        return currentTime;
+        int second = c.get(Calendar.SECOND);
+        String currentTime = "" + year + "-" + month + "-" + date + " " + hour + ":" + minute + ":" + second;
+        */
+        DatabaseMethod db =DatabaseMethod.getInstance(this);
+        return db.getStringSecond();
      }
 
     public final class ViewHolder{
         public TextView title;
-        public TextView edit;
-        public TextView start;
+        public Button edit;
+        public Button start;
+        public Button delete;
+
     }
 
     public class MyAdapter extends BaseAdapter {
@@ -156,7 +167,7 @@ public class JobDetailsAcitiviy extends ListActivity {
         }
 
         @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
+        public View getView(final int position, View convertView, ViewGroup parent) {
 
             ViewHolder holder = null;
             if (convertView == null) {
@@ -165,8 +176,9 @@ public class JobDetailsAcitiviy extends ListActivity {
 
                 convertView = mInflater.inflate(R.layout.activity_job_details_listview_item, null);
                 holder.title = (TextView)convertView.findViewById(R.id.activity_job_details_textview);
-                holder.edit = (TextView)convertView.findViewById(R.id.activity_job_details_edit);
-                holder.start = (TextView)convertView.findViewById(R.id.activity_job_details_start);
+                holder.edit = (Button)convertView.findViewById(R.id.activity_job_details_edit);
+                holder.start = (Button)convertView.findViewById(R.id.activity_job_details_start);
+                holder.delete = (Button)convertView.findViewById(R.id.activity_job_details_delete);
                 convertView.setTag(holder);
 
             }else {
@@ -178,17 +190,70 @@ public class JobDetailsAcitiviy extends ListActivity {
             holder.title.setText((String)mData.get(position).get("title"));
             holder.edit.setText((String)mData.get(position).get("edit"));
             holder.start.setText((String)mData.get(position).get("start"));
+            holder.delete.setText((String)mData.get(position).get("delete"));
 
-            ItemListener itemListener = new ItemListener(position); //监听器记录了所在行，于是绑定到各个控件后能够返回具体的行，以及触发的控件
+        //    ItemListener itemListener = new ItemListener(position); //监听器记录了所在行，于是绑定到各个控件后能够返回具体的行，以及触发的控件
 
-            holder.edit.setOnClickListener(itemListener);
-            holder.start.setOnClickListener(itemListener);
+        //    holder.edit.setOnClickListener(itemListener);
+         //   holder.start.setOnClickListener(itemListener);
+         //   holder.delete.setOnClickListener(itemListener);
+
+            holder.delete.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    dbMethod.delete_job(mData.get(position).get("timeStamp").toString());
+                    mData.remove(position);
+                    adapter.notifyDataSetChanged();
+                }
+            });
+
+            final EditText text = new EditText(JobDetailsAcitiviy.this);
+            holder.start.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                     //text = new EditText(JobDetailsAcitiviy.this);
+                     new AlertDialog.Builder(JobDetailsAcitiviy.this).setTitle("请输入任务时长：")
+                            .setView(text)
+                            .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    Intent startJob = new Intent(JobDetailsAcitiviy.this,ExecutionActivity.class);
+                                    long lastTime = Long.valueOf(text.getText().toString()).longValue();
+                                    startJob.putExtra("title",mData.get(position).get("title").toString());
+                                    startJob.putExtra("timeStamp",mData.get(position).get("timeStamp").toString());
+                                    startJob.putExtra("lastTime",lastTime);
+                                    startActivity(startJob);
+                                   // Log.e("last Time is " , "" + lastTime);
+                                }
+                            })
+                            .setNegativeButton("取消",null)
+                            .show();
+
+
+
+
+
+                }
+            });
+
+            holder.edit.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    Intent editIntent = new Intent(JobDetailsAcitiviy.this,AddJobActivity.class);
+                    editIntent.putExtra("timeStamp",mData.get(position).get("timeStamp").toString());
+                    startActivity(editIntent);
+
+                }
+            });
 
             return convertView;
         }
     }
 
-    class ItemListener implements View.OnClickListener {
+
+/*    class ItemListener implements View.OnClickListener {
         private int m_position;
 
         ItemListener(int pos) {
@@ -197,10 +262,28 @@ public class JobDetailsAcitiviy extends ListActivity {
 
         @Override
         public void onClick(View v) {
-          //  if(v.getId() == R.id.activity_job_details_edit)
-            Log.v("MyListView-click", "line:" + m_position + ":"+ v.getTag());
+
+
+            mData.get(m_position);
+
+           switch(v.getId()){
+
+               case R.id.activity_job_details_edit:
+
+                   break;
+
+               case R.id.activity_job_details_start:
+
+                   break;
+
+               case R.id.activity_job_details_delete:
+                   Toast.makeText(JobDetailsAcitiviy.this,"current position is " + m_position,Toast.LENGTH_LONG);
+                   break;
+
+           }
         }
     }
+    */
 }
 
 

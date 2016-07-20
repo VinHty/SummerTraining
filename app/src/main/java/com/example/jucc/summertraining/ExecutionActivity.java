@@ -20,6 +20,7 @@ import com.example.jucc.summertraining.RelatedToDataBase.MyDatabaseHelper;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import static com.example.jucc.summertraining.RelatedToDataBase.DatabaseMethod.getInstance;
 import static com.example.jucc.summertraining.RelatedToDataBase.DatabaseMethod.getStringTime;
 
 public class ExecutionActivity extends Activity {
@@ -83,13 +84,25 @@ public class ExecutionActivity extends Activity {
 
     }
     private void initJob(){
-        Bundle bundle = this.getIntent().getExtras();
-        lastTime = bundle.getInt("lastTime")*60000;
+        Intent intent=this.getIntent();
+        Bundle bundle=intent.getExtras();
+        String timeStamp=bundle.getString("timeStamp");
+        long lastTime2=bundle.getLong("lastTime")*60000;
+        String title=bundle.getString("title");
+        int lastTime1 = bundle.getInt("lastTime")*60000;
         mContext=getBaseContext();
-        DatabaseMethod quickJob=DatabaseMethod.getInstance(mContext);
+        if(timeStamp==null){
+        DatabaseMethod quickJob=getInstance(mContext);
         timeStamp=getStringTime();
-        int i=new Float(lastTime/60000).intValue();
+        int i=new Float(lastTime1/60000).intValue();
         quickJob.insert_quickjob(timeStamp,"自定义任务",i,timeStamp);
+        lastTime=lastTime1;}
+        else{
+            DatabaseMethod doJob=getInstance(mContext);
+            int i=new Long(lastTime2/60000).intValue();
+            doJob.update_jobWhenStart(title,i,getStringTime(),timeStamp);
+            lastTime=lastTime2;
+        }
     }
     private void startCounting(){
         int i=new Float(lastTime).intValue();
