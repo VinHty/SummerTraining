@@ -6,19 +6,13 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.CountDownTimer;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
-import android.view.ViewDebug;
-import android.view.Window;
 import android.widget.Button;
 
-import com.example.jucc.summertraining.RelatedToDataBase.DatabaseMethod;
-import com.example.jucc.summertraining.RelatedToDataBase.MyDatabaseHelper;
 
-import java.util.Timer;
-import java.util.TimerTask;
+import com.example.jucc.summertraining.RelatedToDataBase.DatabaseMethod;
+
 
 import static com.example.jucc.summertraining.RelatedToDataBase.DatabaseMethod.getStringTime;
 
@@ -83,6 +77,7 @@ public class ExecutionActivity extends Activity {
 
     }
     private void initJob(){
+
         Bundle bundle = this.getIntent().getExtras();
         lastTime = bundle.getInt("lastTime")*60000;
         mContext=getBaseContext();
