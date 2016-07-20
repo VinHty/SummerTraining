@@ -83,7 +83,7 @@ public class DatabaseMethod {
     */
     public void insert_quickjob(String timeStamp,String jobName,int lastTime,String startTime){
         String sqlinsert;
-        sqlinsert="insert into job( set_time,job_name,last_time,start_time,is_suc,alert_time,is_alert) values('"+timeStamp+"','"+jobName+"','"+lastTime+"','"+startTime+"','NULL','NULL','NULL')";
+        sqlinsert="insert into job( set_time,job_name,last_time,start_time,is_suc,alert_time,is_alert) values('"+timeStamp+"','"+jobName+"','"+lastTime+"','"+startTime+"','NULL','NULL','0')";
         db.execSQL(sqlinsert);
     }
     /*
@@ -117,9 +117,9 @@ public class DatabaseMethod {
     /*
     **开始任务时更新
     */
-    public void update_jobWhenStart(String jobName,int lastTime,String startTime){
+    public void update_jobWhenStart(String jobName,int lastTime,String startTime,String timeStamp){
         String sqlupdate;
-        sqlupdate="update job set last_time='"+lastTime+"',start_time='"+startTime+"' where job_name='"+jobName+"'";
+        sqlupdate="update job set job_name='"+jobName+"', last_time='"+lastTime+"',start_time='"+startTime+"' where set_time='"+timeStamp+"'";
         db.execSQL(sqlupdate);
     }
     /*
@@ -166,8 +166,8 @@ public class DatabaseMethod {
     **获取上周
     */
 
-    public List<UseTime> getLastWeek(){
-
+    public UseTimeList getLastWeek(){
+        int i=0;
         List<UseTime> lastWeekList=new ArrayList<UseTime>();
         Date currentTime = new Date(System.currentTimeMillis()-24*60*60*1000);
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
@@ -175,12 +175,15 @@ public class DatabaseMethod {
         Date beforeTime = new Date(System.currentTimeMillis()-7*24*60*60*1000);
         SimpleDateFormat formatter2 = new SimpleDateFormat("yyyy-MM-dd");
         String dateString2 = formatter2.format(beforeTime);
-        Cursor cu=db.rawQuery("select app_name,use_time,SUM(use_time) as  from usetime where use_date<='"+dateString+"'and use_time>='"+dateString2+"' group by app_name",null);
+        Cursor cu=db.rawQuery("select app_name,use_time from usetime where use_date<='"+dateString+"'and use_time>='"+dateString2+"' group by app_name",null);
         while (cu.moveToNext()){
             lastWeekList.add(new UseTime(cu.getString(cu.getColumnIndex("app_name")),cu.getInt(cu.getColumnIndex("use_time"))));
+            i+=cu.getInt(cu.getColumnIndex("use_time"));
         }
         cu.close();
-        return lastWeekList;
+        UseTimeList timeList = new UseTimeList(lastWeekList);
+        timeList.setCount(i);
+        return timeList;
     }
 
     /*

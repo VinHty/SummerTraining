@@ -91,7 +91,6 @@ public class ExecutionActivity extends Activity {
         String title=bundle.getString("title");
         int lastTime1 = bundle.getInt("lastTime")*60000;
         mContext=getBaseContext();
-        DatabaseMethod quickJob=DatabaseMethod.getInstance(mContext);
         if(timeStamp==null){
          quickJob=getInstance(mContext);
         timeStamp=getStringTime();
@@ -101,7 +100,7 @@ public class ExecutionActivity extends Activity {
         else{
             DatabaseMethod doJob=getInstance(mContext);
             int i=new Long(lastTime2/60000).intValue();
-            doJob.update_jobWhenStart(timeStamp,i,getStringTime());
+            doJob.update_jobWhenStart(title,i,getStringTime(),timeStamp);
             lastTime=lastTime2;
         }
     }
