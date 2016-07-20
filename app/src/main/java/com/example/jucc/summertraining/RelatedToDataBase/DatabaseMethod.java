@@ -76,7 +76,7 @@ public class DatabaseMethod {
     */
     public void insert_quickjob(String timeStamp,String jobName,int lastTime,String startTime){
         String sqlinsert;
-        sqlinsert="insert into job( set_time,job_name,last_time,start_time,is_suc,alert_time，is_alert) values('"+timeStamp+"','"+jobName+"','"+lastTime+"','"+startTime+"','NULL','NULL','NULL')";
+        sqlinsert="insert into job( set_time,job_name,last_time,start_time,is_suc,alert_time,is_alert) values('"+timeStamp+"','"+jobName+"','"+lastTime+"','"+startTime+"','NULL','NULL','NULL')";
         db.execSQL(sqlinsert);
     }
     /*

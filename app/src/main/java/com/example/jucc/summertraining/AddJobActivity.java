@@ -3,6 +3,7 @@ package com.example.jucc.summertraining;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -11,10 +12,14 @@ import android.widget.RadioButton;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.example.jucc.summertraining.Entity.Job;
 import com.example.jucc.summertraining.RelatedToDataBase.DatabaseMethod;
 
 import java.sql.Time;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
 
 public class AddJobActivity extends AppCompatActivity {
 
@@ -48,8 +53,45 @@ public class AddJobActivity extends AppCompatActivity {
 
         //若用户点击修改按钮，则有一个intent传来
         //然后所有数据都要初始化，从数据库里读取
-        //
-        //
+        Intent intent = getIntent();
+        final String timeStamp = intent.getStringExtra("timeStamp");
+        if(timeStamp != null){
+            List<Job> myJobs = dbMethod.getJobWhenEdit(timeStamp);
+            String title = myJobs.get(0).getTitle();
+            int needNotificationOrNot = myJobs.get(0).getisRemind();
+            String alertTime = myJobs.get(0).getRemindTime();
+
+            Log.e("remingtime is " , alertTime);
+
+            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+
+            editText.setText(title);
+            if(needNotificationOrNot == 1){
+                needNotification.setChecked(true);
+            }else{
+                noNeedNotification.setChecked(false);
+            }
+
+            try {
+                Date date = formatter.parse(alertTime);
+                Calendar cld = Calendar.getInstance();
+                cld.setTime(date);
+                datePicker.updateDate(cld.get(Calendar.YEAR),cld.get(Calendar.MONTH),cld.get((Calendar.DAY_OF_MONTH)));
+                //Log.e("time" , "" + date.getYear() + ":" + date.getMonth() + ":" + date.getDay());
+                timePicker.setCurrentHour(cld.get(Calendar.HOUR_OF_DAY));
+                timePicker.setCurrentMinute(cld.get(Calendar.MINUTE));
+            }
+            catch(Exception e){
+
+            }
+            //int year = Integer.valueOf("" + alertTime.charAt(0) + alertTime.charAt(1) + alertTime.charAt(2) + alertTime.charAt(3));
+            //Log.e("title is ",year);
+            //Toast.makeText(AddJobActivity.this,myJobs.get(0).getTitle(),Toast.LENGTH_LONG);
+
+
+
+        }
+
 
 
 
@@ -68,21 +110,18 @@ public class AddJobActivity extends AppCompatActivity {
                 String alertTime = "" + year + "-" + month + "-" + date + " " + hour + ":" + minute;
 
                 //获取当前时间
-                Calendar c = Calendar.getInstance();
-                int currentYear = c.get(Calendar.YEAR);
-                int currentMonth = c.get(Calendar.MONTH);
-                int currentDay = c.get(Calendar.DATE);
-                int currentHour = c.get(Calendar.HOUR);
-                int currentMinute = c.get(Calendar.MINUTE);
-                String currentTime = "" + currentYear + "-" + currentMonth + "-" + currentDay + " " + currentHour + ":" + currentMinute;
-                //调用数据库插入或更新函数，向里面插入或者更新任务的信息
-                if(needNotificationOrNot == true) {
-                    dbMethod.insert_jobWithAlert(currentTime, jobTitle,alertTime );
-                }else{
-                    dbMethod.insert_jobWithoutAlert(currentTime,jobTitle,alertTime);
+
+                if(needNotificationOrNot == true &&timeStamp ==null) {
+                    dbMethod.insert_jobWithAlert(dbMethod.getStringSecond(),jobTitle,alertTime );
+                }else if(needNotificationOrNot == false &&timeStamp ==null){
+                    dbMethod.insert_jobWithoutAlert(dbMethod.getStringSecond(),jobTitle,alertTime);
+                }else if(timeStamp != null){
+                    dbMethod.update_jobWhenEdit(timeStamp,jobTitle,alertTime,needNotificationOrNot);
                 }
 
                 //然后返回查看任务界面，同时任务界面需要更新UI，读取新的任务
+                Intent returnJobDetailsActivity = new Intent(AddJobActivity.this,JobDetailsAcitiviy.class);
+                startActivity(returnJobDetailsActivity);
             }
         });
 
