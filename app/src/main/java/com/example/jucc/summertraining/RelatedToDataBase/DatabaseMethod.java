@@ -117,9 +117,9 @@ public class DatabaseMethod {
     /*
     **开始任务时更新
     */
-    public void update_jobWhenStart(String timeStamp,int lastTime,String startTime){
+    public void update_jobWhenStart(String jobName,int lastTime,String startTime,String timeStamp){
         String sqlupdate;
-        sqlupdate="update job set last_time='"+lastTime+"',start_time='"+startTime+"' where set_time='"+timeStamp+"'";
+        sqlupdate="update job set job_name='"+jobName+"', last_time='"+lastTime+"',start_time='"+startTime+"' where set_time='"+timeStamp+"'";
         db.execSQL(sqlupdate);
     }
     /*

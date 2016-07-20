@@ -51,7 +51,7 @@ public class JobDetailsAcitiviy extends ListActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_job_details_acitiviy);
 
-        dbMethod = new DatabaseMethod(this);
+        dbMethod = DatabaseMethod.getInstance(this);
         button_return = (Button)findViewById(R.id.activity_job_details_return);
         button_add = (Button) findViewById(R.id.activity_job_details_add);
 
@@ -128,7 +128,7 @@ public class JobDetailsAcitiviy extends ListActivity {
         int second = c.get(Calendar.SECOND);
         String currentTime = "" + year + "-" + month + "-" + date + " " + hour + ":" + minute + ":" + second;
         */
-        DatabaseMethod db = new DatabaseMethod(this);
+        DatabaseMethod db =DatabaseMethod.getInstance(this);
         return db.getStringSecond();
      }
 
