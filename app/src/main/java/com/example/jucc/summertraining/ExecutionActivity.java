@@ -86,7 +86,7 @@ public class ExecutionActivity extends Activity {
         Bundle bundle = this.getIntent().getExtras();
         lastTime = bundle.getInt("lastTime")*60000;
         mContext=getBaseContext();
-        DatabaseMethod quickJob=new DatabaseMethod(mContext);
+        DatabaseMethod quickJob=DatabaseMethod.getInstance(mContext);
         timeStamp=getStringTime();
         int i=new Float(lastTime/60000).intValue();
         quickJob.insert_quickjob(timeStamp,"自定义任务",i,timeStamp);
@@ -104,7 +104,7 @@ public class ExecutionActivity extends Activity {
             @Override
             public void onFinish() {
                 mContext=getBaseContext();
-                DatabaseMethod quickJobFinish=new DatabaseMethod(mContext);
+                DatabaseMethod quickJobFinish= DatabaseMethod.getInstance(mContext);
                quickJobFinish.update_jobWhenFinish(timeStamp,true);
                 new AlertDialog.Builder(ExecutionActivity.this).setTitle("成功")//设置对话框标题
                         .setMessage("任务成功")//设置显示的内容
@@ -138,7 +138,7 @@ public class ExecutionActivity extends Activity {
     private void giveUpJob(){
         timer.cancel();
         mContext=getBaseContext();
-        DatabaseMethod quickJobGiveUp=new DatabaseMethod(mContext);
+        DatabaseMethod quickJobGiveUp=DatabaseMethod.getInstance(mContext);
         quickJobGiveUp.update_jobWhenFinish(timeStamp,false);
         Intent intent = new Intent();
         intent.setClass(ExecutionActivity.this,MainActivity.class);

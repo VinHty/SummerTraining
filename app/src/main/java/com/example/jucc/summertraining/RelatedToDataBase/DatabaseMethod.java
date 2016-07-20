@@ -24,17 +24,23 @@ import java.util.Objects;
 
 public class DatabaseMethod {
 
-
+    private static DatabaseMethod databaseMethod;
     private Context mContext;
     private MyDatabaseHelper helper ;
     private SQLiteDatabase db;
 
-    public DatabaseMethod(Context mContext){
+    private DatabaseMethod(Context mContext){
         this.mContext=mContext;
         MyDatabaseHelper helper=new MyDatabaseHelper(mContext);
         SQLiteDatabase db = helper.getWritableDatabase();
         this.db= db;
     }
+    public static DatabaseMethod getInstance(Context mContext){
+        if(databaseMethod==null) {
+            databaseMethod = new DatabaseMethod(mContext);
+        }
+            return databaseMethod;
+        }
 
 
 

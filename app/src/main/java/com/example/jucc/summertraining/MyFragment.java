@@ -3,6 +3,7 @@ package com.example.jucc.summertraining;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,7 +22,7 @@ import java.util.HashMap;
 
 public class MyFragment extends Fragment {
     protected DatabaseMethod method;
-    ArrayList<HashMap<String, Object>> list = new ArrayList<>();
+    ArrayList<HashMap<String, Object>> list;
     protected ListView listView;
     protected SimpleAdapter adapter;
     protected static String[] itemName = {"title","time","percent"};
@@ -31,8 +32,10 @@ public class MyFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
         View view = inflater.inflate(R.layout.fragment_app_usage_amount,container,false);
+        list= new ArrayList<>();
         listView = (ListView) view.findViewById(R.id.listView);
-        method=new DatabaseMethod(getContext());
+        Log.e(getClass().getSimpleName(), "onCreateView");
+        method=DatabaseMethod.getInstance(getContext());
         return view;
     }
     public void getUsageAmountFromDatabase(){};

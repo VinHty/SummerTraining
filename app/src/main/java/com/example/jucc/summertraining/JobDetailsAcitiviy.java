@@ -78,7 +78,7 @@ public class JobDetailsAcitiviy extends ListActivity {
     private List<Map<String, Object>> getData() {
         List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
 
-        DatabaseMethod dbMethod = new DatabaseMethod(this);
+        DatabaseMethod dbMethod = DatabaseMethod.getInstance(this);
         List<Job> myJobs = dbMethod.getUnfinishJob();  //从数据库读取未完成的任务,以list的形式
         for(int i = 0; i < myJobs.size(); i++){
             Map<String,Object> map = new HashMap<String,Object>();
