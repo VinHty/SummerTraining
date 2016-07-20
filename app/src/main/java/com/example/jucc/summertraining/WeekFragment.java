@@ -17,19 +17,19 @@ import java.util.List;
  */
 
 public class WeekFragment extends MyFragment {
- //   @Override
-//    public void getUsageAmountFromDatabase() {
-//        List<UseTime> list = method.getLastWeek();
-//        for(int a=0;a<list.size();a++){
-//            UseTime useTime= list.get(a);
-//            HashMap<String,Object> map = new HashMap<>();
-//            String name =useTime.getAppName();
-//            int time = useTime.getUseTime();
-//            map.put("title",name);
-//            map.put("time",time);
-//            this.list.add(map);
-//    }
-
+    @Override
+    public void getUsageAmountFromDatabase() {
+        List<UseTime> list = method.getLastWeek();
+        for (int a = 0; a < list.size(); a++) {
+            UseTime useTime = list.get(a);
+            HashMap<String, Object> map = new HashMap<>();
+            String name = useTime.getAppName();
+            int time = useTime.getUseTime();
+            map.put("title", name);
+            map.put("time", time);
+            this.list.add(map);
+        }
+    }
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
