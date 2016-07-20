@@ -10,7 +10,7 @@
         android:orientation="vertical"
         android:fitsSystemWindows="true"
         tools:context="com.example.jucc.summertraining.MainActivity"
-        android:background="@drawable/main_background">
+        >
 
 
 

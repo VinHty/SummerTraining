@@ -39,7 +39,7 @@ public class AddJobActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_job);
 
-        dbMethod = new DatabaseMethod(this);
+        dbMethod = DatabaseMethod.getInstance(this);
         yesSetJob = (Button)findViewById(R.id.activity_activity_add_job_yes);
         noSetJob = (Button)findViewById(R.id.activity_activity_add_job_no);
         editText = (EditText)findViewById(R.id.activity_activity_add_job_edittext);

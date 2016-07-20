@@ -7,6 +7,7 @@ import android.widget.SimpleCursorAdapter;
 
 import com.example.jucc.summertraining.Entity.Job;
 import com.example.jucc.summertraining.Entity.UseTime;
+import com.example.jucc.summertraining.Entity.UseTimeList;
 import com.example.jucc.summertraining.R;
 
 import java.text.SimpleDateFormat;
@@ -23,17 +24,23 @@ import java.util.Objects;
 
 public class DatabaseMethod {
 
-
+    private static DatabaseMethod databaseMethod;
     private Context mContext;
     private MyDatabaseHelper helper ;
     private SQLiteDatabase db;
 
-    public DatabaseMethod(Context mContext){
+    private DatabaseMethod(Context mContext){
         this.mContext=mContext;
         MyDatabaseHelper helper=new MyDatabaseHelper(mContext);
         SQLiteDatabase db = helper.getWritableDatabase();
         this.db= db;
     }
+    public static DatabaseMethod getInstance(Context mContext){
+        if(databaseMethod==null) {
+            databaseMethod = new DatabaseMethod(mContext);
+        }
+            return databaseMethod;
+        }
 
 
 
@@ -138,18 +145,21 @@ public class DatabaseMethod {
     **获取昨天用量
     */
 
-    public List<UseTime> getYesterdayList(){
-
+    public UseTimeList getYesterdayList(){
+        int i=0;
         List<UseTime> yesterdayList=new ArrayList<UseTime>();
         Date currentTime = new Date(System.currentTimeMillis()-24*60*60*1000);
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
         String dateString = formatter.format(currentTime);
-        Cursor cu=db.rawQuery("select app_name,use_time,use_date,SUM(use_time) as total from usetime where use_date='"+dateString+"' group by app_name,use_date",null);
+        Cursor cu=db.rawQuery("select app_name,use_time,use_date from usetime where use_date='"+dateString+"'",null);
         while (cu.moveToNext()){
-            yesterdayList.add(new UseTime(cu.getString(cu.getColumnIndex("app_name")),cu.getInt(cu.getColumnIndex("use_time")),cu.getInt(cu.getColumnIndex("total"))));
+            yesterdayList.add(new UseTime(cu.getString(cu.getColumnIndex("app_name")),cu.getInt(cu.getColumnIndex("use_time"))));
+            i+=cu.getInt(cu.getColumnIndex("use_time"));
         }
         cu.close();
-        return yesterdayList;
+        UseTimeList timeList = new UseTimeList(yesterdayList);
+        timeList.setCount(i);
+        return timeList;
     }
 
     /*
@@ -165,9 +175,9 @@ public class DatabaseMethod {
         Date beforeTime = new Date(System.currentTimeMillis()-7*24*60*60*1000);
         SimpleDateFormat formatter2 = new SimpleDateFormat("yyyy-MM-dd");
         String dateString2 = formatter2.format(beforeTime);
-        Cursor cu=db.rawQuery("select app_name,use_time,SUM(use_time) as total from usetime where use_date<='"+dateString+"'and use_time>='"+dateString2+"' group by app_name",null);
+        Cursor cu=db.rawQuery("select app_name,use_time,SUM(use_time) as  from usetime where use_date<='"+dateString+"'and use_time>='"+dateString2+"' group by app_name",null);
         while (cu.moveToNext()){
-            lastWeekList.add(new UseTime(cu.getString(cu.getColumnIndex("app_name")),cu.getInt(cu.getColumnIndex("use_time")),cu.getInt(cu.getColumnIndex("total"))));
+            lastWeekList.add(new UseTime(cu.getString(cu.getColumnIndex("app_name")),cu.getInt(cu.getColumnIndex("use_time"))));
         }
         cu.close();
         return lastWeekList;

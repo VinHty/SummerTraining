@@ -3,10 +3,18 @@ package com.example.jucc.summertraining;
 /author  VinHty on 16-7-16
  */
 
+import android.app.Activity;
+import android.app.usage.UsageStats;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.RemoteException;
+import android.provider.Settings;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
@@ -27,13 +35,13 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+
 public class AppUsageAmountActivity extends FragmentActivity {
 
     private Map<String,Integer> map = new HashMap<>();
     private List<Fragment> mFragmentList = new ArrayList<Fragment>();
     private FragmentAdapter mFragmentAdapter;
     private MyOnClickListener onClickListener;
-    private DatabaseMethod method;
 
     private ViewPager mPageVp;
     /**
@@ -62,51 +70,70 @@ public class AppUsageAmountActivity extends FragmentActivity {
     private ViewPager.OnPageChangeListener listener;
     private DatabaseMethod databaseMethod;
 
+    public class MyReceiver extends BroadcastReceiver {
+        private final String actionName = "android.intent.action.DATE_CHANGED";
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String action = intent.getAction();
+            if (action == actionName) {
+                insertIntoDB(mTodayFg);
+            }
+        }
+
+        public void insertIntoDB(MyFragment f) {
+            for (int a = 0; a < f.list.size(); a++) {
+                String date = DatabaseMethod.getStringYesterday();
+                HashMap map = f.list.get(a);
+                String appName = (String) map.get("title");
+                int useTime = (int) map.get("time");
+                f.method.insert_usetime(appName, useTime, date);
+            }
+
+        }
+    }
+
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_app_usage_amount);
-        databaseMethod= new DatabaseMethod(this);
+        databaseMethod= DatabaseMethod.getInstance(this);
         findById();
         init();
         initTabLineWidth();
-        try {
-            getInfo();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        } catch (NoSuchMethodException e) {
-            e.printStackTrace();
-        } catch (InvocationTargetException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        } catch (NoSuchFieldException e) {
-            e.printStackTrace();
-        }
         if(checkFirstLanuch()){
             //第一次启动
-            Iterator it = map.keySet().iterator();
-            while (it.hasNext())
+            for(int a=0;a<mTodayFg.list.size();a++)
             {
-                String appName = (String) it.next();
-                databaseMethod.insert_nowusetime(appName,0,map.get(appName));
+                HashMap map = mTodayFg.list.get(a);
+                String appName= (String) map.get("title");
+                int useTime= (int) map.get("time");
+                databaseMethod.insert_nowusetime(appName,0,useTime);
+
             }
+
+            databaseMethod.insert_usetime("leizhen",200,"2016-07-19");
+            databaseMethod.insert_usetime("mdzz",100,"2016-07-19");
+            databaseMethod.insert_usetime("sdf",499,"2016-07-19");
         }
-        MyListener listener=new MyListener(this);
-        listener.begin(new MyListener.afterReceive() {
-            @Override
-            public void insertIntoDB() {
-                for (int a = 0; a < mTodayFg.list.size(); a++) {
-                    String date = DatabaseMethod.getStringYesterday();
-                    HashMap map = mTodayFg.list.get(a);
-                    String appName = (String) map.get("title");
-                    int useTime = (int) map.get("time");
-                    method.insert_usetime(appName, useTime, date);
-                }
-            }
-        });
+        if(!hasModule(this)) {
+            Intent intent = new Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS);
+            startActivity(intent);
 
 
+        }
+    }
+
+
+    public static boolean hasModule(Activity act) {
+        PackageManager packageManager = act.getApplicationContext().getPackageManager();
+        Intent intent = new Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS);
+        List<ResolveInfo> list = packageManager.queryIntentActivities(intent,
+                PackageManager.MATCH_DEFAULT_ONLY);
+        return list.size() > 0;
     }
 
     private void findById() {
@@ -126,8 +153,6 @@ public class AppUsageAmountActivity extends FragmentActivity {
         mFragmentList.add(mTodayFg);
         mFragmentList.add(mYesterdayFg);
         mFragmentList.add(mWeekFg);
-
-        method=new DatabaseMethod(this);
 
         mTabLineIv.setImageResource(R.drawable.line);
         //使得textview也可以更改当前显示的页面
@@ -256,46 +281,7 @@ public class AppUsageAmountActivity extends FragmentActivity {
             }
         }
     }
-        //网上的关于获取应用程序使用情况的代码 需要研究一下
-    private void getInfo() throws ClassNotFoundException, NoSuchMethodException, InvocationTargetException, IllegalAccessException, NoSuchFieldException {
-        //相当于：IBinder oRemoteService = ServiceManager.getService("usagestats");
-        Class<?> cServiceManager = Class.forName("android.os.ServiceManager");
-        Method mGetService = cServiceManager.getMethod("getService", java.lang.String.class);
-        Object oRemoteService = mGetService.invoke(null, "usagestats");
 
-        // 相当于:IUsageStats mUsageStatsService = IUsageStats.Stub.asInterface(oRemoteService)
-        Class<?> cStub = Class.forName("com.android.internal.app.IUsageStats$Stub");
-        Method mUsageStatsService = cStub.getMethod("asInterface", android.os.IBinder.class);
-        Object oIUsageStats = mUsageStatsService.invoke(null, oRemoteService);
-
-        // 相当于:PkgUsageStats[] oPkgUsageStatsArray =mUsageStatsService.getAllPkgUsageStats();
-        Class<?> cIUsageStatus = Class.forName("com.android.internal.app.IUsageStats");
-        Method mGetAllPkgUsageStats = cIUsageStatus.getMethod("getAllPkgUsageStats", (Class[]) null);
-        Object[] oPkgUsageStatsArray = (Object[]) mGetAllPkgUsageStats.invoke(oIUsageStats, (Object[]) null);
-
-        //相当于
-        //for (PkgUsageStats pkgUsageStats: oPkgUsageStatsArray)
-        //{
-        //  当前APP的包名：
-        //  packageName = pkgUsageStats.packageName
-        //  当前APP的启动次数
-        //  launchCount = pkgUsageStats.launchCount
-        //  当前APP的累计使用时间：
-        //  usageTime = pkgUsageStats.usageTime
-        //  当前APP的每个Activity的最后启动时间
-        //  componentResumeTimes = pkgUsageStats.componentResumeTimes
-        //}
-        Class<?> cPkgUsageStats = Class.forName("com.android.internal.os.PkgUsageStats");
-        for (Object pkgUsageStats : oPkgUsageStatsArray) {
-            String packageName = (String) cPkgUsageStats.getDeclaredField("packageName").get(pkgUsageStats);
-            int launchCount = cPkgUsageStats.getDeclaredField("launchCount").getInt(pkgUsageStats);
-            long usageTime = cPkgUsageStats.getDeclaredField("usageTime").getLong(pkgUsageStats);
-            Map<String, Long> componentResumeMap = (Map<String, Long>) cPkgUsageStats.getDeclaredField("componentResumeTimes").get(pkgUsageStats);
-            map.put(packageName,Integer.parseInt(Long.toString(usageTime)));
-        }
-
-
-    }
     private boolean checkFirstLanuch(){
         SharedPreferences setting = getSharedPreferences("versionFile", 0);
         Boolean user_first = setting.getBoolean("FIRST",true);
