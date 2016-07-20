@@ -7,8 +7,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.SimpleAdapter;
+import android.widget.Toast;
 
 import com.example.jucc.summertraining.Entity.UseTime;
+import com.example.jucc.summertraining.Entity.UseTimeList;
 
 import java.util.HashMap;
 import java.util.List;
@@ -30,14 +32,19 @@ public class YesterdayFragment extends MyFragment {
 
     @Override
     public void getUsageAmountFromDatabase() {
-        List<UseTime> list = method.getYesterdayList();
+
+        UseTimeList useList = method.getYesterdayList();
+        List list = useList.getList();
+        long totalTime=useList.getCount();
+        Toast.makeText(getContext(),"total time is "+totalTime,Toast.LENGTH_SHORT).show();
         for(int a=0;a<list.size();a++){
-            UseTime useTime= list.get(a);
+            UseTime useTime= (UseTime) list.get(a);
             HashMap<String,Object> map = new HashMap<>();
             String name =useTime.getAppName();
-            int time = useTime.getUseTime();
-            long totalTime=useTime.getTotal();
-            long percent = time/totalTime;
+            long time = useTime.getUseTime();
+            Toast.makeText(getContext(),"each app time is "+time,Toast.LENGTH_SHORT).show();
+            long percent = time*100/totalTime;
+            Toast.makeText(getContext(),"each app percent is "+percent,Toast.LENGTH_SHORT).show();
             map.put("title",name);
             map.put("time",time);
             map.put("percent",percent);

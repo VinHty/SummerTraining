@@ -31,7 +31,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import static com.example.jucc.summertraining.TodayFragment.getUsageStats;
 
 public class AppUsageAmountActivity extends FragmentActivity {
 
@@ -114,9 +113,9 @@ public class AppUsageAmountActivity extends FragmentActivity {
 
 
         }
-        databaseMethod.insert_usetime("leizhen",200,"2016-07-18");
-        databaseMethod.insert_usetime("mdzz",100,"2016-07-18");
-        databaseMethod.insert_usetime("sdf",499,"2016-07-18");
+//        databaseMethod.insert_usetime("leizhen",200,"2016-07-18");
+//        databaseMethod.insert_usetime("mdzz",100,"2016-07-18");
+//        databaseMethod.insert_usetime("sdf",499,"2016-07-18");
 
 
 
