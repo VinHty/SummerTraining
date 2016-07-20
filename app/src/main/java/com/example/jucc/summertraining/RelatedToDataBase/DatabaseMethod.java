@@ -175,10 +175,10 @@ public class DatabaseMethod {
         Date beforeTime = new Date(System.currentTimeMillis()-7*24*60*60*1000);
         SimpleDateFormat formatter2 = new SimpleDateFormat("yyyy-MM-dd");
         String dateString2 = formatter2.format(beforeTime);
-        Cursor cu=db.rawQuery("select app_name,use_time from usetime where use_date<='"+dateString+"'and use_time>='"+dateString2+"' group by app_name",null);
+        Cursor cu=db.rawQuery("select app_name,SUM(use_time)  from usetime where use_date<='"+dateString+"'and use_date>='"+dateString2+"' group by app_name",null);
         while (cu.moveToNext()){
-            lastWeekList.add(new UseTime(cu.getString(cu.getColumnIndex("app_name")),cu.getInt(cu.getColumnIndex("use_time"))));
-            i+=cu.getInt(cu.getColumnIndex("use_time"));
+            lastWeekList.add(new UseTime(cu.getString(cu.getColumnIndex("app_name")),cu.getInt(cu.getColumnIndex("SUM(use_time)"))));
+            i+=cu.getInt(cu.getColumnIndex("SUM(use_time)"));
         }
         cu.close();
         UseTimeList timeList = new UseTimeList(lastWeekList);
