@@ -114,17 +114,22 @@ public class AppUsageAmountActivity extends FragmentActivity {
                 databaseMethod.insert_nowusetime(appName,0,useTime);
 
             }
-
             databaseMethod.insert_usetime("leizhen",200,"2016-07-19");
             databaseMethod.insert_usetime("mdzz",100,"2016-07-19");
             databaseMethod.insert_usetime("sdf",499,"2016-07-19");
-        }
-        if(!hasModule(this)) {
+            databaseMethod.insert_usetime("leizhen",200,"2016-07-18");
+            databaseMethod.insert_usetime("mdzz",100,"2016-07-18");
+            databaseMethod.insert_usetime("sdf",499,"2016-07-18");
             Intent intent = new Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS);
             startActivity(intent);
 
 
+
         }
+
+
+
+
     }
 
 
