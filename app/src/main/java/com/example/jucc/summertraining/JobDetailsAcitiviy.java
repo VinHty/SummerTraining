@@ -37,6 +37,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+//当用户在主界面点击任务按钮的时候，跳转至该界面，即任务界面
 public class JobDetailsAcitiviy extends ListActivity {
 
     private List<Map<String, Object>> mData;
@@ -57,6 +58,7 @@ public class JobDetailsAcitiviy extends ListActivity {
         button_add = (Button) findViewById(R.id.activity_job_details_add);
         button_listFinishedJob = (Button)findViewById(R.id.activity_job_details_listFinishedJob);
 
+        //返回按钮的监听事件
         button_return.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -65,15 +67,16 @@ public class JobDetailsAcitiviy extends ListActivity {
             }
         });
 
+        //添加按钮的监听事件
         button_add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent addJobActivity = new Intent(JobDetailsAcitiviy.this,AddJobActivity.class);
                 startActivity(addJobActivity);
-
             }
         });
 
+        //列出所有已完成任务的按钮的监听事件
         button_listFinishedJob.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -83,17 +86,16 @@ public class JobDetailsAcitiviy extends ListActivity {
             }
         });
 
-
+        //构建listView
         mData = getData();
         adapter = new MyAdapter(this);
-
         setListAdapter(adapter);
 
     }
 
+    //从数据库获得对应数据
     private List<Map<String, Object>> getData() {
         List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
-
         DatabaseMethod dbMethod = DatabaseMethod.getInstance(this);
         List<Job> myJobs = dbMethod.getUnfinishJob();  //从数据库读取未完成的任务,以list的形式
         for(int i = 0; i < myJobs.size(); i++){
@@ -106,32 +108,33 @@ public class JobDetailsAcitiviy extends ListActivity {
             map.put("delete","delete" + i);
             list.add(map);
         }
-
-
         return list;
     }
 
+    //获取当前日期和时间
     public String getCurrentTime(){
         DatabaseMethod db =DatabaseMethod.getInstance(this);
         return db.getStringSecond();
      }
 
+    //listview中每个item的布局class
     public final class ViewHolder{
         public TextView title;
         public Button edit;
         public Button start;
         public Button delete;
-
     }
 
+    //存取数据的adapter
     public class MyAdapter extends BaseAdapter {
 
         private LayoutInflater mInflater;
 
-
+        //adapter的构造函数
         public MyAdapter(Context context){
             this.mInflater = LayoutInflater.from(context);
         }
+
         @Override
         public int getCount() {
             // TODO Auto-generated method stub
@@ -150,34 +153,31 @@ public class JobDetailsAcitiviy extends ListActivity {
             return 0;
         }
 
+        //listview中每行的view
         @Override
         public View getView(final int position, View convertView, ViewGroup parent) {
 
             ViewHolder holder = null;
             if (convertView == null) {
-
                 holder=new ViewHolder();
-
                 convertView = mInflater.inflate(R.layout.activity_job_details_listview_item, null);
                 holder.title = (TextView)convertView.findViewById(R.id.activity_job_details_textview);
                 holder.edit = (Button)convertView.findViewById(R.id.activity_job_details_edit);
                 holder.start = (Button)convertView.findViewById(R.id.activity_job_details_start);
                 holder.delete = (Button)convertView.findViewById(R.id.activity_job_details_delete);
                 convertView.setTag(holder);
-
             }else {
-
                 holder = (ViewHolder)convertView.getTag();
             }
 
-
+            //设置listview中每行的文本信息
             holder.title.setText((String)mData.get(position).get("title"));
             holder.edit.setText((String)mData.get(position).get("edit"));
             holder.start.setText((String)mData.get(position).get("start"));
             holder.delete.setText((String)mData.get(position).get("delete"));
 
-        //    ItemListener itemListener = new ItemListener(position); //监听器记录了所在行，于是绑定到各个控件后能够返回具体的行，以及触发的控件
-
+            //监听器记录了所在行，于是绑定到各个控件后能够返回具体的行，以及触发的控件
+            //delete按钮的监听事件
             holder.delete.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -187,12 +187,14 @@ public class JobDetailsAcitiviy extends ListActivity {
                 }
             });
 
+
             final EditText text = new EditText(JobDetailsAcitiviy.this);
+            //开始按钮的监听事件
             holder.start.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
 
-                     //text = new EditText(JobDetailsAcitiviy.this);
+                     //弹出窗口获得用户输入的任务时长
                      new AlertDialog.Builder(JobDetailsAcitiviy.this).setTitle("请输入任务时长：")
                             .setView(text)
                             .setPositiveButton("确定", new DialogInterface.OnClickListener() {
@@ -204,34 +206,25 @@ public class JobDetailsAcitiviy extends ListActivity {
                                     startJob.putExtra("timeStamp",mData.get(position).get("timeStamp").toString());
                                     startJob.putExtra("lastTime",lastTime);
                                     startActivity(startJob);
-                                   // Log.e("last Time is " , "" + lastTime);
                                 }
                             })
                             .setNegativeButton("取消",null)
                             .show();
-
-
-
-
-
                 }
             });
 
+            //edit按钮的响应事件
             holder.edit.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
                     Intent editIntent = new Intent(JobDetailsAcitiviy.this,AddJobActivity.class);
                     editIntent.putExtra("timeStamp",mData.get(position).get("timeStamp").toString());
                     startActivity(editIntent);
-
                 }
             });
-
             return convertView;
         }
     }
-
 }
 
 

@@ -21,6 +21,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+//用户在任务界面，点击添加按钮后，跳转到此界面，即添加任务界面
 public class AddJobActivity extends AppCompatActivity {
 
     private Button yesSetJob;
@@ -51,54 +52,42 @@ public class AddJobActivity extends AppCompatActivity {
         timePicker = (TimePicker)findViewById(R.id.activity_activity_add_job_timePicker);
         timePicker.setIs24HourView(true);
 
-        //若用户点击修改按钮，则有一个intent传来
-        //然后所有数据都要初始化，从数据库里读取
+        //若启动该activity的intent中含有非空的时间戳数据，则表示用户点击的是修改按钮，所以下面的代码是用于初始化该界面的所有数据
         Intent intent = getIntent();
         final String timeStamp = intent.getStringExtra("timeStamp");
         if(timeStamp != null){
+
+            //从数据库里获得相应数据
             List<Job> myJobs = dbMethod.getJobWhenEdit(timeStamp);
             String title = myJobs.get(0).getTitle();
             int needNotificationOrNot = myJobs.get(0).getisRemind();
             String alertTime = myJobs.get(0).getRemindTime();
-
-            Log.e("remingtime is " , alertTime);
-
             SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm");
-
             editText.setText(title);
             if(needNotificationOrNot == 1){
                 needNotification.setChecked(true);
             }else{
                 noNeedNotification.setChecked(false);
             }
-
             try {
                 Date date = formatter.parse(alertTime);
                 Calendar cld = Calendar.getInstance();
                 cld.setTime(date);
+
+                //初始化数据
                 datePicker.updateDate(cld.get(Calendar.YEAR),cld.get(Calendar.MONTH),cld.get((Calendar.DAY_OF_MONTH)));
-                //Log.e("time" , "" + date.getYear() + ":" + date.getMonth() + ":" + date.getDay());
                 timePicker.setCurrentHour(cld.get(Calendar.HOUR_OF_DAY));
                 timePicker.setCurrentMinute(cld.get(Calendar.MINUTE));
             }
             catch(Exception e){
-
             }
-            //int year = Integer.valueOf("" + alertTime.charAt(0) + alertTime.charAt(1) + alertTime.charAt(2) + alertTime.charAt(3));
-            //Log.e("title is ",year);
-            //Toast.makeText(AddJobActivity.this,myJobs.get(0).getTitle(),Toast.LENGTH_LONG);
-
-
-
         }
 
-
-
-
-
+        //点击确定按钮后的响应时间
         yesSetJob.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 //获得任务的各个信息
                 String jobTitle =(String) editText.getText().toString();  //任务标题
                 Boolean needNotificationOrNot = needNotification.isChecked();//如果选择了需要提醒，则为true;如果选择了不需要提醒，则为false
@@ -109,8 +98,7 @@ public class AddJobActivity extends AppCompatActivity {
                 int minute = timePicker.getCurrentMinute();
                 String alertTime = "" + year + "-" + month + "-" + date + " " + hour + ":" + minute;
 
-                //获取当前时间
-
+                //根据timeStamp的有无来判断是用户是在建立新任务还是在修改已经存在的任务，进而调用不同的数据库语句
                 if(needNotificationOrNot == true &&timeStamp ==null) {
                     dbMethod.insert_jobWithAlert(dbMethod.getStringSecond(),jobTitle,alertTime );
                 }else if(needNotificationOrNot == false &&timeStamp ==null){
@@ -125,6 +113,7 @@ public class AddJobActivity extends AppCompatActivity {
             }
         });
 
+        //取消按钮的响应事件，用户点击取消，则返回JobDetailsAcitivity界面
         noSetJob.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -133,6 +122,7 @@ public class AddJobActivity extends AppCompatActivity {
             }
         });
 
+        //设置日期按钮的响应事件
         setDatePicker.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -141,6 +131,7 @@ public class AddJobActivity extends AppCompatActivity {
             }
         });
 
+        //设置时间按钮的响应事件
         setTimePicker.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -148,9 +139,6 @@ public class AddJobActivity extends AppCompatActivity {
                 timePicker.setVisibility(View.VISIBLE);
             }
         });
-
-
-
 
     }
 }
