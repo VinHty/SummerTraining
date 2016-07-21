@@ -47,7 +47,6 @@ public class JobDetailsAcitiviy extends ListActivity {
     private DatabaseMethod dbMethod;
     private MyAdapter adapter;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
