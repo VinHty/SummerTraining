@@ -92,7 +92,7 @@ public class ExecutionActivity extends Activity {
         int lastTime1 = bundle.getInt("lastTime")*60000;
         mContext=getBaseContext();
         if(timeStamp==null){
-         quickJob=getInstance(mContext);
+        DatabaseMethod quickJob=getInstance(mContext);
         timeStamp=getStringTime();
         int i=new Float(lastTime1/60000).intValue();
         quickJob.insert_quickjob(timeStamp,"自定义任务",i,timeStamp);

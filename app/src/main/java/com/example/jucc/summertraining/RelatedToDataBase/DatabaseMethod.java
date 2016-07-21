@@ -208,7 +208,7 @@ public class DatabaseMethod {
         List<Job> jobs=new ArrayList<Job>();
         int i=0;
         if(isSuc==true) i=1;
-        Cursor cu=db.rawQuery("select start_time,job_name,is_suc,last_time from job where is_suc='"+i+"' order by start_time DESE ",null);
+        Cursor cu=db.rawQuery("select start_time,job_name,is_suc,last_time from job where is_suc='"+i+"' order by start_time DESC ",null);
         while (cu.moveToNext()){
             jobs.add(new Job(cu.getString(cu.getColumnIndex("start_time")),cu.getString(cu.getColumnIndex("job_name")),cu.getString(cu.getColumnIndex("alert_time")),cu.getInt(cu.getColumnIndex("is_suc"))));
         }

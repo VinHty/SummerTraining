@@ -42,6 +42,7 @@ public class JobDetailsAcitiviy extends ListActivity {
     private List<Map<String, Object>> mData;
     private Button button_return;
     private Button button_add;
+    private Button button_listFinishedJob;
     private DatabaseMethod dbMethod;
     private MyAdapter adapter;
 
@@ -54,7 +55,7 @@ public class JobDetailsAcitiviy extends ListActivity {
         dbMethod = DatabaseMethod.getInstance(this);
         button_return = (Button)findViewById(R.id.activity_job_details_return);
         button_add = (Button) findViewById(R.id.activity_job_details_add);
-
+        button_listFinishedJob = (Button)findViewById(R.id.activity_job_details_listFinishedJob);
 
         button_return.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -72,6 +73,16 @@ public class JobDetailsAcitiviy extends ListActivity {
 
             }
         });
+
+        button_listFinishedJob.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent listFinishedJob = new Intent(JobDetailsAcitiviy.this,ListFinishedJob.class);
+                startActivity(listFinishedJob);
+                
+            }
+        });
+
 
         mData = getData();
         adapter = new MyAdapter(this);
@@ -96,38 +107,11 @@ public class JobDetailsAcitiviy extends ListActivity {
             list.add(map);
         }
 
-       /* Map<String, Object> map = new HashMap<String, Object>();
-        map.put("title", "Math");
-        map.put("edit", "edit1");
-        map.put("start", "start1");
-        list.add(map);
-
-        map = new HashMap<String, Object>();
-        map.put("title", "Chinese");
-        map.put("edit", "edit2");
-        map.put("start", "start2");
-        list.add(map);
-
-        map = new HashMap<String, Object>();
-        map.put("title", "English");
-        map.put("edit", "edit2");
-        map.put("start", "start2");
-        list.add(map);
-        */
 
         return list;
     }
 
     public String getCurrentTime(){
-     /*   Calendar c = Calendar.getInstance();
-        int year = c.get(Calendar.YEAR);
-        int month = c.get(Calendar.MONTH);
-        int date = c.get(Calendar.DATE);
-        int hour = c.get(Calendar.HOUR);
-        int minute = c.get(Calendar.MINUTE);
-        int second = c.get(Calendar.SECOND);
-        String currentTime = "" + year + "-" + month + "-" + date + " " + hour + ":" + minute + ":" + second;
-        */
         DatabaseMethod db =DatabaseMethod.getInstance(this);
         return db.getStringSecond();
      }
@@ -194,10 +178,6 @@ public class JobDetailsAcitiviy extends ListActivity {
 
         //    ItemListener itemListener = new ItemListener(position); //监听器记录了所在行，于是绑定到各个控件后能够返回具体的行，以及触发的控件
 
-        //    holder.edit.setOnClickListener(itemListener);
-         //   holder.start.setOnClickListener(itemListener);
-         //   holder.delete.setOnClickListener(itemListener);
-
             holder.delete.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -252,38 +232,6 @@ public class JobDetailsAcitiviy extends ListActivity {
         }
     }
 
-
-/*    class ItemListener implements View.OnClickListener {
-        private int m_position;
-
-        ItemListener(int pos) {
-            m_position = pos;
-        }
-
-        @Override
-        public void onClick(View v) {
-
-
-            mData.get(m_position);
-
-           switch(v.getId()){
-
-               case R.id.activity_job_details_edit:
-
-                   break;
-
-               case R.id.activity_job_details_start:
-
-                   break;
-
-               case R.id.activity_job_details_delete:
-                   Toast.makeText(JobDetailsAcitiviy.this,"current position is " + m_position,Toast.LENGTH_LONG);
-                   break;
-
-           }
-        }
-    }
-    */
 }
 
 
