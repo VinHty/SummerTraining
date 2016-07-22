@@ -79,6 +79,7 @@ public class MainActivity extends AppCompatActivity implements CircleTimePiker.T
         Button queryTiming = (Button)findViewById(R.id.timing_query);
         queryTiming.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
+                //该功能只支持api22及以上功能，若版本低会弹出提醒
                 if(getAndroidSDKVersion()<=22){
                     new AlertDialog.Builder(MainActivity.this).setTitle("提醒")//设置对话框标题
                             .setMessage("您的安卓版本较低，暂无法使用该功能")//设置显示的内容
@@ -142,6 +143,7 @@ public class MainActivity extends AppCompatActivity implements CircleTimePiker.T
 
     }
 
+    //获取sdk版本
     private int getAndroidSDKVersion() {
         int version = 0;
         try {
