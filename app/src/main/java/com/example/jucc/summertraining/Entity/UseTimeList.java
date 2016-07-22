@@ -4,6 +4,7 @@ import java.util.List;
 
 /**
  * Created by Vin on 2016/7/19.
+ * 数据库返回给调用者的实体类
  */
 
 public class UseTimeList {
