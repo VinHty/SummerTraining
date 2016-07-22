@@ -1,5 +1,7 @@
 package com.example.jucc.summertraining;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -90,6 +92,18 @@ public class AddJobActivity extends AppCompatActivity {
 
                 //获得任务的各个信息
                 String jobTitle =(String) editText.getText().toString();  //任务标题
+                //对数据输入格式进行限制
+                if(jobTitle.replace(" ","").isEmpty()){
+                    new AlertDialog.Builder(AddJobActivity.this).setTitle("FBI WARNING")
+                            .setMessage("任务名字不可为空，请重新输入")
+                            .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+
+                                }
+                            }).show();
+                }
+
                 Boolean needNotificationOrNot = needNotification.isChecked();//如果选择了需要提醒，则为true;如果选择了不需要提醒，则为false
                 int year = datePicker.getYear();
                 int month = datePicker.getMonth();
@@ -98,18 +112,20 @@ public class AddJobActivity extends AppCompatActivity {
                 int minute = timePicker.getCurrentMinute();
                 String alertTime = "" + year + "-" + month + "-" + date + " " + hour + ":" + minute;
 
-                //根据timeStamp的有无来判断是用户是在建立新任务还是在修改已经存在的任务，进而调用不同的数据库语句
-                if(needNotificationOrNot == true &&timeStamp ==null) {
-                    dbMethod.insert_jobWithAlert(dbMethod.getStringSecond(),jobTitle,alertTime );
-                }else if(needNotificationOrNot == false &&timeStamp ==null){
-                    dbMethod.insert_jobWithoutAlert(dbMethod.getStringSecond(),jobTitle,alertTime);
-                }else if(timeStamp != null){
-                    dbMethod.update_jobWhenEdit(timeStamp,jobTitle,alertTime,needNotificationOrNot);
-                }
+                if(!jobTitle.replace(" ","").isEmpty()) {
+                    //根据timeStamp的有无来判断是用户是在建立新任务还是在修改已经存在的任务，进而调用不同的数据库语句
+                    if (needNotificationOrNot == true && timeStamp == null) {
+                        dbMethod.insert_jobWithAlert(dbMethod.getStringSecond(), jobTitle, alertTime);
+                    } else if (needNotificationOrNot == false && timeStamp == null) {
+                        dbMethod.insert_jobWithoutAlert(dbMethod.getStringSecond(), jobTitle, alertTime);
+                    } else if (timeStamp != null) {
+                        dbMethod.update_jobWhenEdit(timeStamp, jobTitle, alertTime, needNotificationOrNot);
+                    }
 
-                //然后返回查看任务界面，同时任务界面需要更新UI，读取新的任务
-                Intent returnJobDetailsActivity = new Intent(AddJobActivity.this,JobDetailsAcitiviy.class);
-                startActivity(returnJobDetailsActivity);
+                    //然后返回查看任务界面，同时任务界面需要更新UI，读取新的任务
+                    Intent returnJobDetailsActivity = new Intent(AddJobActivity.this,JobDetailsAcitiviy.class);
+                    startActivity(returnJobDetailsActivity);
+                }
             }
         });
 

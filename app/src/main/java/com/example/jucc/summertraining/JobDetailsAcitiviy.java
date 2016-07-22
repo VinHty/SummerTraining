@@ -200,11 +200,26 @@ public class JobDetailsAcitiviy extends ListActivity {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
                                     Intent startJob = new Intent(JobDetailsAcitiviy.this,ExecutionActivity.class);
-                                    long lastTime = Long.valueOf(text.getText().toString()).longValue();
-                                    startJob.putExtra("title",mData.get(position).get("title").toString());
-                                    startJob.putExtra("timeStamp",mData.get(position).get("timeStamp").toString());
-                                    startJob.putExtra("lastTime",lastTime);
-                                    startActivity(startJob);
+
+                                    //对输入数据的格式进行判断
+                                    if(text.getText().toString().matches("[0-9]||[1-9][0-9]||[1-6][0-9][0-9]||7[0-1][0-9]||720")&&(!text.getText().toString().isEmpty())) {
+                                        long lastTime = Long.valueOf(text.getText().toString()).longValue();
+                                        startJob.putExtra("title", mData.get(position).get("title").toString());
+                                        startJob.putExtra("timeStamp", mData.get(position).get("timeStamp").toString());
+                                        startJob.putExtra("lastTime", lastTime);
+                                        startActivity(startJob);
+                                    }
+                                    else{
+                                        new AlertDialog.Builder(JobDetailsAcitiviy.this).setTitle("FBI WARNING")
+                                                .setMessage("任务时长应为0-720之间的任意一个数字，请重新输入")
+                                                .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                                                    @Override
+                                                    public void onClick(DialogInterface dialog, int which) {
+                                                        Intent restartIntent = new Intent(JobDetailsAcitiviy.this,JobDetailsAcitiviy.class);
+                                                        startActivity(restartIntent);
+                                                    }
+                                                }).show();
+                                    }
                                 }
                             })
                             .setNegativeButton("取消",null)
