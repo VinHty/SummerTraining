@@ -21,6 +21,7 @@ import java.util.HashMap;
  */
 
 public class MyFragment extends Fragment {
+    //每个子类都共有的部分 数据库访问对象，存放数据的list,listView的适配器，key的集合，layout里的id的集合
     protected DatabaseMethod method;
     ArrayList<HashMap<String, Object>> list;
     protected ListView listView;
@@ -29,6 +30,9 @@ public class MyFragment extends Fragment {
     protected static int[] itemID = {R.id.activity_app_usage_titel,R.id.activity_app_usage_time,R.id.activity_app_usage_percent};
     @Nullable
     @Override
+    /*
+    初始化View 获得基本控件 实例化对象
+     */
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
         View view = inflater.inflate(R.layout.fragment_app_usage_amount,container,false);
@@ -38,7 +42,13 @@ public class MyFragment extends Fragment {
         method=DatabaseMethod.getInstance(getContext());
         return view;
     }
-    public void getUsageAmountFromDatabase(){};
 
+    /*
+    /从数据库读取消息存入全局list
+     */
+    public void getUsageAmountFromDatabase(){};
+/*
+/更新数据操作 针对今日用量
+ */
     public void update() {}
 }

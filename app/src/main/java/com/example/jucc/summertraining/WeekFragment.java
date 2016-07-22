@@ -19,8 +19,11 @@ import java.util.List;
 
 public class WeekFragment extends MyFragment {
     @Override
+    /*
+    /从数据库获取上周用量 存入list
+     */
     public void getUsageAmountFromDatabase() {
-        UseTimeList useTimeList = method.getLastWeek();
+        UseTimeList useTimeList=method.getLastWeek();
         List list = useTimeList.getList();
         long count = useTimeList.getCount();
         for (int a = 0; a < list.size(); a++) {
@@ -35,6 +38,9 @@ public class WeekFragment extends MyFragment {
             this.list.add(map);
         }
     }
+    /*/
+    初始化view 读取app使用量 绑定适配器
+     */
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {

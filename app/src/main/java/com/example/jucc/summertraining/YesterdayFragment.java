@@ -20,6 +20,9 @@ import java.util.List;
  */
 
 public class YesterdayFragment extends MyFragment {
+    /*/
+    初始化view 读取app使用量 绑定适配器
+     */
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -29,7 +32,9 @@ public class YesterdayFragment extends MyFragment {
         listView.setAdapter(adapter);
         return view;
     }
-
+    /*
+    /从数据库读取 昨日用量情况统计
+     */
     @Override
     public void getUsageAmountFromDatabase() {
 
