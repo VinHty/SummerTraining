@@ -8,19 +8,18 @@
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:fitsSystemWindows="true"
-    tools:context="com.example.jucc.summertraining.MainActivity">
+    android:layout_gravity="center"
+    tools:context="com.example.jucc.summertraining.MainActivity"
+    >
 
 
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="451dp"
-        android:orientation="vertical">
 
         <com.example.jucc.summertraining.CircleProgressBar
             android:id="@+id/circleProgerss"
             android:layout_width="200dp"
             android:layout_height="200dp"
+            android:layout_gravity="center"
             circle_Progress:backColor="#ffffff"
             circle_Progress:startAngle="-90"
             circle_Progress:roundColor="#D1D1D1"
@@ -35,10 +34,11 @@
             android:id="@+id/give_up"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="60dp"
             android:text="@string/give_up" />
 
 
-    </LinearLayout>
 
 
 

@@ -9,75 +9,86 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:fitsSystemWindows="true"
-        tools:context="com.example.jucc.summertraining.MainActivity"
-        >
+        tools:context="com.example.jucc.summertraining.MainActivity">
 
 
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="451dp"
-        android:orientation="vertical"
-        android:layout_gravity="center_horizontal">
 
-        <com.example.jucc.summertraining.CircleTimePiker
-            android:id="@+id/circleSelect"
-            android:layout_width="wrap_content"
-            android:layout_height="312dp"
-            circle_Picker:circle_center_radius="0"
-            circle_Picker:circle_center_color="#FFFF3500"
-            circle_Picker:circle_point_width="0"
-            circle_Picker:circle_point_color="#FF00FFFF"
-            circle_Picker:circle_target_radius="25"
-            circle_Picker:circle_target_color="#4169E1"
-            />
-        <TextView
-            android:id="@+id/circleSelectTv"
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="451dp"
+                android:orientation="vertical"
+                android:layout_gravity="center_horizontal">
+
+                <com.example.jucc.summertraining.CircleTimePiker
+                    android:id="@+id/circleSelect"
+                    android:layout_width="wrap_content"
+                    android:layout_height="312dp"
+                    circle_Picker:circle_center_radius="0"
+                    circle_Picker:circle_center_color="#FFFF3500"
+                    circle_Picker:circle_point_width="0"
+                    circle_Picker:circle_point_color="#FF00FFFF"
+                    circle_Picker:circle_target_radius="25"
+                    circle_Picker:circle_target_color="#4169E1"
+                    />
+                <TextView
+                    android:id="@+id/circleSelectTv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    />
+
+                <Button
+                    android:id="@+id/start_timing"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/start_timing"
+                    android:layout_gravity="center_horizontal"
+                    />
+
+
+            </LinearLayout>
+
+
+            <LinearLayout
+            android:gravity="bottom"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
-            />
+            android:layout_height="51dp"
+            android:orientation="horizontal"
+            android:id="@+id/circleselect">
 
-        <Button
-            android:id="@+id/start_timing"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/start_timing"
-            android:layout_gravity="center_horizontal"/>
+                <Button
+                    android:id="@+id/job_query"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="计划"
+                    />
+
+                <Button
+                    android:id="@+id/timing_query"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="查看时间"
+                    />
+
+                <Button
+                    android:id="@+id/shop"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="商店"
+                    />
+
+                <Button
+                    android:id="@+id/setting"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="设置"
+                    />
+
+            </LinearLayout>
 
 
     </LinearLayout>
 
-
-    <LinearLayout
-    android:gravity="bottom"
-    android:layout_width="match_parent"
-    android:layout_height="51dp"
-    android:orientation="horizontal"
-        android:id="@+id/circleselect">
-    <Button
-        android:id="@+id/job_query"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="计划"/>
-    <Button
-        android:id="@+id/timing_query"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="查看时间"/>
-    <Button
-        android:id="@+id/shop"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="商店"/>
-    <Button
-        android:id="@+id/setting"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="设置"/>
-
-
-</LinearLayout>
-    </LinearLayout>
 
 

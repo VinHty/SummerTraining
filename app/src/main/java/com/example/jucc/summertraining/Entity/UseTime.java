@@ -5,6 +5,7 @@ package com.example.jucc.summertraining.Entity;
  */
 
 public  class UseTime {
+    //一个类表示每个应用和对应的使用时间
     private String appName;
     private int useTime;
     private String useDate;
@@ -37,8 +38,6 @@ public  class UseTime {
     public UseTime(String appName,int useTime){
         this.appName=appName;
         this.useTime=useTime;
-
-
     }
 
 }
