@@ -27,22 +27,28 @@ import android.widget.TextView;
 
 import com.example.jucc.summertraining.RelatedToDataBase.DatabaseMethod;
 
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
 
 public class AppUsageAmountActivity extends FragmentActivity {
 
-    private Map<String,Integer> map = new HashMap<>();
+    /*
+    /存放fragment的list
+     */
     private List<Fragment> mFragmentList = new ArrayList<Fragment>();
+    /*
+    /fragment adapter
+     */
     private FragmentAdapter mFragmentAdapter;
+    /*
+    /textView的click listener
+     */
     private MyOnClickListener onClickListener;
 
+    // view pager
     private ViewPager mPageVp;
     /**
      * Tab显示内容TextView
@@ -67,9 +73,14 @@ public class AppUsageAmountActivity extends FragmentActivity {
      */
     private int screenWidth;
 
+    //pager的listener
     private ViewPager.OnPageChangeListener listener;
+    // 数据库对象
     private DatabaseMethod databaseMethod;
 
+    /*
+    /广播接收器，接收日期变化广播
+     */
     public class MyReceiver extends BroadcastReceiver {
         private final String actionName = "android.intent.action.DATE_CHANGED";
 
@@ -80,7 +91,9 @@ public class AppUsageAmountActivity extends FragmentActivity {
                 insertIntoDB(mTodayFg);
             }
         }
-
+/*
+/将今日用量存入数据库 持久化数据
+ */
         public void insertIntoDB(MyFragment f) {
             for (int a = 0; a < f.list.size(); a++) {
                 String date = DatabaseMethod.getStringYesterday();
@@ -100,12 +113,16 @@ public class AppUsageAmountActivity extends FragmentActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_app_usage_amount);
+        //实例化数据库对象
         databaseMethod= DatabaseMethod.getInstance(this);
+        //获取各种控件
         findById();
+        //
         init();
         initTabLineWidth();
+        //第一次启动时做的工作
         if(checkFirstLanuch()){
-            //第一次启动
+            //第一次启动 将用量存入数据库
             for(int a=0;a<mTodayFg.list.size();a++)
             {
                 HashMap map = mTodayFg.list.get(a);
@@ -119,6 +136,7 @@ public class AppUsageAmountActivity extends FragmentActivity {
             databaseMethod.insert_usetime("mdzz",100,"2016-07-19");
             databaseMethod.insert_usetime("sdf",499,"2016-07-19");
         }
+        //如果不能获取用量信息，则调用系统设置，给app授权
         if(!hasModule(this)) {
             Intent intent = new Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS);
             startActivity(intent);
@@ -127,7 +145,7 @@ public class AppUsageAmountActivity extends FragmentActivity {
         }
     }
 
-
+//判断当前活动是否有权限获取数据
     public static boolean hasModule(Activity act) {
         PackageManager packageManager = act.getApplicationContext().getPackageManager();
         Intent intent = new Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS);
@@ -135,7 +153,7 @@ public class AppUsageAmountActivity extends FragmentActivity {
                 PackageManager.MATCH_DEFAULT_ONLY);
         return list.size() > 0;
     }
-
+//获取各种控件
     private void findById() {
         mTabTodayTv = (TextView) this.findViewById(R.id.today);
         mTabYesterdayTv = (TextView) this.findViewById(R.id.yesterday);
@@ -215,7 +233,7 @@ public class AppUsageAmountActivity extends FragmentActivity {
                 }
                 mTabLineIv.setLayoutParams(lp);
             }
-
+//选取不同页面时 更改顶部text的颜色
             @Override
             public void onPageSelected(int position) {
                 resetTextView();
@@ -281,7 +299,8 @@ public class AppUsageAmountActivity extends FragmentActivity {
             }
         }
     }
-
+//判断APP是否为第一次启动
+    // 是则返回true 否则返回 false
     private boolean checkFirstLanuch(){
         SharedPreferences setting = getSharedPreferences("versionFile", 0);
         Boolean user_first = setting.getBoolean("FIRST",true);

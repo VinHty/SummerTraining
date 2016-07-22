@@ -2,9 +2,9 @@ package com.example.jucc.summertraining;
 
 /**
  * Created by Vin on 2016/7/15.
+ * 自定义Fragment Adapter
  */
 
-import java.util.ArrayList;
 import java.util.List;
 
 import android.support.v4.app.Fragment;
