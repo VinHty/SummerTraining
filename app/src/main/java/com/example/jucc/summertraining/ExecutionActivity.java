@@ -69,7 +69,7 @@ public class ExecutionActivity extends Activity {
 
                     }
 
-                }).show();//在按键响应事件中显示此对话框1
+                }).show();//在按键响应事件中显示此对话框
             }
         });
     }

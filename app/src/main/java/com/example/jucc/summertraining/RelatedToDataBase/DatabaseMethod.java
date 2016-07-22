@@ -26,7 +26,6 @@ public class DatabaseMethod {
 
     private static DatabaseMethod databaseMethod;
     private Context mContext;
-    private MyDatabaseHelper helper ;
     private SQLiteDatabase db;
 
     private DatabaseMethod(Context mContext){
@@ -35,6 +34,8 @@ public class DatabaseMethod {
         SQLiteDatabase db = helper.getWritableDatabase();
         this.db= db;
     }
+
+    //使用单例模式，防止过多对象导致数据库对象栈溢出
     public static DatabaseMethod getInstance(Context mContext){
         if(databaseMethod==null) {
             databaseMethod = new DatabaseMethod(mContext);
@@ -45,7 +46,7 @@ public class DatabaseMethod {
 
 
     /*
-    **插入今天的实时使用时间1
+    **插入今天的实时使用时间
      */
     public void insert_nowusetime(String appName,int nowUse,int iniUse){
         String sqlinsert;
@@ -78,7 +79,7 @@ public class DatabaseMethod {
     }
     */
 
-            /*
+    /*
     **开始自定义任务时插入
     */
     public void insert_quickjob(String timeStamp,String jobName,int lastTime,String startTime){
@@ -146,17 +147,21 @@ public class DatabaseMethod {
     */
 
     public UseTimeList getYesterdayList(){
+        //UestimeList包含了一个List 和一个int类型数据记录总的时间
         int i=0;
         List<UseTime> yesterdayList=new ArrayList<UseTime>();
         Date currentTime = new Date(System.currentTimeMillis()-24*60*60*1000);
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
         String dateString = formatter.format(currentTime);
+        //将日期设置为昨天的
         Cursor cu=db.rawQuery("select app_name,use_time,use_date from usetime where use_date='"+dateString+"'",null);
+        //将查询的数据放进List中，并且计算出总时间
         while (cu.moveToNext()){
             yesterdayList.add(new UseTime(cu.getString(cu.getColumnIndex("app_name")),cu.getInt(cu.getColumnIndex("use_time"))));
             i+=cu.getInt(cu.getColumnIndex("use_time"));
         }
         cu.close();
+        //关闭
         UseTimeList timeList = new UseTimeList(yesterdayList);
         timeList.setCount(i);
         return timeList;
@@ -208,9 +213,9 @@ public class DatabaseMethod {
         List<Job> jobs=new ArrayList<Job>();
         int i=0;
         if(isSuc==true) i=1;
-        Cursor cu=db.rawQuery("select start_time,job_name,is_suc,last_time from job where is_suc='"+i+"' order by start_time DESE ",null);
+        Cursor cu=db.rawQuery("select start_time,job_name,is_suc,last_time from job where is_suc='"+i+"' order by start_time DESC ",null);
         while (cu.moveToNext()){
-            jobs.add(new Job(cu.getString(cu.getColumnIndex("start_time")),cu.getString(cu.getColumnIndex("job_name")),cu.getString(cu.getColumnIndex("alert_time")),cu.getInt(cu.getColumnIndex("is_suc"))));
+            jobs.add(new Job(cu.getString(cu.getColumnIndex("start_time")),cu.getString(cu.getColumnIndex("job_name")),cu.getString(cu.getColumnIndex("last_time")),cu.getInt(cu.getColumnIndex("is_suc"))));
         }
         cu.close();
         return jobs;
