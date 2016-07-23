@@ -115,7 +115,7 @@ public class TodayFragment extends MyFragment {
 /更新数据 每次点击tab 删除现有的list里面的数据 然后重新获取消息装填
  */
     public void update() {
-        Log.d(getClass().getSimpleName(),list.get(9).toString());
+     //   Log.d(getClass().getSimpleName(),list.get(9).toString());
 
         list.clear();     Log.d(getClass().getSimpleName(),list.toString());
 

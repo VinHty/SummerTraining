@@ -240,7 +240,7 @@ public class AppUsageAmountActivity extends FragmentActivity {
                 switch (position) {
                     case 0:
                         mTabTodayTv.setTextColor(Color.BLUE);
-                        mTodayFg.update();
+                        //mTodayFg.update();
                         break;
                     case 1:
                         mTabYesterdayTv.setTextColor(Color.BLUE);

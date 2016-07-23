@@ -5,6 +5,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.widget.SimpleCursorAdapter;
 
+import com.example.jucc.summertraining.Entity.Fish;
 import com.example.jucc.summertraining.Entity.Job;
 import com.example.jucc.summertraining.Entity.UseTime;
 import com.example.jucc.summertraining.Entity.UseTimeList;
@@ -14,6 +15,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -262,4 +264,90 @@ public class DatabaseMethod {
         String timeString = formatter.format(currentTime);
         return timeString;
     }
+    /*
+   /获得用户金币数量f
+    */
+    public int getCoins(){
+        Cursor cursor=db.rawQuery("select * from account",null);
+        int coins=0;
+        while (cursor.moveToNext()){
+            coins=cursor.getInt(cursor.getColumnIndex("coins"));
+        }
+        return coins;
+    }
+
+
+    /*
+    /增加用户金币数量
+    /@number 增加的数量
+     */
+    public  void  increaseCoins(int number){
+        int coins = getCoins();
+        int newNumber = number+coins;
+        db.execSQL("update account set coins ="+newNumber);
+    }
+    /*
+    /购买鱼 减少金币数量
+    @number 鱼的价格
+     */
+    public void buyFish(int number){
+        int coins =getCoins();
+        int newNumber=number-coins;
+        db.execSQL("update account set coins ="+newNumber);
+    }
+/* species table method
+/用于在商店显示所有现有的fish的种类和价格
+return 基于fish对象的list列表
+ */
+    public List<Fish> getAllSpecies() {
+        Cursor cursor = db.rawQuery("select * from species", null);
+        List<Fish> list = null;
+        while (cursor.moveToNext()) {
+            int species = cursor.getInt(cursor.getColumnIndex("species"));
+            int price = cursor.getInt(cursor.getColumnIndex("price"));
+            Fish fish = new Fish(species, price);
+            list.add(fish);
+        }
+        return list;
+    }
+
+    /*/
+    获取用户可用的鱼的列表
+    return 基于鱼的种类的list
+     */
+    public List<Integer> userAvailableFish(){
+        Cursor cursor = db.rawQuery("select * from achievement where available=1",null);
+        List<Integer> list = null;
+        while (cursor.moveToNext()){
+            int species = cursor.getInt(cursor.getColumnIndex("species"));
+            list.add(species);
+        }
+        return list;
+    }
+
+    /*
+    /更新成就次数
+    @param fish对象
+     */
+    public void updateAchievement(Fish fish){
+        int times = getTimes(fish);
+        int newTimes = times+1;
+        db.execSQL("update achievement set times="+newTimes);
+
+
+    }
+/*/
+基于fish种类获得完成次数
+@param fish 对象
+ */
+    public int getTimes(Fish fish){
+        int species = fish.getSpecies();
+        int state = fish.getState();
+        Cursor cu = db.rawQuery("select times from achievement where species="+species+" and state = "+state,null);
+        cu.moveToNext();
+        int times =cu.getInt(cu.getColumnIndex("times"));
+        return times;
+    }
+
+
 }
