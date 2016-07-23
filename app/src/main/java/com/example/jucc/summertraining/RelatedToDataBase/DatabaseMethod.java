@@ -73,7 +73,6 @@ public class DatabaseMethod {
     }
     /*
     **将今天的使用时间插入到总的时间记录表中
-        突然发现这个函数没用……尴尬
     public void  update_usetime(String appName,int use,String date){
         String sqlupdate;
         sqlupdate="update usetime set use_time='"+use+"' where app_name='"+appName+"' and use_date='"+date+"'";
@@ -149,7 +148,7 @@ public class DatabaseMethod {
     */
 
     public UseTimeList getYesterdayList(){
-        //UestimeList包含了一个List 和一个int类型数据记录总的时间
+        //UseTimeList包含了一个List 和一个int类型数据记录总的时间
         int i=0;
         List<UseTime> yesterdayList=new ArrayList<UseTime>();
         Date currentTime = new Date(System.currentTimeMillis()-24*60*60*1000);
@@ -163,7 +162,7 @@ public class DatabaseMethod {
             i+=cu.getInt(cu.getColumnIndex("use_time"));
         }
         cu.close();
-        //关闭
+        //关闭cursor
         UseTimeList timeList = new UseTimeList(yesterdayList);
         timeList.setCount(i);
         return timeList;
@@ -174,20 +173,25 @@ public class DatabaseMethod {
     */
 
     public UseTimeList getLastWeek(){
+        //UseTimeList包含了一个List 和一个int类型数据记录总的时间
         int i=0;
         List<UseTime> lastWeekList=new ArrayList<UseTime>();
         Date currentTime = new Date(System.currentTimeMillis()-24*60*60*1000);
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+        //将日期设置为昨天的
         String dateString = formatter.format(currentTime);
         Date beforeTime = new Date(System.currentTimeMillis()-7*24*60*60*1000);
         SimpleDateFormat formatter2 = new SimpleDateFormat("yyyy-MM-dd");
+        //将日期设置为7天前
         String dateString2 = formatter2.format(beforeTime);
         Cursor cu=db.rawQuery("select app_name,SUM(use_time)  from usetime where use_date<='"+dateString+"'and use_date>='"+dateString2+"' group by app_name",null);
+        //将查询的数据放进List中，并且计算出总时间
         while (cu.moveToNext()){
             lastWeekList.add(new UseTime(cu.getString(cu.getColumnIndex("app_name")),cu.getInt(cu.getColumnIndex("SUM(use_time)"))));
             i+=cu.getInt(cu.getColumnIndex("SUM(use_time)"));
         }
         cu.close();
+        //关闭cursor
         UseTimeList timeList = new UseTimeList(lastWeekList);
         timeList.setCount(i);
         return timeList;
@@ -238,7 +242,7 @@ public class DatabaseMethod {
     }
 
         /*
-    **将当前日期转化为string，精确到天
+    **将当前日期转化为string，精确到天，格式为2016-07-22
     */
     public static String getStringYesterday() {
         Date currentTime = new Date(System.currentTimeMillis()-24*60*60*1000);
@@ -247,7 +251,7 @@ public class DatabaseMethod {
         return dateString;
     }
     /*
-    **将当前日期时间转化为string，精确到分钟
+    **将当前日期时间转化为string，精确到分钟，格式为2016-07-22 12:15
     */
     public static String getStringTime() {
         Date currentTime = new Date();
@@ -256,7 +260,7 @@ public class DatabaseMethod {
         return timeString;
     }
     /*
-**将当前日期时间转化为string，精确到苗
+**将当前日期时间转化为string，精确到秒，格式为2016-07-22 12:12:12
 */
     public static String getStringSecond() {
         Date currentTime = new Date();

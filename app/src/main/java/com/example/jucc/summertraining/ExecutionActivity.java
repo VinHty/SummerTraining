@@ -6,20 +6,11 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.CountDownTimer;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
-import android.view.ViewDebug;
-import android.view.Window;
 import android.widget.Button;
 
 import com.example.jucc.summertraining.RelatedToDataBase.DatabaseMethod;
-import com.example.jucc.summertraining.RelatedToDataBase.MyDatabaseHelper;
-
-import java.util.Timer;
-import java.util.TimerTask;
-
 import static com.example.jucc.summertraining.RelatedToDataBase.DatabaseMethod.getInstance;
 import static com.example.jucc.summertraining.RelatedToDataBase.DatabaseMethod.getStringSecond;
 import static com.example.jucc.summertraining.RelatedToDataBase.DatabaseMethod.getStringTime;
@@ -39,11 +30,17 @@ public class ExecutionActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_execution);
+        //初始化进度条的变量值
         initVariable();
+        //初始化时间选择器
         viewInit();
+        //根据收到的Intent判断开始的任务是快速任务还是已经添加的任务
         initJob();
+        //倒计时进行时对进度条进行更新
         startCounting();
+        //开始倒计时
         timer.start();
+        //初始化放弃按钮，并且响应时间为弹出对话框
         final Button giveUp =(Button)findViewById(R.id.give_up);
         giveUp.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -92,10 +89,12 @@ public class ExecutionActivity extends Activity {
         String title=bundle.getString("title");
         int lastTime1 = bundle.getInt("lastTime")*60000;
         mContext=getBaseContext();
+        //timeStamp为null说明为快速任务
         if(timeStamp1==null){
         DatabaseMethod quickJob=getInstance(mContext);
         int i=new Float(lastTime1/60000).intValue();
         String timeStamp=getStringSecond();
+            //调用方法，将任务的相关数据存入数据库
         quickJob.insert_quickjob(timeStamp,"自定义任务",i,getStringTime());
         lastTime=lastTime1;
         timeStampJob=timeStamp;
@@ -103,6 +102,7 @@ public class ExecutionActivity extends Activity {
         else{
             DatabaseMethod doJob=getInstance(mContext);
             int i=new Long(lastTime2/60000).intValue();
+            //调用方法，将任务的相关数据存入数据库
             doJob.update_jobWhenStart(title,i,getStringTime(),timeStamp1);
             lastTime=lastTime2;
             timeStampJob=timeStamp1;
@@ -110,17 +110,23 @@ public class ExecutionActivity extends Activity {
     }
     private void startCounting(){
         int i=new Float(lastTime).intValue();
+        //时间间隔设为一秒
         timer=new CountDownTimer(i,1000) {
             @Override
             public void onTick(long millisUntilFinished) {
+                //每秒对当前进度进行更新
                 int finish=new Long(millisUntilFinished).intValue();
                 mCurrentProgress =(lastTime-finish)/(lastTime/100);
                 rpBar01.setProgress(mCurrentProgress);
             }
 
             @Override
+            //倒计时结束时执行此函数
             public void onFinish() {
+                mCurrentProgress=100;
+                rpBar01.setProgress(mCurrentProgress);
                 mContext=getBaseContext();
+                //将任务完成情况存入数据库
                 DatabaseMethod quickJobFinish= DatabaseMethod.getInstance(mContext);
                quickJobFinish.update_jobWhenFinish(timeStampJob,true);
                 new AlertDialog.Builder(ExecutionActivity.this).setTitle("成功")//设置对话框标题
@@ -152,11 +158,16 @@ public class ExecutionActivity extends Activity {
             }
         };
     }
+
+    //放弃任务时执行
     private void giveUpJob(){
+        //取消计时器
         timer.cancel();
         mContext=getBaseContext();
+        //将任务完成情况存入数据库
         DatabaseMethod quickJobGiveUp=DatabaseMethod.getInstance(mContext);
         quickJobGiveUp.update_jobWhenFinish(timeStampJob,false);
+        //关闭Activity并且跳转到MainActivity
         Intent intent = new Intent();
         intent.setClass(ExecutionActivity.this,MainActivity.class);
         ExecutionActivity.this.startActivity(intent);

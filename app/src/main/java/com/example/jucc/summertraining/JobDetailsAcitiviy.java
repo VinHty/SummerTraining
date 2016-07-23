@@ -5,34 +5,21 @@ import android.app.ListActivity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.provider.ContactsContract;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutCompat;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
-import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.ListView;
-import android.widget.NumberPicker;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
 import android.widget.TextView;
-import android.widget.TimePicker;
-import android.widget.Toast;
+
 
 import com.example.jucc.summertraining.Entity.Job;
 import com.example.jucc.summertraining.RelatedToDataBase.DatabaseMethod;
 
-import java.sql.Time;
+
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -200,11 +187,26 @@ public class JobDetailsAcitiviy extends ListActivity {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
                                     Intent startJob = new Intent(JobDetailsAcitiviy.this,ExecutionActivity.class);
-                                    long lastTime = Long.valueOf(text.getText().toString()).longValue();
-                                    startJob.putExtra("title",mData.get(position).get("title").toString());
-                                    startJob.putExtra("timeStamp",mData.get(position).get("timeStamp").toString());
-                                    startJob.putExtra("lastTime",lastTime);
-                                    startActivity(startJob);
+
+                                    //对输入数据的格式进行判断
+                                    if(text.getText().toString().matches("[0-9]||[1-9][0-9]||[1-6][0-9][0-9]||7[0-1][0-9]||720")&&(!text.getText().toString().isEmpty())) {
+                                        long lastTime = Long.valueOf(text.getText().toString()).longValue();
+                                        startJob.putExtra("title", mData.get(position).get("title").toString());
+                                        startJob.putExtra("timeStamp", mData.get(position).get("timeStamp").toString());
+                                        startJob.putExtra("lastTime", lastTime);
+                                        startActivity(startJob);
+                                    }
+                                    else{
+                                        new AlertDialog.Builder(JobDetailsAcitiviy.this).setTitle("FBI WARNING")
+                                                .setMessage("任务时长应为0-720之间的任意一个数字，请重新输入")
+                                                .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                                                    @Override
+                                                    public void onClick(DialogInterface dialog, int which) {
+                                                        Intent restartIntent = new Intent(JobDetailsAcitiviy.this,JobDetailsAcitiviy.class);
+                                                        startActivity(restartIntent);
+                                                    }
+                                                }).show();
+                                    }
                                 }
                             })
                             .setNegativeButton("取消",null)

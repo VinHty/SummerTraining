@@ -35,12 +35,12 @@ public class CircleTimePiker extends View {
     /**
      * 圆心半径
      */
-    private float mCircleCenterRadius = 0;
+    //private float mCircleCenterRadius = 0;
 
     /**
      * 圆心颜色
      */
-    private int mCircleCenterColor = 0;
+   // private int mCircleCenterColor = 0;
 
     /**
      * 指针宽度
@@ -139,14 +139,14 @@ public class CircleTimePiker extends View {
 
         TypedArray a = context.obtainStyledAttributes(attrs,
                 R.styleable.Circle_Selector);
-        mCircleCenterColor = a.getColor(
-                R.styleable.Circle_Selector_circle_center_color, Color.BLUE);
+//        mCircleCenterColor = a.getColor(
+//                R.styleable.Circle_Selector_circle_center_color, Color.BLUE);
         mCirclePointColor = a.getColor(
                 R.styleable.Circle_Selector_circle_point_color, Color.RED);
         mCircleTargetColor = a.getColor(
                 R.styleable.Circle_Selector_circle_center_color, Color.GREEN);
-        mCircleCenterRadius = a.getInt(
-                R.styleable.Circle_Selector_circle_center_radius, 0);
+//        mCircleCenterRadius = a.getInt(
+//                R.styleable.Circle_Selector_circle_center_radius, 0);
         mCirclePointWidth = a.getInt(
                 R.styleable.Circle_Selector_circle_point_width, 0);
         mCircleTargetRadius = a.getInt(
@@ -155,7 +155,9 @@ public class CircleTimePiker extends View {
 
         init();
     }
-
+    /*
+    **初始化mPaint
+     */
     private void init() {
         mCenterPoint = new Point();
         mPaint = new Paint();
@@ -176,11 +178,13 @@ public class CircleTimePiker extends View {
         int minSize = w > h ? h : w;
         mCircleRadius = (minSize - 2 * margin) / 2;
         // 圆心半径
-        mCircleCenterRadius = mCircleRadius * .05f;
+      //  mCircleCenterRadius = mCircleRadius * .05f;
         mCircleInnerRadius = mCircleRadius* .8f;
         super.onSizeChanged(w, h, oldw, oldh);
     }
-
+    /*
+    监听触摸事件
+     */
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         int action = event.getAction();
