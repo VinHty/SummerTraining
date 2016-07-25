@@ -9,31 +9,42 @@
     android:orientation="vertical"
     tools:context="com.example.jucc.summertraining.JobDetailsAcitiviy">
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
         <Button
             android:id="@+id/activity_job_details_return"
-            android:text="@string/JobDetails_Button_Return"
+            android:text="Return"
+            android:layout_alignParentLeft="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
+        <Button
+            android:id="@+id/fragment_list_unfinished_job_linearlayout"
+            android:text="未完成任务"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_toEndOf="@+id/activity_job_details_return" />
+        <Button
+            android:id="@+id/fragment_list_finished_job_linearlayout"
+            android:text="已完成任务"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_toStartOf="@+id/activity_job_details_add" />
         <Button
             android:id="@+id/activity_job_details_add"
-            android:text="@string/JobDetails_Button_Add"
+            android:text="Add"
+            android:layout_alignParentRight="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
-        <Button
-            android:id="@+id/activity_job_details_listFinishedJob"
-            android:text="查看已完成任务"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-    </LinearLayout>
+    </RelativeLayout>
 
-    <ListView
-        android:id="@android:id/list"
+    <android.support.v7.widget.ContentFrameLayout
+        android:id="@+id/id_content"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-    </ListView>
+        android:layout_height="match_parent">
+    </android.support.v7.widget.ContentFrameLayout>
 
 </LinearLayout>

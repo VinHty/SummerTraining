@@ -1,41 +1,32 @@
-<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context="com.example.jucc.summertraining.ListFinishedJob">
+    android:orientation="horizontal"
+    tools:context="com.example.jucc.summertraining.ListFinishedJobFragment">
 
     <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <Button
-            android:id="@+id/activity_list_finished_job_return"
-            android:text="return"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
+        android:orientation="vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent">
         <Button
             android:id="@+id/activity_list_finished_job_successful"
             android:text="已成功任务"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
-
         <Button
             android:id="@+id/activity_list_finished_job_failed"
             android:text="失败任务"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
-
     </LinearLayout>
 
-    <ListView
-        android:id="@android:id/list"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
 
-    </ListView>
+    <!-- TODO: Update blank fragment layout -->
+    <ListView
+        android:id="@id/android:list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        />
 
 </LinearLayout>

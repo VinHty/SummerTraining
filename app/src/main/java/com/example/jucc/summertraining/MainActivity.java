@@ -1,27 +1,36 @@
 package com.example.jucc.summertraining;
 
 
+import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 
 
-
-public class MainActivity extends AppCompatActivity implements CircleTimePiker.TimeAdapter, CircleTimePiker.OnSelectionChangeListener {
+public class MainActivity extends Activity implements CircleTimePiker.TimeAdapter, CircleTimePiker.OnSelectionChangeListener {
     private CircleTimePiker circleSelect;
     private TextView circleSelectTv;
-    public  Bundle bundle=new Bundle();
+    public Bundle bundle = new Bundle();
+    private PopupWindow popMenu;
+
+    private Button mPopWindowBtn;
+    private View mPopWindowView;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+
         //初始化按键
         initButton();
         //初始化时间选择器
@@ -32,16 +41,17 @@ public class MainActivity extends AppCompatActivity implements CircleTimePiker.T
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);  
+        getLayoutInflater().inflate(R.layout.pop_menu_list, null);
+
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
-
-        return super.onOptionsItemSelected(item);
+        return true;
     }
+
     //获取位置
     @Override
     public String getNameByPosition(int position) {
@@ -50,24 +60,76 @@ public class MainActivity extends AppCompatActivity implements CircleTimePiker.T
         }
         return "";
     }
+
+
+
     //获取位置，并将位置对应的值赋值给bundle
     @Override
     public void onPositionChange(int newPositoin, int oldPosition) {
 
-        circleSelectTv.setText("设定时长为" + newPositoin+"分钟");
-        bundle.putInt("lastTime",newPositoin);
+        circleSelectTv.setText("设定时长为" + newPositoin + "分钟");
+
+        bundle.putInt("lastTime", newPositoin);
     }
 
     @Override
     public int getCount() {
-        return 60;
+        return 120;
     }
 
 
     //初始化各个按钮
-    public void initButton(){
+    public void initButton() {
+
+        //初始化开始按钮，点击后发送intent并且跳转到对应活动
+        Button start = (Button) findViewById(R.id.start_timing);
+        start.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Intent intent = new Intent();
+                intent.putExtras(bundle);
+                intent.setClass(MainActivity.this, ExecutionActivity.class);
+                MainActivity.this.startActivity(intent);
+            }
+        });
+        final Button menu1 = (Button) findViewById(R.id.pop_menu);
+        menu1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            showPopWindow();
+
+            }
+        });
+
+
+    }
+
+    //初始化选择器
+    public void initSelector() {
+        circleSelect = (CircleTimePiker) findViewById(R.id.circleSelect);
+        circleSelectTv = (TextView) findViewById(R.id.circleSelectTv);
+        circleSelect.setAdapter(this);
+        circleSelect.setOnSelectionChangeListener(this);
+        circleSelectTv.setText("设定时长为0分钟");
+
+    }
+
+    //获取sdk版本
+    private int getAndroidSDKVersion() {
+        int version = 0;
+        try {
+            version = Integer.valueOf(android.os.Build.VERSION.SDK);
+        } catch (NumberFormatException e) {
+        }
+        return version;
+    }
+
+    private void showPopWindow(){
+        mPopWindowBtn = (Button) findViewById(R.id.pop_menu);
+        mPopWindowView=LayoutInflater.from(MainActivity.this).inflate(R.layout.pop_menu_list, null);
+        // 创建一个PopuWidow对象
         //初始化查看任务按钮，点击后跳转到对应活动
-        Button queryJob = (Button)findViewById(R.id.job_query);
+        Button queryJob = (Button)mPopWindowView.findViewById(R.id.job_query);
         queryJob.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Intent intent = new Intent();
@@ -76,7 +138,7 @@ public class MainActivity extends AppCompatActivity implements CircleTimePiker.T
             }
         });
         //初始化查看手机使用情况按钮，点击后跳转到对应活动
-        Button queryTiming = (Button)findViewById(R.id.timing_query);
+        Button queryTiming = (Button)mPopWindowView.findViewById(R.id.timing_query);
         queryTiming.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 //该功能只支持api22及以上功能，若版本低会弹出提醒
@@ -103,7 +165,7 @@ public class MainActivity extends AppCompatActivity implements CircleTimePiker.T
             }
         });
         //初始化查看设置按钮，点击后跳转到对应活动
-        Button setting = (Button)findViewById(R.id.setting);
+        Button setting = (Button)mPopWindowView.findViewById(R.id.setting);
         setting.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Intent intent = new Intent();
@@ -112,7 +174,7 @@ public class MainActivity extends AppCompatActivity implements CircleTimePiker.T
             }
         });
         //初始化商店按钮，点击后跳转到对应活动
-        Button shop = (Button)findViewById(R.id.shop);
+        Button shop = (Button)mPopWindowView.findViewById(R.id.shop);
         shop.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Intent intent = new Intent();
@@ -120,38 +182,17 @@ public class MainActivity extends AppCompatActivity implements CircleTimePiker.T
                 MainActivity.this.startActivity(intent);
             }
         });
-        //初始化开始按钮，点击后发送intent并且跳转到对应活动
-        Button start =(Button)findViewById(R.id.start_timing);
-        start.setOnClickListener(new View.OnClickListener() {
+        Button achi = (Button)mPopWindowView.findViewById(R.id.achievement);
+        achi.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Intent intent = new Intent();
-                intent.putExtras(bundle);
-                intent.setClass(MainActivity.this, ExecutionActivity.class);
+                intent.setClass(MainActivity.this, ShopActivity.class);
                 MainActivity.this.startActivity(intent);
             }
         });
 
-
+        popMenu = new PopupWindow(mPopWindowView,150,500 ,true);
+        popMenu.showAsDropDown(mPopWindowBtn);
     }
-    //初始化选择器
-    public void initSelector(){
-        circleSelect = (CircleTimePiker) findViewById(R.id.circleSelect);
-        circleSelectTv = (TextView) findViewById(R.id.circleSelectTv);
-        circleSelect.setAdapter(this);
-        circleSelect.setOnSelectionChangeListener(this);
-        circleSelectTv.setText("设定时长为0分钟");
-
-    }
-
-    //获取sdk版本
-    private int getAndroidSDKVersion() {
-        int version = 0;
-        try {
-            version = Integer.valueOf(android.os.Build.VERSION.SDK);
-        } catch (NumberFormatException e) {
-        }
-        return version;
-    }
-
 }
 
