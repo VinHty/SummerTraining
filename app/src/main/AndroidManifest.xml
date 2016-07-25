@@ -42,7 +42,7 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".AddJobActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@android:style/Theme.Holo.Light" />
     </application>
 
 </manifest>

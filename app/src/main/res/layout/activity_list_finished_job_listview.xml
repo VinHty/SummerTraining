@@ -10,9 +10,10 @@
         android:layout_height="wrap_content" />
 
     <LinearLayout
-        android:orientation="vertical"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="right">
 
         <TextView
             android:id="@+id/activity_list_finished_job_dialog_starttime"
