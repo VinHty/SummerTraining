@@ -29,7 +29,7 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         //用于存放鱼的种类的表 ， 存放种类和价格， 客户端只需要读取，不需要对这个表进行修改和删除。
         db.execSQL("create table   achievement(species INTEGER not null , state INTEGER not null,times INTEGER default 0,available INTEGER default 0),PRIMARY KEY(species,state)");
         //用于存放用户的成就， 分别对应鱼的 种类，状态，次数，是否可用（使用之前需要在商店购买）
-        //创建一个表存储任务，分别为添加任务的时间，任务的名称，任务持续时间，开始时间，是否成功，提醒时间，是否提醒
+
     }
 
 

@@ -91,9 +91,10 @@ public class AppUsageAmountActivity extends FragmentActivity {
                 insertIntoDB(mTodayFg);
             }
         }
-/*
-/将今日用量存入数据库 持久化数据
- */
+
+        /*
+        /将今日用量存入数据库 持久化数据
+         */
         public void insertIntoDB(MyFragment f) {
             for (int a = 0; a < f.list.size(); a++) {
                 String date = DatabaseMethod.getStringYesterday();
@@ -107,37 +108,34 @@ public class AppUsageAmountActivity extends FragmentActivity {
     }
 
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_app_usage_amount);
         //实例化数据库对象
-        databaseMethod= DatabaseMethod.getInstance(this);
+        databaseMethod = DatabaseMethod.getInstance(this);
         //获取各种控件
         findById();
         //
         init();
         initTabLineWidth();
         //第一次启动时做的工作
-        if(checkFirstLanuch()){
+        if (checkFirstLanuch()) {
             //第一次启动 将用量存入数据库
-            for(int a=0;a<mTodayFg.list.size();a++)
-            {
+            for (int a = 0; a < mTodayFg.list.size(); a++) {
                 HashMap map = mTodayFg.list.get(a);
-                String appName= (String) map.get("title");
-                int useTime= (int) map.get("time");
-                databaseMethod.insert_nowusetime(appName,0,useTime);
+                String appName = (String) map.get("title");
+                int useTime = (int) map.get("time");
+                databaseMethod.insert_nowusetime(appName, 0, useTime);
 
             }
 
-            databaseMethod.insert_usetime("leizhen",200,"2016-07-19");
-            databaseMethod.insert_usetime("mdzz",100,"2016-07-19");
-            databaseMethod.insert_usetime("sdf",499,"2016-07-19");
+            databaseMethod.insert_usetime("leizhen", 200, "2016-07-19");
+            databaseMethod.insert_usetime("mdzz", 100, "2016-07-19");
+            databaseMethod.insert_usetime("sdf", 499, "2016-07-19");
         }
         //如果不能获取用量信息，则调用系统设置，给app授权
-        if(!hasModule(this)) {
+        if (!hasModule(this)) {
             Intent intent = new Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS);
             startActivity(intent);
 
@@ -145,7 +143,7 @@ public class AppUsageAmountActivity extends FragmentActivity {
         }
     }
 
-//判断当前活动是否有权限获取数据
+    //判断当前活动是否有权限获取数据
     public static boolean hasModule(Activity act) {
         PackageManager packageManager = act.getApplicationContext().getPackageManager();
         Intent intent = new Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS);
@@ -153,7 +151,8 @@ public class AppUsageAmountActivity extends FragmentActivity {
                 PackageManager.MATCH_DEFAULT_ONLY);
         return list.size() > 0;
     }
-//获取各种控件
+
+    //获取各种控件
     private void findById() {
         mTabTodayTv = (TextView) this.findViewById(R.id.today);
         mTabYesterdayTv = (TextView) this.findViewById(R.id.yesterday);
@@ -233,7 +232,8 @@ public class AppUsageAmountActivity extends FragmentActivity {
                 }
                 mTabLineIv.setLayoutParams(lp);
             }
-//选取不同页面时 更改顶部text的颜色
+
+            //选取不同页面时 更改顶部text的颜色
             @Override
             public void onPageSelected(int position) {
                 resetTextView();
@@ -280,7 +280,7 @@ public class AppUsageAmountActivity extends FragmentActivity {
     }
 
     private class MyOnClickListener implements View.OnClickListener {
-            //切换页面
+        //切换页面
         @Override
         public void onClick(View v) {
             switch (v.getId()) {
@@ -299,19 +299,20 @@ public class AppUsageAmountActivity extends FragmentActivity {
             }
         }
     }
-//判断APP是否为第一次启动
+
+    //判断APP是否为第一次启动
     // 是则返回true 否则返回 false
-    private boolean checkFirstLanuch(){
+    private boolean checkFirstLanuch() {
         SharedPreferences setting = getSharedPreferences("versionFile", 0);
-        Boolean user_first = setting.getBoolean("FIRST",true);
-        if(user_first){//第一次
+        Boolean user_first = setting.getBoolean("FIRST", true);
+        if (user_first) {//第一次
             setting.edit().putBoolean("FIRST", false).commit();
             return true;
 
-           // Toast.makeText(MainActivity.this, "第一次", Toast.LENGTH_LONG).show();
-        }else{
+            // Toast.makeText(MainActivity.this, "第一次", Toast.LENGTH_LONG).show();
+        } else {
             return false;
-          //  Toast.makeText(MainActivity.this, "不是第一次", Toast.LENGTH_LONG).show();
+            //  Toast.makeText(MainActivity.this, "不是第一次", Toast.LENGTH_LONG).show();
         }
     }
 

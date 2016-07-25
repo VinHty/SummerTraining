@@ -26,12 +26,13 @@ public class YesterdayFragment extends MyFragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view= super.onCreateView(inflater, container, savedInstanceState);
+        View view = super.onCreateView(inflater, container, savedInstanceState);
         this.getUsageAmountFromDatabase();
-        adapter=new SimpleAdapter(getContext(),list,R.layout.activity_app_usage_list_item,itemName,itemID);
+        adapter = new SimpleAdapter(getContext(), list, R.layout.activity_app_usage_list_item, itemName, itemID);
         listView.setAdapter(adapter);
         return view;
     }
+
     /*
     /从数据库读取 昨日用量情况统计
      */
@@ -40,19 +41,19 @@ public class YesterdayFragment extends MyFragment {
 
         UseTimeList useList = method.getYesterdayList();
         List list = useList.getList();
-        long totalTime=useList.getCount();
+        long totalTime = useList.getCount();
         //Toast.makeText(getContext(),"total time is "+totalTime,Toast.LENGTH_SHORT).show();
-        for(int a=0;a<list.size();a++){
-            UseTime useTime= (UseTime) list.get(a);
-            HashMap<String,Object> map = new HashMap<>();
-            String name =useTime.getAppName();
+        for (int a = 0; a < list.size(); a++) {
+            UseTime useTime = (UseTime) list.get(a);
+            HashMap<String, Object> map = new HashMap<>();
+            String name = useTime.getAppName();
             long time = useTime.getUseTime();
-           // Toast.makeText(getContext(),"each app time is "+time,Toast.LENGTH_SHORT).show();
-            long percent = time*100/totalTime;
-           // Toast.makeText(getContext(),"each app percent is "+percent,Toast.LENGTH_SHORT).show();
-            map.put("title",name);
-            map.put("time",time);
-            map.put("percent",percent);
+            // Toast.makeText(getContext(),"each app time is "+time,Toast.LENGTH_SHORT).show();
+            long percent = time * 100 / totalTime;
+            // Toast.makeText(getContext(),"each app percent is "+percent,Toast.LENGTH_SHORT).show();
+            map.put("title", name);
+            map.put("time", time);
+            map.put("percent", percent);
             this.list.add(map);
         }
     }
