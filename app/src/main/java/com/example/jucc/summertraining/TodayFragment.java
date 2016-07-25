@@ -45,12 +45,11 @@ public class TodayFragment extends MyFragment {
         View view = super.onCreateView(inflater, container, savedInstanceState);
         adapter = new SimpleAdapter(getContext(), list, R.layout.activity_app_usage_list_item, itemName, itemID);
         readFromList(getActivity());
-        Log.d(getClass().getSimpleName(),list.get(9).toString());
+        Log.d(getClass().getSimpleName(), list.get(9).toString());
         listView.setAdapter(adapter);
         return view;
 
     }
-
 
 
     /**
@@ -73,58 +72,57 @@ public class TodayFragment extends MyFragment {
     /读取数据 并且存入list中
      */
     public void readFromList(Activity act) {
-            if (getUsageStats(act) == null) {
-                Toast.makeText(act, "没有记录", Toast.LENGTH_SHORT).show();
-            } else {
-                List<UsageStats> queryUsageStats = getUsageStats(act);
-                PackageManager pm = getContext().getPackageManager();
-                long totalTime = 0;
-                for (UsageStats usageStats : queryUsageStats) {
-                    String appName = usageStats.getPackageName();
-                    long useTime = usageStats.getTotalTimeInForeground() / 1000 / 60;
-                    String name = null;
-                    try {
-                         name = pm.getApplicationLabel(pm.getApplicationInfo(appName,PackageManager.GET_META_DATA)).toString();
-                    } catch (PackageManager.NameNotFoundException e) {
-                        e.printStackTrace();
-                    }
-                    HashMap<String, Object> map = new HashMap<>();
-                    totalTime += useTime;
-                    map.put("title", name);
-                    map.put("time", useTime);
-                    this.list.add(map);
+        if (getUsageStats(act) == null) {
+            Toast.makeText(act, "没有记录", Toast.LENGTH_SHORT).show();
+        } else {
+            List<UsageStats> queryUsageStats = getUsageStats(act);
+            PackageManager pm = getContext().getPackageManager();
+            long totalTime = 0;
+            for (UsageStats usageStats : queryUsageStats) {
+                String appName = usageStats.getPackageName();
+                long useTime = usageStats.getTotalTimeInForeground() / 1000 / 60;
+                String name = null;
+                try {
+                    name = pm.getApplicationLabel(pm.getApplicationInfo(appName, PackageManager.GET_META_DATA)).toString();
+                } catch (PackageManager.NameNotFoundException e) {
+                    e.printStackTrace();
                 }
-                Log.e(getClass().getSimpleName(),"list size is "+list.size());
-                for (int i = 0; i < list.size(); i++) {
-                    Map map = list.get(i);
-                    long time = (long) map.get("time");
-                    if(totalTime == 0) {
-                        map.put("percent", 0);
-                    } else {
-                        long percent = time * 100 / totalTime;
-                        map.put("percent", percent);
-                    }
-
-                }
+                HashMap<String, Object> map = new HashMap<>();
+                totalTime += useTime;
+                map.put("title", name);
+                map.put("time", useTime);
+                this.list.add(map);
             }
+            Log.e(getClass().getSimpleName(), "list size is " + list.size());
+            for (int i = 0; i < list.size(); i++) {
+                Map map = list.get(i);
+                long time = (long) map.get("time");
+                if (totalTime == 0) {
+                    map.put("percent", 0);
+                } else {
+                    long percent = time * 100 / totalTime;
+                    map.put("percent", percent);
+                }
+
+            }
+        }
 
 
     }
 
-/*
-/更新数据 每次点击tab 删除现有的list里面的数据 然后重新获取消息装填
- */
+    /*
+    /更新数据 每次点击tab 删除现有的list里面的数据 然后重新获取消息装填
+     */
     public void update() {
-        Log.d(getClass().getSimpleName(),list.get(9).toString());
+        //   Log.d(getClass().getSimpleName(),list.get(9).toString());
 
-        list.clear();     Log.d(getClass().getSimpleName(),list.toString());
+        list.clear();
+        Log.d(getClass().getSimpleName(), list.toString());
 
         readFromList(getActivity());
-        Log.d(getClass().getSimpleName(),list.get(9).toString());
-        Log.e(getClass().getSimpleName(),"list size is "+list.size());
+        Log.d(getClass().getSimpleName(), list.get(9).toString());
+        Log.e(getClass().getSimpleName(), "list size is " + list.size());
         //Toast.makeText(getContext(), "update executed", Toast.LENGTH_SHORT).show();
         adapter.notifyDataSetChanged();
-
     }
-
 }
