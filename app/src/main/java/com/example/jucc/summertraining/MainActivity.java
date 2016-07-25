@@ -191,7 +191,7 @@ public class MainActivity extends Activity implements CircleTimePiker.TimeAdapte
             }
         });
 
-        popMenu = new PopupWindow(mPopWindowView,150,500 ,true);
+        popMenu = new PopupWindow(mPopWindowView,700,900 ,true);
         popMenu.showAsDropDown(mPopWindowBtn);
     }
 }
