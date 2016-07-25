@@ -42,7 +42,7 @@
         <activity
             android:name=".AddJobActivity"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".ListFinishedJob"></activity>
+        <activity android:name=".ListFinishedJob" />
     </application>
 
 </manifest>

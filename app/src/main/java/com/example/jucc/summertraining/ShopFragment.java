@@ -41,7 +41,6 @@ public class ShopFragment extends Fragment implements View.OnClickListener{
         purchase= (Button) view.findViewById(R.id.purchase);
         method= DatabaseMethod.getInstance(getContext());
         purchase.setOnClickListener(this);
-        img.setImageResource(R.drawable.line);
         img.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -51,7 +50,7 @@ public class ShopFragment extends Fragment implements View.OnClickListener{
         return view;
     }
 
-    public void setResources(String title,String description,String price,int id,int speciesID){
+    public void setResources(String title,String description,int price,int id,int speciesID){
         this.title.setText(title);
         this.description.setText(description);
         this.price.setText(price);
