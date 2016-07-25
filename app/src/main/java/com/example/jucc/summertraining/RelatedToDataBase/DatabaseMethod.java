@@ -3,6 +3,7 @@ package com.example.jucc.summertraining.RelatedToDataBase;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 import android.widget.SimpleCursorAdapter;
 
 import com.example.jucc.summertraining.Entity.Fish;
@@ -280,13 +281,14 @@ public class DatabaseMethod {
     Vin 增加于 2016-7-23 迭代2
    /获得用户金币数量
     */
-    public int getCoins() {
+    public String getCoins() {
         Cursor cursor = db.rawQuery("select * from account", null);
         int coins = 0;
         while (cursor.moveToNext()) {
             coins = cursor.getInt(cursor.getColumnIndex("coins"));
+            Log.d(getClass().getSimpleName(),"coins are "+coins);
         }
-        return coins;
+        return String.valueOf(coins);
     }
 
 
@@ -295,7 +297,7 @@ public class DatabaseMethod {
     /@number 增加的数量
      */
     public void increaseCoins(int number) {
-        int coins = getCoins();
+        int coins =Integer.parseInt( getCoins());
         int newNumber = number + coins;
         db.execSQL("update account set coins =" + newNumber);
     }
@@ -305,38 +307,53 @@ public class DatabaseMethod {
     @fish 鱼对象
      */
     public void buyFish(Fish fish) {
-        int coins = getCoins();
+        int coins =Integer.parseInt( getCoins());
         int newNumber = coins - fish.getPrice();
         db.execSQL("update account set coins =" + newNumber);
-        db.execSQL("update achievement set available =1 where species=" + fish.getSpecies());
+        db.execSQL("update species set available =1 where species=" + fish.getSpecies());
     }
 
     /* species table method
-    /用于在商店显示所有现有的fish的种类和价格
+    /用于在商店显示所有现有的fish的种类和价格和资源文件id
     return 基于fish对象的list列表
      */
     public List<Fish> getAllSpecies() {
-        Cursor cursor = db.rawQuery("select * from species", null);
-        List<Fish> list = null;
+        Cursor cursor = db.rawQuery("select s.species as species,name,price,id from species s,achievement a where a.species=s.species and state=2", null);
+        List<Fish> list = new ArrayList<>();
         while (cursor.moveToNext()) {
             int species = cursor.getInt(cursor.getColumnIndex("species"));
             int price = cursor.getInt(cursor.getColumnIndex("price"));
+            int id=cursor.getInt(cursor.getColumnIndex("id"));
+            String name = cursor.getString(cursor.getColumnIndex("name"));
             Fish fish = new Fish(species, price);
+            fish.setId(id);
+            fish.setName(name);
             list.add(fish);
         }
         return list;
     }
 
     /*/
-    获取用户可用的鱼的列表
-    return 基于鱼的种类的list
-     */
-    public List<Integer> userAvailableFish() {
-        Cursor cursor = db.rawQuery("select * from achievement where available=1", null);
-        List<Integer> list = null;
+    获取用户可用的鱼的列表 包含 species,name,id,state
+    return 包含鱼的的list的list对象 每一个对象是一个包含3个state的鱼的list     */
+    public List< List<Fish> > userAvailableFish() {
+        Cursor cursor = db.rawQuery("select s.species as species,name,id,state from species s,achievement a where available=1 and s.species=a.species)", null);
+        List<List<Fish>> list = null;
         while (cursor.moveToNext()) {
+            List<Fish> local = null;
             int species = cursor.getInt(cursor.getColumnIndex("species"));
-            list.add(species);
+            String name =cursor.getString(cursor.getColumnIndex("name"));
+            int id = cursor.getInt(cursor.getColumnIndex("id"));
+            int state = cursor.getInt(cursor.getColumnIndex("state"));
+            Fish fish = new Fish(species);
+            fish.setName(name);
+            fish.setId(id);
+            fish.setState(state);
+            local.add(fish);
+            if(state==2){
+                list.add(local);
+                local.clear();
+            }
         }
         return list;
     }
@@ -366,6 +383,63 @@ public class DatabaseMethod {
         cu.moveToNext();
         int times = cu.getInt(cu.getColumnIndex("times"));
         return times;
+    }
+
+    public List<Fish> achievementSmall(){
+        String sql = "select s.species as species,name,id,times from achievement a,species s where s.species=a.species and state=0";
+        Cursor cursor=db.rawQuery(sql,null);
+        List<Fish> list = null;
+        while (cursor.moveToNext()){
+            int species = cursor.getInt(cursor.getColumnIndex("species"));
+            String name = cursor.getString(cursor.getColumnIndex("name"));
+            int id = cursor.getInt(cursor.getColumnIndex("id"));
+            int times = cursor.getInt(cursor.getColumnIndex("times"));
+            Fish fish = new Fish(species);
+            fish.setName(name);
+            fish.setId(id);
+            fish.setTimes(times);
+            list.add(fish);
+        }
+        return list;
+    }
+    public List<Fish> achievementMid(){
+        String sql = "select s.species as species,name,id,times from achievement a,species s where s.species=a.species and state=1";
+        Cursor cursor=db.rawQuery(sql,null);
+        List<Fish> list = null;
+        while (cursor.moveToNext()){
+            int species = cursor.getInt(cursor.getColumnIndex("species"));
+            String name = cursor.getString(cursor.getColumnIndex("name"));
+            int id = cursor.getInt(cursor.getColumnIndex("id"));
+            int times = cursor.getInt(cursor.getColumnIndex("times"));
+            Fish fish = new Fish(species);
+            fish.setName(name);
+            fish.setId(id);
+            fish.setTimes(times);
+            list.add(fish);
+        }
+        return list;
+    }
+    public List<Fish> achievementBig(){
+        String sql = "select s.species as species,name,id,times from achievement a,species s where s.species=a.species and state=2";
+        Cursor cursor=db.rawQuery(sql,null);
+        List<Fish> list = null;
+        while (cursor.moveToNext()){
+            int species = cursor.getInt(cursor.getColumnIndex("species"));
+            String name = cursor.getString(cursor.getColumnIndex("name"));
+            int id = cursor.getInt(cursor.getColumnIndex("id"));
+            int times = cursor.getInt(cursor.getColumnIndex("times"));
+            Fish fish = new Fish(species);
+            fish.setName(name);
+            fish.setId(id);
+            fish.setTimes(times);
+            list.add(fish);
+        }
+        return list;
+    }
+
+
+    public void insertFakeRecords(){
+        String sql= "insert into ";
     }
 
 

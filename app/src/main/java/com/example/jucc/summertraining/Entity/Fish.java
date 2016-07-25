@@ -7,6 +7,7 @@ package com.example.jucc.summertraining.Entity;
 public class Fish {
     private int species;
     //鱼的种类 0-9分别代表不同的鱼
+    private String name;
     //0 - xxx 1- xxx 2-xxx 3-xxx 4-xxx 5-xxx 6-xxx 7-xxx 8-xxx 9-xxx
     private int price;
     //每种鱼对应的价格
@@ -14,6 +15,23 @@ public class Fish {
     //鱼所处的状态 0-2 分别代表三种状态 小 中 大
     private int times;
     //该种状态的鱼被完成的次数，UI端不需要传入该参数
+    private int id;
+    //资源文件id
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
 
     public int getTimes() {
         return times;
@@ -64,5 +82,8 @@ public class Fish {
     public Fish(int species,int state,boolean success){
         this.species=species;
         this.state=state;
+    }
+    public Fish (int species){
+        this.species=species;
     }
 }

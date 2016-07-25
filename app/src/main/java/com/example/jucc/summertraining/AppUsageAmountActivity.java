@@ -135,11 +135,7 @@ public class AppUsageAmountActivity extends FragmentActivity {
             databaseMethod.insert_usetime("sdf", 499, "2016-07-19");
         }
         //如果不能获取用量信息，则调用系统设置，给app授权
-        if (!hasModule(this)) {
-            Intent intent = new Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS);
-            startActivity(intent);
-
-
+        if (hasModule(this)) {
         }
     }
 

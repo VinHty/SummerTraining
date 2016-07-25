@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.example.jucc.summertraining.Entity.Fish;
 import com.example.jucc.summertraining.RelatedToDataBase.DatabaseMethod;
@@ -19,16 +20,21 @@ public class ShopActivity extends AppCompatActivity {
     private FragmentAdapter fragmentAdapter;
     private ViewPager viewPager;
     private Button back;
-    private int currentIndex;
+    private DatabaseMethod method;
+    private TextView coins;
+    public String[] description={"",""};
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_shop);
+        method=DatabaseMethod.getInstance(this);
         findById();
         newFragmentAndFillList();
+        init();
         fragmentAdapter=new FragmentAdapter(this.getSupportFragmentManager(),list);
         viewPager.setAdapter(fragmentAdapter);
         viewPager.setCurrentItem(0);
+
 
     }
     private void findById(){
@@ -44,6 +50,18 @@ public class ShopActivity extends AppCompatActivity {
                 }
             }
         });
+        coins= (TextView) findViewById(R.id.coins);
+    }
+    protected void init(){
+        List<Fish> localList = method.getAllSpecies();
+        for(int i =0;i<localList.size();i++){
+            ShopFragment fragment= (ShopFragment) list.get(i);
+            Fish fish = localList.get(i);
+            if(fish.getSpecies()==i){
+                 fragment.setResources(fish.getName(),description[i],fish.getPrice(),fish.getId(),i);
+            }
+        }
+        coins.setText("金币:"+method.getCoins());
 
     }
 
