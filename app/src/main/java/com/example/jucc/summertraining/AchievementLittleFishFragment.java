@@ -151,9 +151,12 @@ public class AchievementLittleFishFragment extends ListFragment {
 
     //listview中每个item的布局class
     public final class ViewHolder{
-        public ImageView imagerview;
-        public TextView fishname;
-        public TextView fishamount;
+        public ImageView leftimagerview;
+        public TextView leftfishname;
+        public TextView leftfishamount;
+        public ImageView rightimageview;
+        public TextView rightfishname;
+        public TextView rightfishamount;
     }
 
     //存取数据的adapter
@@ -192,17 +195,33 @@ public class AchievementLittleFishFragment extends ListFragment {
             if (convertView == null) {
                 holder=new ViewHolder();
                 convertView = mInflater.inflate(R.layout.activity_job_details_listview_item, null);
-                holder.imagerview = (ImageView) convertView.findViewById(R.id.littlefish_imageview);
-                holder.fishname = (TextView) convertView.findViewById(R.id.littlefish_name);
-                holder.fishamount = (TextView) convertView.findViewById(R.id.littlefish_textview);
+                holder.leftimagerview = (ImageView) convertView.findViewById(R.id.littlefish_leftimageview);
+                holder.leftfishname = (TextView) convertView.findViewById(R.id.littlefish_leftname);
+                holder.leftfishamount = (TextView) convertView.findViewById(R.id.littlefish_lefttextview);
+                holder.rightimageview = (ImageView)convertView.findViewById(R.id.littlefish_rightimageview);
+                holder.rightfishname = (TextView)convertView.findViewById(R.id.littlefish_rightname);
+                holder.rightfishamount = (TextView)convertView.findViewById(R.id.littlefish_righttextview);
                 convertView.setTag(holder);
             }else {
                 holder = (ViewHolder)convertView.getTag();
             }
-            //设置listview中每行的文本信息
-            holder.imagerview.setImageDrawable(getResources().getDrawable((int)mData.get(position).get("image")));
-            holder.fishname.setText((String)mData.get(position).get("name"));
-            holder.fishamount.setText((String)mData.get(position).get("amount"));
+            if(position == 0){
+                //设置listview中每行的文本信息
+                holder.leftimagerview.setImageDrawable(getResources().getDrawable((int)mData.get(0).get("image")));
+                holder.leftfishname.setText((String)mData.get(0).get("name"));
+                holder.leftfishamount.setText((String)mData.get(0).get("amount"));
+                holder.rightimageview.setImageDrawable(getResources().getDrawable((int)mData.get(1).get("image")));
+                holder.rightfishname.setText((String)mData.get(1).get("name"));
+                holder.rightfishamount.setText((String)mData.get(1).get("amount"));
+            }else if(position == 1 || position == 2){
+                //设置listview中每行的文本信息
+                holder.leftimagerview.setImageDrawable(getResources().getDrawable((int)mData.get(2*position).get("image")));
+                holder.leftfishname.setText((String)mData.get(2*position).get("name"));
+                holder.leftfishamount.setText((String)mData.get(2*position).get("amount"));
+                holder.rightimageview.setImageDrawable(getResources().getDrawable((int)mData.get(2*position+1).get("image")));
+                holder.rightfishname.setText((String)mData.get(2*position+1).get("name"));
+                holder.rightfishamount.setText((String)mData.get(2*position+1).get("amount"));
+            }
             return convertView;
         }
     }
