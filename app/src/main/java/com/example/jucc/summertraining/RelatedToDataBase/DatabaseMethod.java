@@ -10,7 +10,6 @@ import com.example.jucc.summertraining.Entity.Fish;
 import com.example.jucc.summertraining.Entity.Job;
 import com.example.jucc.summertraining.Entity.UseTime;
 import com.example.jucc.summertraining.Entity.UseTimeList;
-import com.example.jucc.summertraining.R;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -318,7 +317,7 @@ public class DatabaseMethod {
     return 基于fish对象的list列表
      */
     public List<Fish> getAllSpecies() {
-        Cursor cursor = db.rawQuery("select s.species as species,name,price,id from species s,achievement a where a.species=s.species and state=2", null);
+        Cursor cursor = db.rawQuery("select s.species as species,name,price,id from species as s,achievement as a where a.species=s.species and state=2", null);
         List<Fish> list = new ArrayList<>();
         while (cursor.moveToNext()) {
             int species = cursor.getInt(cursor.getColumnIndex("species"));
@@ -337,7 +336,7 @@ public class DatabaseMethod {
     获取用户可用的鱼的列表 包含 species,name,id,state
     return 包含鱼的的list的list对象 每一个对象是一个包含3个state的鱼的list     */
     public List< List<Fish> > userAvailableFish() {
-        Cursor cursor = db.rawQuery("select s.species as species,name,id,state from species s,achievement a where available=1 and s.species=a.species)", null);
+        Cursor cursor = db.rawQuery("select s.species as species,name,id,state from species as s,achievement as a where available=1 and s.species=a.species)", null);
         List<List<Fish>> list = null;
         while (cursor.moveToNext()) {
             List<Fish> local = null;
@@ -386,7 +385,7 @@ public class DatabaseMethod {
     }
 
     public List<Fish> achievementSmall(){
-        String sql = "select s.species as species,name,id,times from achievement a,species s where s.species=a.species and state=0";
+        String sql = "select s.species as species,name,id,times from achievement as a,species as s where s.species=a.species and state=0";
         Cursor cursor=db.rawQuery(sql,null);
         List<Fish> list = null;
         while (cursor.moveToNext()){
@@ -403,7 +402,7 @@ public class DatabaseMethod {
         return list;
     }
     public List<Fish> achievementMid(){
-        String sql = "select s.species as species,name,id,times from achievement a,species s where s.species=a.species and state=1";
+        String sql = "select s.species as species,name,id,times from achievement as a,species as s where s.species=a.species and state=1";
         Cursor cursor=db.rawQuery(sql,null);
         List<Fish> list = null;
         while (cursor.moveToNext()){
@@ -420,7 +419,7 @@ public class DatabaseMethod {
         return list;
     }
     public List<Fish> achievementBig(){
-        String sql = "select s.species as species,name,id,times from achievement a,species s where s.species=a.species and state=2";
+        String sql = "select s.species as species,name,id,times from achievement as a,species as s where s.species=a.species and state=2";
         Cursor cursor=db.rawQuery(sql,null);
         List<Fish> list = null;
         while (cursor.moveToNext()){
