@@ -4,9 +4,14 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.ListFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.BaseAdapter;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.example.jucc.summertraining.Entity.Fish;
 import com.example.jucc.summertraining.Entity.Job;
@@ -25,7 +30,7 @@ import java.util.Map;
  * Use the {@link AchievementLittleFishFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class AchievementLittleFishFragment extends Fragment {
+public class AchievementLittleFishFragment extends ListFragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -130,15 +135,76 @@ public class AchievementLittleFishFragment extends Fragment {
         List<Fish> myFish = dbMethod.getAllSpecies();  //从数据库读取未完成的任务,以list的形式
         for(int i = 0; i < myFish.size(); i++){
             Map<String,Object> map = new HashMap<String,Object>();
-            map.put("title",myFish.get(i));
-            map.put("timeStamp",myFish.get(i));
-            map.put("alertTime",myFish.get(i));
-            map.put("edit","edit" + i);
-            map.put("start","start" + i);
-            map.put("delete","delete" + i);
+            map.put("image",myFish.get(i).getSpecies());
+            map.put("name",myFish.get(i).getName());
+            map.put("amount",myFish.get(i).getTimes());
             list.add(map);
         }
         return list;
+    }
+
+    //获取当前日期和时间
+    public String getCurrentTime(){
+        DatabaseMethod db =DatabaseMethod.getInstance(getContext());
+        return db.getStringSecond();
+    }
+
+    //listview中每个item的布局class
+    public final class ViewHolder{
+        public ImageView imagerview;
+        public TextView fishname;
+        public TextView fishamount;
+    }
+
+    //存取数据的adapter
+    public class MyAdapter extends BaseAdapter {
+
+        private LayoutInflater mInflater;
+
+        //adapter的构造函数
+        public MyAdapter(Context context){
+            this.mInflater = LayoutInflater.from(context);
+        }
+
+        @Override
+        public int getCount() {
+            // TODO Auto-generated method stub
+            return mData.size();
+        }
+
+        @Override
+        public Object getItem(int arg0) {
+            // TODO Auto-generated method stub
+            return null;
+        }
+
+        @Override
+        public long getItemId(int arg0) {
+            // TODO Auto-generated method stub
+            return 0;
+        }
+
+        //listview中每行的view
+        @Override
+        public View getView(final int position, View convertView, ViewGroup parent) {
+
+            ViewHolder holder = null;
+            if (convertView == null) {
+                holder=new ViewHolder();
+                convertView = mInflater.inflate(R.layout.activity_job_details_listview_item, null);
+                holder.imagerview = (ImageView) convertView.findViewById(R.id.littlefish_imageview);
+                holder.fishname = (TextView) convertView.findViewById(R.id.littlefish_name);
+                holder.fishamount = (TextView) convertView.findViewById(R.id.littlefish_textview);
+                convertView.setTag(holder);
+            }else {
+                holder = (ViewHolder)convertView.getTag();
+            }
+            //设置listview中每行的文本信息
+            holder.imagerview.setImageDrawable(getResources().getDrawable((int)mData.get(position).get("image")));
+            holder.fishname.setText((String)mData.get(position).get("name"));
+            holder.fishamount.setText((String)mData.get(position).get("amount"));
+            return convertView;
+        }
     }
 
 }
