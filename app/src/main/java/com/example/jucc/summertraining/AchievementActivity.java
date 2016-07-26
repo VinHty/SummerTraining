@@ -26,6 +26,8 @@ public class AchievementActivity extends AppCompatActivity implements View.OnCli
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_achievement);
 
+        fragmentManager = getSupportFragmentManager();
+
         button_return = (Button)findViewById(R.id.activity_achievement_return);
         button_little = (Button)findViewById(R.id.activity_achievement_littlefish);
         button_medium = (Button)findViewById(R.id.activity_achievement_mediumfish);

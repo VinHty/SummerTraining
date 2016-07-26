@@ -186,7 +186,7 @@ public class MainActivity extends Activity implements CircleTimePiker.TimeAdapte
         achi.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Intent intent = new Intent();
-                intent.setClass(MainActivity.this, ShopActivity.class);
+                intent.setClass(MainActivity.this, AchievementActivity.class);
                 MainActivity.this.startActivity(intent);
             }
         });
