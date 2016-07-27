@@ -15,14 +15,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ShopActivity extends AppCompatActivity {
-   private ShopFragment Fish0,Fish1,Fish2,Fish3,Fish4,Fish5,Fish6,Fish7,Fish8,Fish9;
+   private ShopFragment Fish0,Fish1,Fish2,Fish3,Fish4,Fish5;
     private List<Fragment>  list =new ArrayList<>();
+    public List<Fish > fishList=null;
     private FragmentAdapter fragmentAdapter;
     private ViewPager viewPager;
     private Button back;
     private DatabaseMethod method;
     private TextView coins;
-    public String[] description={"",""};
+    public String[] description={"sdf","sdf","sdfsdf","sdfsfsddfsdf","sdfsdfsfsf","sdfsfsdfsdf"};
+    public static int times =0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,7 +32,7 @@ public class ShopActivity extends AppCompatActivity {
         method=DatabaseMethod.getInstance(this);
         findById();
         newFragmentAndFillList();
-        init();
+        fishList=method.getAllSpecies();
         fragmentAdapter=new FragmentAdapter(this.getSupportFragmentManager(),list);
         viewPager.setAdapter(fragmentAdapter);
         viewPager.setCurrentItem(0);
@@ -52,17 +54,11 @@ public class ShopActivity extends AppCompatActivity {
         });
         coins= (TextView) findViewById(R.id.coins);
     }
-    protected void init(){
-        List<Fish> localList = method.getAllSpecies();
-        for(int i =0;i<localList.size();i++){
-            ShopFragment fragment= (ShopFragment) list.get(i);
-            Fish fish = localList.get(i);
-            if(fish.getSpecies()==i){
-                 fragment.setResources(fish.getName(),description[i],fish.getPrice(),fish.getId(),i);
-            }
-        }
+    protected void init(ShopFragment shopFragment){
+        Fish fish =fishList.get(times);
+        shopFragment.setResources(fish.getName(),description[times],String.valueOf(fish.getPrice()),fish.getId(),times);
         coins.setText("金币:"+method.getCoins());
-
+        times++;
     }
 
 
@@ -73,20 +69,12 @@ public class ShopActivity extends AppCompatActivity {
         Fish3=new ShopFragment();
         Fish4=new ShopFragment();
         Fish5=new ShopFragment();
-        Fish6=new ShopFragment();
-        Fish7=new ShopFragment();
-        Fish8=new ShopFragment();
-        Fish9=new ShopFragment();
         list.add(Fish0);
         list.add(Fish1);
         list.add(Fish2);
         list.add(Fish3);
         list.add(Fish4);
         list.add(Fish5);
-        list.add(Fish6);
-        list.add(Fish7);
-        list.add(Fish8);
-        list.add(Fish9);
     }
 
 

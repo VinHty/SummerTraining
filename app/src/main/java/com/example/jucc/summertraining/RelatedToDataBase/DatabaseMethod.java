@@ -10,6 +10,7 @@ import com.example.jucc.summertraining.Entity.Fish;
 import com.example.jucc.summertraining.Entity.Job;
 import com.example.jucc.summertraining.Entity.UseTime;
 import com.example.jucc.summertraining.Entity.UseTimeList;
+import com.example.jucc.summertraining.R;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -438,8 +439,9 @@ public class DatabaseMethod {
     }
 
 
-    public void insertFakeRecords(){
-        String sql= "insert into ";
+    public void insertRecords(){
+
+
     }
 
 

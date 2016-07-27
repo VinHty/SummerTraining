@@ -1,8 +1,11 @@
 package com.example.jucc.summertraining;
 
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -27,7 +30,7 @@ public class ShopFragment extends Fragment implements View.OnClickListener {
     private Button purchase;
     private DatabaseMethod method;
     int speciesID;
-    
+
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
         View view = inflater.inflate(R.layout.fragment_shop_activity, container, false);
@@ -44,10 +47,11 @@ public class ShopFragment extends Fragment implements View.OnClickListener {
                 Log.e(getClass().getSimpleName(), "click img");
             }
         });
+        ((ShopActivity)getActivity()).init(this);
         return view;
     }
 
-    public void setResources(String title, String description, int price, int id, int speciesID) {
+    public void setResources(String title, String description, String price, int id, int speciesID) {
         this.title.setText(title);
         this.description.setText(description);
         this.price.setText(price);
@@ -65,9 +69,35 @@ public class ShopFragment extends Fragment implements View.OnClickListener {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.purchase:
-                Fish fish = createFish();
-                method.buyFish(fish);
+                if(Integer.parseInt(getPrice())>=Integer.parseInt(method.getCoins())) {
+                    Fish fish = createFish();
+                    method.buyFish(fish);
+                    new AlertDialog.Builder(getActivity()).setTitle("提示")//设置对话框标题
+                            .setMessage("购买成功")//设置显示的内容
+                            .setPositiveButton("确定", new DialogInterface.OnClickListener() {//添加确定按钮
 
+
+                                @Override
+
+                                public void onClick(DialogInterface dialog, int which) {//确定按钮的响应事件
+
+                                }
+
+                            }).show();//在按键响应事件中显示此对话框
+                }
+                else  new AlertDialog.Builder(getActivity()).setTitle("提示")//设置对话框标题
+                        .setMessage("您的金币不足")//设置显示的内容
+                        .setPositiveButton("确定",new DialogInterface.OnClickListener() {//添加确定按钮
+
+
+
+                            @Override
+
+                            public void onClick(DialogInterface dialog, int which) {//确定按钮的响应事件
+
+                            }
+
+                        }).show();//在按键响应事件中显示此对话框
         }
 
     }

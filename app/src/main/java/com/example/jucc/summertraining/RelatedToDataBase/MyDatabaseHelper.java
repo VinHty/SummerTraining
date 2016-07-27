@@ -4,6 +4,8 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import com.example.jucc.summertraining.R;
+
 /**
  * Created by Vin on 2016/7/14.
  */
@@ -29,7 +31,31 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         //用于存放鱼的种类的表 ， 存放种类和价格，是否可用（使用之前需要在商店购买）， 客户端只需要读取，不需要对这个表进行修改和删除。
         db.execSQL("create table   achievement(species INTEGER not null , state INTEGER not null,times INTEGER default 0,id INTEGER not null,PRIMARY KEY(species,state))");
         //用于存放用户的成就， 分别对应鱼的 种类，状态，次数，资源文件ID
-
+        //存入固定数据
+        db.execSQL("insert into achievement values(0,0,0,"+ R.drawable.a_00+")");
+        db.execSQL("insert into achievement values(0,1,0,"+ R.drawable.a_01+")");
+        db.execSQL("insert into achievement values(0,2,0,"+ R.drawable.a_02+")");
+        db.execSQL("insert into achievement values(1,0,0,"+ R.drawable.b_00+")");
+        db.execSQL("insert into achievement values(1,1,0,"+ R.drawable.b_01+")");
+        db.execSQL("insert into achievement values(1,2,0,"+ R.drawable.b_02+")");
+        db.execSQL("insert into achievement values(2,0,0,"+ R.drawable.c_00+")");
+        db.execSQL("insert into achievement values(2,1,0,"+ R.drawable.c_01+")");
+        db.execSQL("insert into achievement values(2,2,0,"+ R.drawable.c_02+")");
+        db.execSQL("insert into achievement values(3,0,0,"+ R.drawable.d_00+")");
+        db.execSQL("insert into achievement values(3,1,0,"+ R.drawable.d_01+")");
+        db.execSQL("insert into achievement values(3,2,0,"+ R.drawable.d_02+")");
+        db.execSQL("insert into achievement values(4,0,0,"+ R.drawable.e_00+")");
+        db.execSQL("insert into achievement values(4,1,0,"+ R.drawable.e_01+")");
+        db.execSQL("insert into achievement values(4,2,0,"+ R.drawable.e_02+")");
+        db.execSQL("insert into achievement values(5,0,0,"+ R.drawable.f_00+")");
+        db.execSQL("insert into achievement values(5,1,0,"+ R.drawable.f_01+")");
+        db.execSQL("insert into achievement values(5,2,0,"+ R.drawable.f_02+")");
+        db.execSQL("insert into species values(0,"+"'蓝精灵'"+",200,1)");
+        db.execSQL("insert into species values(1,"+"'小黄鱼'"+",300,0)");
+        db.execSQL("insert into species values(2,"+"'鲤鱼'"+",500,0)");
+        db.execSQL("insert into species values(3,"+"'武昌鱼'"+",700,0)");
+        db.execSQL("insert into species values(4,"+"'胖头鱼'"+",1000,0)");
+        db.execSQL("insert into species values(5,"+"'蝴蝶鱼'"+",1200,0)");
     }
 
 
