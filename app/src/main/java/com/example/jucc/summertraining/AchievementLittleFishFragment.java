@@ -5,6 +5,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.ListFragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,7 +39,6 @@ public class AchievementLittleFishFragment extends ListFragment {
 
     private List<Map<String, Object>> mData;
     private MyAdapter adapter;
-    private DatabaseMethod dbMethod;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -81,7 +81,6 @@ public class AchievementLittleFishFragment extends ListFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        dbMethod = DatabaseMethod.getInstance(getContext());
         mData = getData();
         adapter = new MyAdapter(getContext());
         setListAdapter(adapter);
@@ -132,7 +131,8 @@ public class AchievementLittleFishFragment extends ListFragment {
     private List<Map<String, Object>> getData() {
         List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
         DatabaseMethod dbMethod = DatabaseMethod.getInstance(getContext());
-        List<Fish> myFish = dbMethod.getAllSpecies();  //从数据库读取未完成的任务,以list的形式
+        List<Fish> myFish = dbMethod.achievementSmall();
+        Log.e("DB","list:    "+myFish.size());//从数据库读取未完成的任务,以list的形式
         for(int i = 0; i < myFish.size(); i++){
             Map<String,Object> map = new HashMap<String,Object>();
             map.put("image",myFish.get(i).getSpecies());

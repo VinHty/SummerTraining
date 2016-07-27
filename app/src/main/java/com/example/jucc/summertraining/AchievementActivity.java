@@ -1,6 +1,7 @@
 package com.example.jucc.summertraining;
 
 import android.content.Intent;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
@@ -8,7 +9,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
-public class AchievementActivity extends AppCompatActivity implements View.OnClickListener{
+public class AchievementActivity extends FragmentActivity implements View.OnClickListener{
 
     private Button button_return;
     private Button button_little;
@@ -80,7 +81,7 @@ public class AchievementActivity extends AppCompatActivity implements View.OnCli
                 {
                     // 如果MessageFragment为空，则创建一个并添加到界面上
                     littleFishFragment = new AchievementLittleFishFragment();
-                    transaction.add(R.id.id_content, littleFishFragment);
+                    transaction.add(R.id.activity_achievement_content, littleFishFragment);
                 } else
                 {
                     // 如果MessageFragment不为空，则直接将它显示出来
@@ -95,7 +96,7 @@ public class AchievementActivity extends AppCompatActivity implements View.OnCli
                 {
                     // 如果MessageFragment为空，则创建一个并添加到界面上
                     mediumFishFragment = new AchievementMediumFishFragment();
-                    transaction.add(R.id.id_content, mediumFishFragment);
+                    transaction.add(R.id.activity_achievement_content, mediumFishFragment);
                 } else
                 {
                     // 如果MessageFragment不为空，则直接将它显示出来
@@ -107,7 +108,7 @@ public class AchievementActivity extends AppCompatActivity implements View.OnCli
                 {
                     // 如果MessageFragment为空，则创建一个并添加到界面上
                     bigFishFragment = new AchievementBigFishFragment();
-                    transaction.add(R.id.id_content, bigFishFragment);
+                    transaction.add(R.id.activity_achievement_content, bigFishFragment);
                 } else
                 {
                     // 如果MessageFragment不为空，则直接将它显示出来

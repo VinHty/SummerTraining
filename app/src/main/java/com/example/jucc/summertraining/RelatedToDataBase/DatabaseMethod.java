@@ -387,7 +387,7 @@ public class DatabaseMethod {
     public List<Fish> achievementSmall(){
         String sql = "select s.species as species,name,id,times from achievement as a,species as s where s.species=a.species and state=0";
         Cursor cursor=db.rawQuery(sql,null);
-        List<Fish> list = null;
+        List<Fish> list =new ArrayList<Fish>();
         while (cursor.moveToNext()){
             int species = cursor.getInt(cursor.getColumnIndex("species"));
             String name = cursor.getString(cursor.getColumnIndex("name"));
@@ -399,6 +399,7 @@ public class DatabaseMethod {
             fish.setTimes(times);
             list.add(fish);
         }
+        Log.e("DB","list:    "+list.toString());
         return list;
     }
     public List<Fish> achievementMid(){
