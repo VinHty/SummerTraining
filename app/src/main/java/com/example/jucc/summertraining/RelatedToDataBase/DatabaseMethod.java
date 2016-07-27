@@ -406,7 +406,7 @@ public class DatabaseMethod {
     public List<Fish> achievementMid(){
         String sql = "select s.species as species,name,id,times from achievement as a,species as s where s.species=a.species and state=1";
         Cursor cursor=db.rawQuery(sql,null);
-        List<Fish> list = null;
+        List<Fish> list = new ArrayList<Fish>();
         while (cursor.moveToNext()){
             int species = cursor.getInt(cursor.getColumnIndex("species"));
             String name = cursor.getString(cursor.getColumnIndex("name"));
@@ -423,7 +423,7 @@ public class DatabaseMethod {
     public List<Fish> achievementBig(){
         String sql = "select s.species as species,name,id,times from achievement as a,species as s where s.species=a.species and state=2";
         Cursor cursor=db.rawQuery(sql,null);
-        List<Fish> list = null;
+        List<Fish> list = new ArrayList<Fish>();
         while (cursor.moveToNext()){
             int species = cursor.getInt(cursor.getColumnIndex("species"));
             String name = cursor.getString(cursor.getColumnIndex("name"));
