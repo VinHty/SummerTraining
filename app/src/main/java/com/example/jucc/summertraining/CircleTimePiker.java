@@ -447,7 +447,7 @@ public class CircleTimePiker extends View {
     }
 
     private void drawFish(Canvas canvas){
-        bitMap= BitmapFactory.decodeResource(getResources(),R.drawable.test);
+        //bitMap= BitmapFactory.decodeResource(getResources(),R.drawable.test);
         float left = getPaddingLeft() +(getWidth()-mCircleRadius*2)/2+((float)mCircleTargetRadius)*(float)1.5;
         float top = getPaddingTop()+(getHeight()-mCircleRadius*2)/2+((float)mCircleTargetRadius)*(float)1.5;
         float right = canvas.getWidth() - getPaddingRight()-(getWidth()-mCircleRadius*2)/2-((float)mCircleTargetRadius)*(float)1.5;
