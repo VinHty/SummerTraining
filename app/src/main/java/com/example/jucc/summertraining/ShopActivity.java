@@ -4,6 +4,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -36,6 +37,7 @@ public class ShopActivity extends AppCompatActivity {
         fragmentAdapter=new FragmentAdapter(this.getSupportFragmentManager(),list);
         viewPager.setAdapter(fragmentAdapter);
         viewPager.setCurrentItem(0);
+        //Log.d(getClass().getSimpleName(),"调用getCoins"+method.getCoins());
 
 
     }
@@ -55,6 +57,7 @@ public class ShopActivity extends AppCompatActivity {
         coins= (TextView) findViewById(R.id.coins);
     }
     protected void init(ShopFragment shopFragment){
+        times=times%6;
         Fish fish =fishList.get(times);
         shopFragment.setResources(fish.getName(),description[times],String.valueOf(fish.getPrice()),fish.getId(),times);
         coins.setText("金币:"+method.getCoins());
