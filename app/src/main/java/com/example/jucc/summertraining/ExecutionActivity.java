@@ -1,17 +1,25 @@
 package com.example.jucc.summertraining;
 
 import android.app.Activity;
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.CountDownTimer;
+import android.os.Vibrator;
+import android.provider.Settings;
 import android.support.v7.app.AlertDialog;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.jucc.summertraining.Entity.Fish;
 import com.example.jucc.summertraining.RelatedToDataBase.DatabaseMethod;
@@ -39,6 +47,9 @@ public class ExecutionActivity extends Activity {
     private int now=0;
     private Bundle bundle;
     private Intent intent;
+    private Vibrator vibrator;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -180,6 +191,10 @@ public class ExecutionActivity extends Activity {
                 int m=(int)(i*0.6+Math.pow(2,state));
                 Log.e("Exe","m:   "+m);
                 quickJobFinish.increaseCoins(m);
+                vibrator = (Vibrator)getSystemService(Context.VIBRATOR_SERVICE);
+                long [] pattern = {100,400,100,400};   // 停止 开启 停止 开启
+                vibrator.vibrate(pattern,2);           //重复两次上面的pattern 如果只想震动一次，index设为-1
+          //      onStop();
                 new AlertDialog.Builder(ExecutionActivity.this).setTitle("成功")//设置对话框标题1
                         .setMessage("任务成功")//设置显示的内容
                         .setPositiveButton("分享",new DialogInterface.OnClickListener() {//添加确定按钮
@@ -223,6 +238,8 @@ public class ExecutionActivity extends Activity {
             quickJobGiveUp.updateAchievement(fishGiveUp);
 
         }
+
+
         //关闭Activity并且跳转到MainActivity
         Intent intent = new Intent();
         intent.setClass(ExecutionActivity.this,MainActivity.class);
@@ -242,4 +259,8 @@ public class ExecutionActivity extends Activity {
         return state;
     }
 
+    public void onStop(){
+        super.onStop();
+        vibrator.cancel();
+    }
 }

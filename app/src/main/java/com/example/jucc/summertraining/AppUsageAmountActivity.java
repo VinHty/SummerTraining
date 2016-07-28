@@ -119,7 +119,12 @@ public class AppUsageAmountActivity extends FragmentActivity {
         //
         init();
         initTabLineWidth();
-        //第一次启动时做的工作
+        //如果不能获取用量信息，则调用系统设置，给app授权
+        if (hasModule(this)) {
+        }
+    }
+
+    public void insertUsage() {
         if (checkFirstLanuch()) {
             //第一次启动 将用量存入数据库
             for (int a = 0; a < mTodayFg.list.size(); a++) {
@@ -127,15 +132,7 @@ public class AppUsageAmountActivity extends FragmentActivity {
                 String appName = (String) map.get("title");
                 int useTime = (int) map.get("time");
                 databaseMethod.insert_nowusetime(appName, 0, useTime);
-
             }
-
-            databaseMethod.insert_usetime("leizhen", 200, "2016-07-19");
-            databaseMethod.insert_usetime("mdzz", 100, "2016-07-19");
-            databaseMethod.insert_usetime("sdf", 499, "2016-07-19");
-        }
-        //如果不能获取用量信息，则调用系统设置，给app授权
-        if (hasModule(this)) {
         }
     }
 
