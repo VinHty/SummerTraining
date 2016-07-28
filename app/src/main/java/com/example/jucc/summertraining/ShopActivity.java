@@ -55,6 +55,7 @@ public class ShopActivity extends AppCompatActivity {
         coins= (TextView) findViewById(R.id.coins);
     }
     protected void init(ShopFragment shopFragment){
+        times=times%6;
         Fish fish =fishList.get(times);
         shopFragment.setResources(fish.getName(),description[times],String.valueOf(fish.getPrice()),fish.getId(),times);
         coins.setText("金币:"+method.getCoins());

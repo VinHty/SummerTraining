@@ -213,8 +213,8 @@ public class MainActivity extends Activity implements CircleTimePiker.TimeAdapte
         Button queryTiming = (Button)mPopWindowView.findViewById(R.id.timing_query);
         queryTiming.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                //该功能只支持api22及以上功能，若版本低会弹出提醒
-                if(getAndroidSDKVersion()<=22){
+                //该功能只支持api21及以上功能，若版本低会弹出提醒
+                if(getAndroidSDKVersion()<21){
                     new AlertDialog.Builder(MainActivity.this).setTitle("提醒")//设置对话框标题
                             .setMessage("您的安卓版本较低，暂无法使用该功能")//设置显示的内容
                             .setPositiveButton("确定",new DialogInterface.OnClickListener() {//添加确定按钮
