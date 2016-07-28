@@ -12,14 +12,19 @@
     tools:context="com.example.jucc.summertraining.MainActivity"
     >
 
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center">
 
 
 
         <com.example.jucc.summertraining.CircleProgressBar
             android:id="@+id/circleProgerss"
-            android:layout_width="200dp"
-            android:layout_height="200dp"
-            android:layout_gravity="center"
+            android:layout_width="258dp"
+            android:layout_height="258dp"
+            android:gravity="center"
+            android:background="@color/transparent"
             circle_Progress:backColor="#ffffff"
             circle_Progress:startAngle="-90"
             circle_Progress:roundColor="#D1D1D1"
@@ -29,6 +34,16 @@
             circle_Progress:textSize="18sp"
             />
 
+
+                <ImageButton
+                    android:id="@+id/fish_state"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:background="@color/transparent"
+                    android:src="@drawable/a_00"/>
+
+        </FrameLayout>
 
         <Button
             android:id="@+id/give_up"

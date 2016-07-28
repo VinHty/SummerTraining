@@ -11,31 +11,46 @@
         android:fitsSystemWindows="true"
         tools:context="com.example.jucc.summertraining.MainActivity">
 
-<Button
-    android:id="@+id/pop_menu"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:text="caidan"/>
+            <Button
+                android:id="@+id/pop_menu"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="caidan"/>
 
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="451dp"
+                android:layout_height="match_parent"
                 android:orientation="vertical"
                 android:layout_gravity="center_horizontal">
 
-                <com.example.jucc.summertraining.CircleTimePiker
-                    android:id="@+id/circleSelect"
-                    android:layout_width="wrap_content"
-                    android:layout_height="312dp"
-                    android:background="@drawable/main_background"
-                    circle_Picker:circle_center_radius="0"
-                    circle_Picker:circle_center_color="#FFFF3500"
-                    circle_Picker:circle_point_width="0"
-                    circle_Picker:circle_point_color="#FF00FFFF"
-                    circle_Picker:circle_target_radius="25"
-                    circle_Picker:circle_target_color="#4169E1"
-                    />
+                <FrameLayout
+                    android:id="@+id/a"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <ImageButton
+                        android:layout_height="wrap_content"
+                        android:layout_width="wrap_content"
+                        android:id="@+id/fish_image"
+                        android:layout_gravity="center"
+                        android:background="@color/transparent"
+                        android:src="@drawable/a_00"/>
+
+
+                    <com.example.jucc.summertraining.CircleTimePiker
+                        android:layout_gravity="center_horizontal"
+                        android:id="@+id/circleSelect"
+                        android:layout_width="wrap_content"
+                        android:layout_height="258dp"
+                        circle_Picker:circle_center_radius="0"
+                        circle_Picker:circle_center_color="#FFFF3500"
+                        circle_Picker:circle_point_width="0"
+                        circle_Picker:circle_point_color="#FF00FFFF"
+                        circle_Picker:circle_target_radius="35"
+                        circle_Picker:circle_target_color="#4169E1"/>
+
+                </FrameLayout>
                 <TextView
                     android:id="@+id/circleSelectTv"
                     android:layout_width="match_parent"

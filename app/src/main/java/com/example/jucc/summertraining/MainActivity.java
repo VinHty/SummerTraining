@@ -2,17 +2,31 @@ package com.example.jucc.summertraining;
 
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
+import android.widget.FrameLayout;
+import android.widget.ImageButton;
 import android.widget.PopupWindow;
 import android.widget.TextView;
+
+import com.example.jucc.summertraining.Entity.Fish;
+import com.example.jucc.summertraining.RelatedToDataBase.DatabaseMethod;
+
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.List;
+import java.util.ListIterator;
 
 
 public class MainActivity extends Activity implements CircleTimePiker.TimeAdapter, CircleTimePiker.OnSelectionChangeListener {
@@ -23,20 +37,60 @@ public class MainActivity extends Activity implements CircleTimePiker.TimeAdapte
 
     private Button mPopWindowBtn;
     private View mPopWindowView;
+    private int[][] fish;
+    private ImageButton selectFish;
+    private int n,m,allFish;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-
+        selectFish=(ImageButton)findViewById(R.id.fish_image) ;
+//        selectFish.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                changeImage();
+//            }
+//        });
+        m=0;
+        n=0;
+        allFish=0;
         //初始化按键
         initButton();
+        fish=new int[6][3];
+        initUsableFish();
+        Log.d(getClass().getSimpleName(),DatabaseMethod.getInstance(this).userAvailableFish().toString());
         //初始化时间选择器
         initSelector();
     }
-
+//    public boolean onTouchEvent(MotionEvent event) {
+//        int action = event.getAction();
+//        int[] i=new int[2];
+//        circleSelect.getLocationOnScreen(i);
+//        float x=event.getRawX()-i[0];
+//        float y=event.getRawY()-i[1];
+//        float r=circleSelect.getmCircleRadius()-50;
+//        switch (action) {
+//            case MotionEvent.ACTION_DOWN:
+//
+//
+//            case MotionEvent.ACTION_MOVE:
+//                if(x*x+y*y<r*r){
+//                    changeImage();
+//                    Log.e("position","POSITION:   "+x+y);
+//                }
+//            if(x*x+y*y>=r*r) {
+//                 circleSelect.getTouchPositionFromPoint(event.getX(), event.getY());
+//            }
+//
+//                break;
+//        }
+//
+//
+//        return true;
+//
+//    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -69,6 +123,8 @@ public class MainActivity extends Activity implements CircleTimePiker.TimeAdapte
 
         circleSelectTv.setText("设定时长为" + newPositoin + "分钟");
 
+        changeState(fish,newPositoin);
+
         bundle.putInt("lastTime", newPositoin);
     }
 
@@ -81,11 +137,27 @@ public class MainActivity extends Activity implements CircleTimePiker.TimeAdapte
     //初始化各个按钮
     public void initButton() {
 
+        ImageButton imageButton=(ImageButton)findViewById(R.id.fish_image) ;
+        imageButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                changeImage();
+            }
+        });
+
         //初始化开始按钮，点击后发送intent并且跳转到对应活动
         Button start = (Button) findViewById(R.id.start_timing);
         start.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Intent intent = new Intent();
+
+                int small=fish[m][0];
+                int middle=fish[m][1];
+                int big=fish[m][2];
+                bundle.putInt("fish",m);
+                bundle.putInt("smallFish",small);
+                bundle.putInt("middleFish",middle);
+                bundle.putInt("bigFish",big);
                 intent.putExtras(bundle);
                 intent.setClass(MainActivity.this, ExecutionActivity.class);
                 MainActivity.this.startActivity(intent);
@@ -194,5 +266,61 @@ public class MainActivity extends Activity implements CircleTimePiker.TimeAdapte
         popMenu = new PopupWindow(mPopWindowView,700,900 ,true);
         popMenu.showAsDropDown(mPopWindowBtn);
     }
+
+
+    private void initUsableFish(){
+        Context mContext=this;
+        DatabaseMethod getUsableFish=DatabaseMethod.getInstance(mContext);
+        List<Fish> listFish=getUsableFish.userAvailableFish();
+        int all=listFish.size();
+        int i=0;
+        int m=0;
+        int n=0;
+
+        while(i<all){
+            Log.e("fish:","   n::"+n);
+            fish[m][n]=listFish.get(i).getId();
+            Log.e("fish:","   fish"+fish[m][n]);
+            n=n+1;
+            i++;
+
+            if (n==3){
+                n=0;
+                m=m+1;
+            }
+
+        }
+        allFish=all/3;
+
+
+
+    }
+
+    public void changeImage(){
+        if(m==allFish-1){
+            m=0;
+            selectFish.setImageResource(fish[m][n]);
+        }
+        else {
+            m=m+1;
+            selectFish.setImageResource(fish[m][n]);
+        }
+
+    }
+
+    public void changeState(int[][] i,int k){
+        if(k<=20){
+            n=0;
+            selectFish.setImageResource(i[m][n]);
+        }
+        else if(k<=50){
+            n=1;
+            selectFish.setImageResource(i[m][n]);
+        }
+        else
+            n=2;
+            selectFish.setImageResource(i[m][n]);
+    }
+
 }
 
