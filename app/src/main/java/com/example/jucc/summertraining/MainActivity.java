@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
@@ -264,6 +265,7 @@ public class MainActivity extends Activity implements CircleTimePiker.TimeAdapte
         });
 
         popMenu = new PopupWindow(mPopWindowView,700,900 ,true);
+        popMenu.setBackgroundDrawable(new BitmapDrawable());
         popMenu.showAsDropDown(mPopWindowBtn);
     }
 
