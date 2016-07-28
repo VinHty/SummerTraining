@@ -86,4 +86,16 @@ public class Fish {
     public Fish (int species){
         this.species=species;
     }
+
+    @Override
+    public String toString() {
+        return "Fish{" +
+                "species=" + species +
+                ", name='" + name + '\'' +
+                ", price=" + price +
+                ", state=" + state +
+                ", times=" + times +
+                ", id=" + id +
+                '}';
+    }
 }

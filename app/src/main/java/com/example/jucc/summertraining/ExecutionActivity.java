@@ -7,9 +7,13 @@ import android.content.Intent;
 import android.os.CountDownTimer;
 import android.support.v7.app.AlertDialog;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 
+import com.example.jucc.summertraining.Entity.Fish;
 import com.example.jucc.summertraining.RelatedToDataBase.DatabaseMethod;
 import static com.example.jucc.summertraining.RelatedToDataBase.DatabaseMethod.getInstance;
 import static com.example.jucc.summertraining.RelatedToDataBase.DatabaseMethod.getStringSecond;
@@ -25,11 +29,30 @@ public class ExecutionActivity extends Activity {
     private Context mContext;
     private CountDownTimer timer;
     private String timeStampJob;
+    private int state=0;
+    private ImageButton fishState;
+    private int small;
+    private int middle;
+    private int big;
+    private int localstate=0;
+    private int fish;
+    private int now=0;
+    private Bundle bundle;
+    private Intent intent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_execution);
+        intent=this.getIntent();
+        bundle=intent.getExtras();
+        small=bundle.getInt("smallFish");
+//        Log.e("ss","small     " +small    );
+        middle=bundle.getInt("middleFish");
+        big=bundle.getInt("bigFish");
+        fish=bundle.getInt("fish");
+        fishState=(ImageButton) findViewById(R.id.fish_state);
+        fishState.setImageResource(small);
         //初始化进度条的变量值
         initVariable();
         //初始化时间选择器
@@ -82,12 +105,13 @@ public class ExecutionActivity extends Activity {
 
     }
     private void initJob(){
-        Intent intent=this.getIntent();
-        Bundle bundle=intent.getExtras();
+
+
         String timeStamp1=bundle.getString("timeStamp");
         long lastTime2=bundle.getLong("lastTime")*60000;
         String title=bundle.getString("title");
         int lastTime1 = bundle.getInt("lastTime")*60000;
+
         mContext=getBaseContext();
         //timeStamp为null说明为快速任务
         if(timeStamp1==null){
@@ -110,14 +134,30 @@ public class ExecutionActivity extends Activity {
     }
     private void startCounting(){
         int i=new Float(lastTime).intValue();
+
         //时间间隔设为一秒
         timer=new CountDownTimer(i,1000) {
             @Override
             public void onTick(long millisUntilFinished) {
                 //每秒对当前进度进行更新
                 int finish=new Long(millisUntilFinished).intValue();
+                    now=now+1;
+                Log.e("ss","small     " +small    );
+                    switch (getState(now)){
+                        case 0:fishState.setImageResource(small);
+
+                        case 1:fishState.setImageResource(small);
+
+                        case 2:fishState.setImageResource(middle);
+
+                        case 3:fishState.setImageResource(big);
+
+                            break;
+
+                }
                 mCurrentProgress =(lastTime-finish)/(lastTime/100);
                 rpBar01.setProgress(mCurrentProgress);
+
             }
 
             @Override
@@ -129,6 +169,8 @@ public class ExecutionActivity extends Activity {
                 //将任务完成情况存入数据库
                 DatabaseMethod quickJobFinish= DatabaseMethod.getInstance(mContext);
                quickJobFinish.update_jobWhenFinish(timeStampJob,true);
+                Fish fishFinish=new Fish(fish,localstate,true);
+                quickJobFinish.updateAchievement(fishFinish);
                 new AlertDialog.Builder(ExecutionActivity.this).setTitle("成功")//设置对话框标题
                         .setMessage("任务成功")//设置显示的内容
                         .setPositiveButton("分享",new DialogInterface.OnClickListener() {//添加确定按钮
@@ -167,11 +209,30 @@ public class ExecutionActivity extends Activity {
         //将任务完成情况存入数据库
         DatabaseMethod quickJobGiveUp=DatabaseMethod.getInstance(mContext);
         quickJobGiveUp.update_jobWhenFinish(timeStampJob,false);
+        if (localstate!=0){
+            Fish fishGiveUp=new Fish(fish,localstate,false);
+            quickJobGiveUp.updateAchievement(fishGiveUp);
+            int i=(int)lastTime/60000;
+            int m=(int)(i*0.6+Math.pow(2,localstate));
+            quickJobGiveUp.increaseCoins(m);
+        }
         //关闭Activity并且跳转到MainActivity
         Intent intent = new Intent();
         intent.setClass(ExecutionActivity.this,MainActivity.class);
         ExecutionActivity.this.startActivity(intent);
         finish();
+    }
+
+    private int getState(int i) {
+        if (i <= 600) {
+            state = 0;
+        } else if (i <= 1800) {
+            state = 1;
+        } else if (i <= 4200) {
+            state = 2;
+        } else state = 3;
+
+        return state;
     }
 
 }

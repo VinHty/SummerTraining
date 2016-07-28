@@ -16,6 +16,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -336,11 +337,11 @@ public class DatabaseMethod {
     /*/
     获取用户可用的鱼的列表 包含 species,name,id,state
     return 包含鱼的的list的list对象 每一个对象是一个包含3个state的鱼的list     */
-    public List< List<Fish> > userAvailableFish() {
-        Cursor cursor = db.rawQuery("select s.species as species,name,id,state from species as s,achievement as a where available=1 and s.species=a.species)", null);
-        List<List<Fish>> list = null;
+    public List<Fish> userAvailableFish() {
+//        db =
+        Cursor cursor = db.rawQuery("select s.species as species,name,id,state  from species as s,achievement as a where available=1 and s.species=a.species order by species,state asc", null);
+        List<Fish> list = new ArrayList<>();
         while (cursor.moveToNext()) {
-            List<Fish> local = null;
             int species = cursor.getInt(cursor.getColumnIndex("species"));
             String name =cursor.getString(cursor.getColumnIndex("name"));
             int id = cursor.getInt(cursor.getColumnIndex("id"));
@@ -349,12 +350,9 @@ public class DatabaseMethod {
             fish.setName(name);
             fish.setId(id);
             fish.setState(state);
-            local.add(fish);
-            if(state==2){
-                list.add(local);
-                local.clear();
-            }
+            list.add(fish);
         }
+
         return list;
     }
 
