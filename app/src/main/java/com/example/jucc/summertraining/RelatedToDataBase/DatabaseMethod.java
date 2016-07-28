@@ -300,7 +300,9 @@ public class DatabaseMethod {
     public void increaseCoins(int number) {
         int coins =Integer.parseInt( getCoins());
         int newNumber = number + coins;
+        Log.e("DB","newNum:   "+newNumber);
         db.execSQL("update account set coins =" + newNumber);
+        Log.e("DB","COIN:    "+getCoins());
     }
 
     /*
@@ -365,7 +367,7 @@ public class DatabaseMethod {
         int state = fish.getState();
         int times = getTimes(fish);
         int newTimes = times + 1;
-        db.execSQL("update achievement set times=" + newTimes + "where species=" + species + "and state = " + state);
+        db.execSQL("update achievement set times=" + newTimes + " where species=" + species + " and state = " + state);
 
 
     }

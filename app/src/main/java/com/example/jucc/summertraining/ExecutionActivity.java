@@ -11,7 +11,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.example.jucc.summertraining.Entity.Fish;
 import com.example.jucc.summertraining.RelatedToDataBase.DatabaseMethod;
@@ -34,7 +34,7 @@ public class ExecutionActivity extends Activity {
     private int small;
     private int middle;
     private int big;
-    private int localstate=0;
+    private TextView time;
     private int fish;
     private int now=0;
     private Bundle bundle;
@@ -44,6 +44,7 @@ public class ExecutionActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_execution);
+        time=(TextView)findViewById(R.id.time_counting);
         intent=this.getIntent();
         bundle=intent.getExtras();
         small=bundle.getInt("smallFish");
@@ -108,7 +109,7 @@ public class ExecutionActivity extends Activity {
 
 
         String timeStamp1=bundle.getString("timeStamp");
-        long lastTime2=bundle.getLong("lastTime")*60000;
+        long lastTime2=bundle.getInt("lastTime")*60000;
         String title=bundle.getString("title");
         int lastTime1 = bundle.getInt("lastTime")*60000;
 
@@ -140,18 +141,20 @@ public class ExecutionActivity extends Activity {
             @Override
             public void onTick(long millisUntilFinished) {
                 //每秒对当前进度进行更新
+                long myminute = (millisUntilFinished / 1000) / 60;
+                long mysecond = millisUntilFinished / 1000 - myminute * 60;
+                time.setText("剩余时间"  + myminute + ":" + mysecond);
                 int finish=new Long(millisUntilFinished).intValue();
                     now=now+1;
                 Log.e("ss","small     " +small    );
                     switch (getState(now)){
                         case 0:fishState.setImageResource(small);
-
+                            break;
                         case 1:fishState.setImageResource(small);
-
+                            break;
                         case 2:fishState.setImageResource(middle);
-
+                            break;
                         case 3:fishState.setImageResource(big);
-
                             break;
 
                 }
@@ -169,8 +172,14 @@ public class ExecutionActivity extends Activity {
                 //将任务完成情况存入数据库
                 DatabaseMethod quickJobFinish= DatabaseMethod.getInstance(mContext);
                quickJobFinish.update_jobWhenFinish(timeStampJob,true);
-                Fish fishFinish=new Fish(fish,localstate,true);
-                quickJobFinish.updateAchievement(fishFinish);
+                if (state!=0){
+                    Fish fishFinish=new Fish(fish,state-1,true);
+                    quickJobFinish.updateAchievement(fishFinish);
+                }
+                int i=(int)lastTime/60000;
+                int m=(int)(i*0.6+Math.pow(2,state));
+                Log.e("Exe","m:   "+m);
+                quickJobFinish.increaseCoins(m);
                 new AlertDialog.Builder(ExecutionActivity.this).setTitle("成功")//设置对话框标题1
                         .setMessage("任务成功")//设置显示的内容
                         .setPositiveButton("分享",new DialogInterface.OnClickListener() {//添加确定按钮
@@ -209,12 +218,10 @@ public class ExecutionActivity extends Activity {
         //将任务完成情况存入数据库
         DatabaseMethod quickJobGiveUp=DatabaseMethod.getInstance(mContext);
         quickJobGiveUp.update_jobWhenFinish(timeStampJob,false);
-        if (localstate!=0){
-            Fish fishGiveUp=new Fish(fish,localstate,false);
+        if (state!=0){
+            Fish fishGiveUp=new Fish(fish,state-1,false);
             quickJobGiveUp.updateAchievement(fishGiveUp);
-            int i=(int)lastTime/60000;
-            int m=(int)(i*0.6+Math.pow(2,localstate));
-            quickJobGiveUp.increaseCoins(m);
+
         }
         //关闭Activity并且跳转到MainActivity
         Intent intent = new Intent();
