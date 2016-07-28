@@ -77,6 +77,7 @@ public class TodayFragment extends MyFragment {
         if (getUsageStats(act) == null) {
             Intent intent = new Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS);
             startActivity(intent);
+            readFromList(act);
         } else {
             List<UsageStats> queryUsageStats = getUsageStats(act);
             PackageManager pm = getContext().getPackageManager();

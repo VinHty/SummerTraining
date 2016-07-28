@@ -2,8 +2,12 @@ package com.example.jucc.summertraining;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.ContentValues;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
+import android.net.Uri;
+import android.provider.CalendarContract;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -29,6 +33,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.TimeZone;
 
 //用户在任务界面，点击添加按钮后，跳转到此界面，即添加任务界面
 public class AddJobActivity extends Activity {
@@ -43,6 +48,8 @@ public class AddJobActivity extends Activity {
     private DatePicker datePicker;
     private TimePicker timePicker;
     private DatabaseMethod dbMethod;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -136,6 +143,9 @@ public class AddJobActivity extends Activity {
                     Intent returnJobDetailsActivity = new Intent(AddJobActivity.this, JobDetailsAcitiviy.class);
                     startActivity(returnJobDetailsActivity);
                 }
+
+
+
             }
         });
 
@@ -213,5 +223,34 @@ public class AddJobActivity extends Activity {
             np.setLayoutParams(params);
         }
 
+
+    private void initCalendars() {
+
+        TimeZone timeZone = TimeZone.getDefault();
+        ContentValues value = new ContentValues();
+        value.put(CalendarContract.Calendars.NAME, "yy");
+
+        value.put(CalendarContract.Calendars.ACCOUNT_NAME, "mygmailaddress@gmail.com");
+        value.put(CalendarContract.Calendars.ACCOUNT_TYPE, "com.android.exchange");
+        value.put(CalendarContract.Calendars.CALENDAR_DISPLAY_NAME, "mytt");
+        value.put(CalendarContract.Calendars.VISIBLE, 1);
+        value.put(CalendarContract.Calendars.CALENDAR_COLOR, -9206951);
+        value.put(CalendarContract.Calendars.CALENDAR_ACCESS_LEVEL, CalendarContract.Calendars.CAL_ACCESS_OWNER);
+        value.put(CalendarContract.Calendars.SYNC_EVENTS, 1);
+        value.put(CalendarContract.Calendars.CALENDAR_TIME_ZONE, timeZone.getID());
+        value.put(CalendarContract.Calendars.OWNER_ACCOUNT, "mygmailaddress@gmail.com");
+        value.put(CalendarContract.Calendars.CAN_ORGANIZER_RESPOND, 0);
+
+        Uri calendarUri = CalendarContract.Calendars.CONTENT_URI;
+        calendarUri = calendarUri.buildUpon()
+                .appendQueryParameter(CalendarContract.CALLER_IS_SYNCADAPTER, "true")
+                .appendQueryParameter(CalendarContract.Calendars.ACCOUNT_NAME, "mygmailaddress@gmail.com")
+                .appendQueryParameter(CalendarContract.Calendars.ACCOUNT_TYPE, "com.android.exchange")
+                .build();
+
+        getContentResolver().insert(calendarUri, value);
     }
+
+
+}
 

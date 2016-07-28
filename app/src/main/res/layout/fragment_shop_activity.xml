@@ -9,7 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/title"
-        android:layout_marginTop="58dp"
+        android:layout_marginTop="28dp"
         android:layout_alignParentTop="true"
         android:layout_alignParentStart="true"
         android:gravity="center" />
@@ -19,7 +19,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/title"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="131dp"
+        android:layout_marginTop="31dp"
         android:id="@+id/img"
         android:foregroundGravity="center" />
 
@@ -36,7 +36,7 @@
 
 
     <Button
-        android:text="Button"
+        android:text="Buy"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/purchase"
@@ -44,7 +44,7 @@
         android:layout_alignParentStart="true" />
 
     <TextView
-        android:text="TextView"
+        android:text="price"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"

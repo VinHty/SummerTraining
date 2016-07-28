@@ -25,7 +25,7 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         //创建一个表存储今天的使用用量，分别为应用名称，当前的使用总量，今天刚开始的使用总量
         db.execSQL("create table   job( set_time TEXT NOT NULL PRIMARY KEY,job_name TEXT not null ,last_time INTEGER,start_time TEXT ,is_suc INTEGER ,alert_time TEXT,is_alert INTEGER)");
         //创建一个表存储任务，分别为添加任务的时间，任务的名称，任务持续时间，开始时间，是否成功，提醒时间，是否提醒1
-        db.execSQL("create table   account(coins INTEGER default 0 PRIMARY KEY)");
+        db.execSQL("create table   account(coins INTEGER not null default 0 PRIMARY KEY)");
         //用于储存用户的金币数量的表
         db.execSQL("create table   species(species INTEGER not null PRIMARY KEY,name Text not null, price INTEGER not null,available INTEGER default 0 not null,FOREIGN KEY(species) REFERENCES achievement (species) )");
         //用于存放鱼的种类的表 ， 存放种类和价格，是否可用（使用之前需要在商店购买）， 客户端只需要读取，不需要对这个表进行修改和删除。

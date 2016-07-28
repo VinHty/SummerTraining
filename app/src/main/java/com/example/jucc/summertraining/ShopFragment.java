@@ -69,7 +69,7 @@ public class ShopFragment extends Fragment implements View.OnClickListener {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.purchase:
-                if(Integer.parseInt(getPrice())>=Integer.parseInt(method.getCoins())) {
+                if(Integer.parseInt(method.getCoins())>=Integer.parseInt(getPrice())) {
                     Fish fish = createFish();
                     method.buyFish(fish);
                     new AlertDialog.Builder(getActivity()).setTitle("提示")//设置对话框标题
