@@ -171,7 +171,7 @@ public class ExecutionActivity extends Activity {
                quickJobFinish.update_jobWhenFinish(timeStampJob,true);
                 Fish fishFinish=new Fish(fish,localstate,true);
                 quickJobFinish.updateAchievement(fishFinish);
-                new AlertDialog.Builder(ExecutionActivity.this).setTitle("成功")//设置对话框标题
+                new AlertDialog.Builder(ExecutionActivity.this).setTitle("成功")//设置对话框标题1
                         .setMessage("任务成功")//设置显示的内容
                         .setPositiveButton("分享",new DialogInterface.OnClickListener() {//添加确定按钮
 
