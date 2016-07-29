@@ -24,7 +24,7 @@ public class ShopActivity extends AppCompatActivity {
     private Button back;
     private DatabaseMethod method;
     private TextView coins;
-    public String[] description = {"sdf", "sdf", "sdfsdf", "sdfsfsddfsdf", "sdfsdfsfsf", "sdfsfsdfsdf"};
+    public String[] description = {"我只是长得很蓝而已=￣ω￣=", "为近海底层结群性洄游鱼类\n栖息于泥质或泥沙底质的海区", "喜欢生活在平原上的暖和湖泊\n或水流缓慢的河川里\n分布在除澳洲和南美洲外的全世界。", "上世纪50年代由易伯鲁等30多位中科院水生所\n研究人员发现梁子湖中有一种鳊鱼是以往文献中没有的。\n他将它命名为团头鲂，俗称武昌鱼。", "温水性鱼类，适宜生长的水温为25—30℃\n能适应较肥沃的水体环境", "蝴蝶鱼由于体色艳丽，深受我国观赏鱼爱好者的青睐\n它们在我国沿海各地的水族馆中被大量饲养。"};
     public static int times = 0;
     public int current = 0;
 
