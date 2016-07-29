@@ -8,6 +8,7 @@
 
         <ImageButton
             android:id="@+id/job_query"
+            android:layout_marginTop="15dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/renwu"
@@ -17,6 +18,7 @@
 
         <ImageButton
             android:id="@+id/timing_query"
+            android:layout_marginTop="15dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/chakan"
@@ -25,6 +27,7 @@
 
         <ImageButton
             android:id="@+id/shop"
+            android:layout_marginTop="15dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/shop"
@@ -33,6 +36,7 @@
 
         <ImageButton
             android:id="@+id/achievement"
+            android:layout_marginTop="15dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/chengjiu"
@@ -41,6 +45,7 @@
 
         <ImageButton
             android:id="@+id/setting"
+            android:layout_marginTop="15dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/setting"

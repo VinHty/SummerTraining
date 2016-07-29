@@ -14,9 +14,11 @@
 
             <ImageButton
                 android:id="@+id/pop_menu"
+                android:layout_marginTop="20dp"
+                android:layout_marginLeft="20dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/muen_06"
+                android:src="@drawable/menu_06"
                 android:background="@color/transparent"/>
 
 

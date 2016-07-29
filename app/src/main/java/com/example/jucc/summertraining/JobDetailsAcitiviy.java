@@ -62,9 +62,7 @@ public class JobDetailsAcitiviy extends AppCompatActivity implements View.OnClic
         button_return.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Intent returnIntent = new Intent(JobDetailsAcitiviy.this,MainActivity.class);
-               // startActivity(returnIntent);
-                finish();
+               finish();
             }
         });
 
