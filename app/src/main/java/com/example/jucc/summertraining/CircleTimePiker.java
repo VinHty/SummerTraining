@@ -3,6 +3,7 @@ package com.example.jucc.summertraining;
 /**
  * Created by xiaoqiang on 2016/7/15.
  */
+
 import android.content.Context;
 import android.content.Loader;
 import android.content.res.TypedArray;
@@ -44,7 +45,6 @@ public class CircleTimePiker extends View {
     private float mCircleRadius = 0;
 
 
-
     /**
      * 数字显示的位置距离圆心坐标的距离
      */
@@ -58,7 +58,7 @@ public class CircleTimePiker extends View {
     /**
      * 圆心颜色
      */
-    private double mCurAngle= 0;
+    private double mCurAngle = 0;
 
     /**
      * 指针宽度
@@ -84,6 +84,10 @@ public class CircleTimePiker extends View {
      * 边距
      */
     private int margin = 0;
+
+    /**
+     * 画笔
+     */
     private Paint mPaint = null;
 
     /**
@@ -95,7 +99,7 @@ public class CircleTimePiker extends View {
      * 相邻两个选项间的弧度
      */
     private float mSingleRadian = 0;
-    private boolean isDraw=false;
+
 
     /**
      * 中心点坐标
@@ -112,7 +116,6 @@ public class CircleTimePiker extends View {
      */
     private int mSelectPosition = 2;
 
-    private Bitmap bitMap;
 
     /**
      * 环形时间选择器的数据适配器
@@ -124,17 +127,18 @@ public class CircleTimePiker extends View {
     /* =================get/set方法====================== */
 
 
-    public void setmCenterPoint(Point CenterPoint){
-        mCenterPoint=CenterPoint;
+    public void setmCenterPoint(Point CenterPoint) {
+        mCenterPoint = CenterPoint;
     }
 
-    public Point getmCenterPoint(){
+    public Point getmCenterPoint() {
         return mCenterPoint;
     }
 
-    public float getmCircleRadius(){
+    public float getmCircleRadius() {
         return mCircleRadius;
     }
+
     /**
      * 设置一圈有多少个item
      */
@@ -190,6 +194,7 @@ public class CircleTimePiker extends View {
 
         init();
     }
+
     /*
     **初始化mPaint
      */
@@ -211,26 +216,27 @@ public class CircleTimePiker extends View {
         mCenterPoint.y = h / 2;
         // 计算圆形半径
         int minSize = w > h ? h : w;
-        mCircleRadius = (minSize - 2 * margin+100) / 2;
+        mCircleRadius = (minSize - 2 * margin + 100) / 2;
         // 圆心半径
-      //  mCircleCenterRadius = mCircleRadius * .05f;
-        mCircleInnerRadius = mCircleRadius* .8f;
+        //  mCircleCenterRadius = mCircleRadius * .05f;
+        mCircleInnerRadius = mCircleRadius * .8f;
         super.onSizeChanged(w, h, oldw, oldh);
     }
+
     /*
-    监听触摸事件
+    监听触摸事件,如果事件在圆圈内，则放弃事件
      */
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         int action = event.getAction();
-        float x=event.getX()-mCenterPoint.x;
-        float y=event.getY()-mCenterPoint.y;
+        float x = event.getX() - mCenterPoint.x;
+        float y = event.getY() - mCenterPoint.y;
         switch (action) {
             case MotionEvent.ACTION_DOWN:
-                if(x*x+y*y<=(mCircleRadius-180)*(mCircleRadius-180))
-                return false;
+                if (x * x + y * y <= (mCircleRadius - 180) * (mCircleRadius - 180))
+                    return false;
             case MotionEvent.ACTION_MOVE:
-                if(x*x+y*y>=(mCircleRadius-180)*(mCircleRadius-180)) {
+                if (x * x + y * y >= (mCircleRadius - 180) * (mCircleRadius - 180)) {
                     getTouchPositionFromPoint(event.getX(), event.getY());
                 }
                 break;
@@ -295,7 +301,7 @@ public class CircleTimePiker extends View {
         if (mSelectionChangeListener != null) {
             mSelectionChangeListener
                     .onPositionChange(position, mSelectPosition);
-    }
+        }
         mSelectPosition = position;
 
         invalidate();
@@ -348,20 +354,20 @@ public class CircleTimePiker extends View {
     @Override
     protected void onDraw(Canvas canvas) {
         // 先画背景的圆
-       // drawOutterCircle(canvas);
+        // drawOutterCircle(canvas);
         // 画圆心
-     //   drawCircleCenter(canvas);
+        //   drawCircleCenter(canvas);
         // 画指针
         drawPoint(canvas);
         // 画圆周的条目
-       // drawCircleItem(canvas);
+        // drawCircleItem(canvas);
         drawCircleSelected(canvas);
 
     }
 
     /**
      * 画指针
-    */
+     */
     private void drawPoint(Canvas canvas) {
         float x = 0;
         float y = 0;
@@ -374,10 +380,10 @@ public class CircleTimePiker extends View {
             y = mCenterPoint.y
                     - (int) (mCircleInnerRadius * Math.cos(mSingleRadian
                     * mSelectPosition));
-          //  canvas.drawLine(mCenterPoint.x, mCenterPoint.y, x, y, mPaint);
-         //   mPaint.setColor(mCircleCenterColor);
-         //   canvas.drawCircle(mCenterPoint.x, mCenterPoint.y,
-               //     mCircleCenterRadius, mPaint);
+            //  canvas.drawLine(mCenterPoint.x, mCenterPoint.y, x, y, mPaint);
+            //   mPaint.setColor(mCircleCenterColor);
+            //   canvas.drawCircle(mCenterPoint.x, mCenterPoint.y,
+            //     mCircleCenterRadius, mPaint);
             mPaint.setColor(mCircleTargetColor);
             mPaint.setStyle(Paint.Style.FILL);
             canvas.drawCircle(x, y, mCircleTargetRadius, mPaint);
@@ -409,12 +415,14 @@ public class CircleTimePiker extends View {
 //        }
 //    }
 
-    private  void  drawCircleSelected(Canvas canvas){
-        float left = getPaddingLeft() +(getWidth()-mCircleRadius*2)/2+((float)mCircleTargetRadius)*(float)1.5+40;
-        float top = getPaddingTop()+(getHeight()-mCircleRadius*2)/2+((float)mCircleTargetRadius)*(float)1.5+40;
-        float right = canvas.getWidth() - getPaddingRight()-(getWidth()-mCircleRadius*2)/2-((float)mCircleTargetRadius)*(float)1.5-40;
-        float bottom = canvas.getHeight() - getPaddingBottom()-(getHeight()-mCircleRadius*2)/2-((float)mCircleTargetRadius)*(float)1.5-40;
-        mPaint.setStrokeWidth(((float)mCircleTargetRadius)*(float)1.2); //设置圆环的宽度
+
+    //根据已经选择的部分画出圆弧
+    private void drawCircleSelected(Canvas canvas) {
+        float left = getPaddingLeft() + (getWidth() - mCircleRadius * 2) / 2 + ((float) mCircleTargetRadius) * (float) 1.5 + 40;
+        float top = getPaddingTop() + (getHeight() - mCircleRadius * 2) / 2 + ((float) mCircleTargetRadius) * (float) 1.5 + 40;
+        float right = canvas.getWidth() - getPaddingRight() - (getWidth() - mCircleRadius * 2) / 2 - ((float) mCircleTargetRadius) * (float) 1.5 - 40;
+        float bottom = canvas.getHeight() - getPaddingBottom() - (getHeight() - mCircleRadius * 2) / 2 - ((float) mCircleTargetRadius) * (float) 1.5 - 40;
+        mPaint.setStrokeWidth(((float) mCircleTargetRadius) * (float) 1.2); //设置圆环的宽度
         mPaint.setColor(mCircleTargetColor);  //设置进度的颜色
         RectF oval = new RectF(left, top, right, bottom);  //用于定义的圆弧的形状和大小的界限
         mPaint.setStyle(Paint.Style.STROKE);
@@ -422,6 +430,7 @@ public class CircleTimePiker extends View {
 
 
     }
+
     /**
      * 画圆心
      */
@@ -460,6 +469,9 @@ public class CircleTimePiker extends View {
         String getNameByPosition(int position);
 
     }
+
+
+    //计算cos值
     private float computeCos(float x, float y) {
         float width = x - getWidth() / 2;
         float height = y - getHeight() / 2;
@@ -467,18 +479,19 @@ public class CircleTimePiker extends View {
         return height / slope;
     }
 
-    private void drawFish(Canvas canvas){
-        //bitMap= BitmapFactory.decodeResource(getResources(),R.drawable.test);
-        float left = getPaddingLeft() +(getWidth()-mCircleRadius*2)/2+((float)mCircleTargetRadius)*(float)1.5;
-        float top = getPaddingTop()+(getHeight()-mCircleRadius*2)/2+((float)mCircleTargetRadius)*(float)1.5;
-        float right = canvas.getWidth() - getPaddingRight()-(getWidth()-mCircleRadius*2)/2-((float)mCircleTargetRadius)*(float)1.5;
-        float bottom = canvas.getHeight() - getPaddingBottom()-(getHeight()-mCircleRadius*2)/2-((float)mCircleTargetRadius)*(float)1.5;
-        RectF rectf=new RectF(left,top,right,bottom);
-        Rect rect=new Rect((int)left,(int)top,(int)right,(int)bottom);
-        canvas.drawBitmap(bitMap,null,rectf,mPaint);
-        isDraw=true;
-    }
 
+    //画出一条鱼
+//    private void drawFish(Canvas canvas){
+//        //bitMap= BitmapFactory.decodeResource(getResources(),R.drawable.test);
+//        float left = getPaddingLeft() +(getWidth()-mCircleRadius*2)/2+((float)mCircleTargetRadius)*(float)1.5;
+//        float top = getPaddingTop()+(getHeight()-mCircleRadius*2)/2+((float)mCircleTargetRadius)*(float)1.5;
+//        float right = canvas.getWidth() - getPaddingRight()-(getWidth()-mCircleRadius*2)/2-((float)mCircleTargetRadius)*(float)1.5;
+//        float bottom = canvas.getHeight() - getPaddingBottom()-(getHeight()-mCircleRadius*2)/2-((float)mCircleTargetRadius)*(float)1.5;
+//        RectF rectf=new RectF(left,top,right,bottom);
+//        Rect rect=new Rect((int)left,(int)top,(int)right,(int)bottom);
+//        canvas.drawBitmap(bitMap,null,rectf,mPaint);
+//        isDraw=true;
+//    }
 
 
 }

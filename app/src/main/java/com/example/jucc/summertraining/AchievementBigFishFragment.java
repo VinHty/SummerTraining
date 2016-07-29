@@ -30,6 +30,8 @@ import java.util.Map;
  * Use the {@link AchievementBigFishFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
+
+//大鱼成就fragment
 public class AchievementBigFishFragment extends ListFragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -76,10 +78,12 @@ public class AchievementBigFishFragment extends ListFragment {
         }
     }
 
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
+        //获得数据，绑定adapter
         mData = getData();
         adapter = new MyAdapter(getContext());
         setListAdapter(adapter);
@@ -126,11 +130,12 @@ public class AchievementBigFishFragment extends ListFragment {
         void onFragmentInteraction(Uri uri);
     }
 
+    //从数据库获取大鱼的数据
     private List<Map<String, Object>> getData() {
         List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
         DatabaseMethod dbMethod = DatabaseMethod.getInstance(getContext());
         List<Fish> myFish = dbMethod.achievementBig();
-        Log.e("DB","list:    "+myFish.size());//从数据库读取未完成的任务,以list的形式
+        Log.e("DB","list:    "+myFish.size());//从数据库读取大鱼数据,以list的形式
         for(int i = 0; i < myFish.size(); i++){
             Map<String,Object> map = new HashMap<String,Object>();
             map.put("image",myFish.get(i).getId());
@@ -139,12 +144,6 @@ public class AchievementBigFishFragment extends ListFragment {
             list.add(map);
         }
         return list;
-    }
-
-    //获取当前日期和时间
-    public String getCurrentTime(){
-        DatabaseMethod db =DatabaseMethod.getInstance(getContext());
-        return db.getStringSecond();
     }
 
     //listview中每个item的布局class

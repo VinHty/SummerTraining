@@ -64,8 +64,6 @@ public class AddJobActivity extends Activity {
         editText = (EditText) findViewById(R.id.activity_activity_add_job_edittext);
         needNotification = (RadioButton) findViewById(R.id.activity_activity_add_job_needNotification);
         noNeedNotification = (RadioButton) findViewById(R.id.activity_activity_add_job_notNeedNotification);
-        //setDatePicker = (Button)findViewById(R.id.activity_activity_add_job_showDatePicker);
-        //setTimePicker = (Button)findViewById(R.id.activity_activity_add_job_showTimePicker);
         datePicker = (DatePicker) findViewById(R.id.activity_activity_add_job_datePicker);
         timePicker = (TimePicker) findViewById(R.id.activity_activity_add_job_timePicker);
         resizePikcer(datePicker);//调整datepicker大小
@@ -116,7 +114,6 @@ public class AddJobActivity extends Activity {
                             .setPositiveButton("确定", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
-
                                 }
                             }).show();
                 }
@@ -153,31 +150,10 @@ public class AddJobActivity extends Activity {
         noSetJob.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Intent returnJobDetailsActivity = new Intent(AddJobActivity.this, JobDetailsAcitiviy.class);
-                //startActivity(returnJobDetailsActivity);
                 finish();
             }
         });
     }
-
-        //设置日期按钮的响应事件
-      /*  setDatePicker.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                datePicker.setVisibility(View.VISIBLE);
-                timePicker.setVisibility(View.GONE);
-            }
-        });
-
-        //设置时间按钮的响应事件
-        setTimePicker.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                datePicker.setVisibility(View.GONE);
-                timePicker.setVisibility(View.VISIBLE);
-            }
-        });
-        */
 
         /**
          * 调整FrameLayout大小
@@ -224,7 +200,7 @@ public class AddJobActivity extends Activity {
             np.setLayoutParams(params);
         }
 
-
+//初始化日期控件
     private void initCalendars() {
 
         TimeZone timeZone = TimeZone.getDefault();

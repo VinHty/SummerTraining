@@ -34,6 +34,8 @@ import java.util.Map;
  * Use the {@link ListUnfinishedJobFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
+
+//列出未完成任务的fragment
 public class ListUnfinishedJobFragment extends ListFragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -79,15 +81,13 @@ public class ListUnfinishedJobFragment extends ListFragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
-
-
-
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
+        //得到数据，绑定adapter,显示
         dbMethod = DatabaseMethod.getInstance(getContext());
         mData = getData();
         adapter = new MyAdapter(getContext());
@@ -215,9 +215,6 @@ public class ListUnfinishedJobFragment extends ListFragment {
 
             //设置listview中每行的文本信息
             holder.title.setText((String)mData.get(position).get("title"));
-           // holder.edit.setText((String)mData.get(position).get("edit"));
-           // holder.start.setText((String)mData.get(position).get("start"));
-           // holder.delete.setText((String)mData.get(position).get("delete"));
 
             //监听器记录了所在行，于是绑定到各个控件后能够返回具体的行，以及触发的控件
             //delete按钮的监听事件
