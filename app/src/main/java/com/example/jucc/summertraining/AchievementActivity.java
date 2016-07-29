@@ -52,8 +52,9 @@ public class AchievementActivity extends FragmentActivity implements View.OnClic
     public void onClick(View v){
         switch (v.getId()){
             case R.id.activity_achievement_return:
-                Intent returnMain = new Intent(AchievementActivity.this,MainActivity.class);
-                startActivity(returnMain);
+                finish();
+                //Intent returnMain = new Intent(AchievementActivity.this,MainActivity.class);
+                //startActivity(returnMain);
                 break;
             case R.id.activity_achievement_littlefish:
                 setTabSelection(0);

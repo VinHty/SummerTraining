@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.example.jucc.summertraining.Entity.Job;
@@ -162,9 +163,9 @@ public class ListUnfinishedJobFragment extends ListFragment {
     //listview中每个item的布局class
     public final class ViewHolder{
         public TextView title;
-        public Button edit;
-        public Button start;
-        public Button delete;
+        public ImageButton edit;
+        public ImageButton start;
+        public ImageButton delete;
     }
 
     //存取数据的adapter
@@ -204,9 +205,9 @@ public class ListUnfinishedJobFragment extends ListFragment {
                 holder=new ViewHolder();
                 convertView = mInflater.inflate(R.layout.activity_job_details_listview_item, null);
                 holder.title = (TextView)convertView.findViewById(R.id.activity_job_details_textview);
-                holder.edit = (Button)convertView.findViewById(R.id.activity_job_details_edit);
-                holder.start = (Button)convertView.findViewById(R.id.activity_job_details_start);
-                holder.delete = (Button)convertView.findViewById(R.id.activity_job_details_delete);
+                holder.edit = (ImageButton)convertView.findViewById(R.id.activity_job_details_edit);
+                holder.start = (ImageButton)convertView.findViewById(R.id.activity_job_details_start);
+                holder.delete = (ImageButton)convertView.findViewById(R.id.activity_job_details_delete);
                 convertView.setTag(holder);
             }else {
                 holder = (ViewHolder)convertView.getTag();
@@ -214,9 +215,9 @@ public class ListUnfinishedJobFragment extends ListFragment {
 
             //设置listview中每行的文本信息
             holder.title.setText((String)mData.get(position).get("title"));
-            holder.edit.setText((String)mData.get(position).get("edit"));
-            holder.start.setText((String)mData.get(position).get("start"));
-            holder.delete.setText((String)mData.get(position).get("delete"));
+           // holder.edit.setText((String)mData.get(position).get("edit"));
+           // holder.start.setText((String)mData.get(position).get("start"));
+           // holder.delete.setText((String)mData.get(position).get("delete"));
 
             //监听器记录了所在行，于是绑定到各个控件后能够返回具体的行，以及触发的控件
             //delete按钮的监听事件

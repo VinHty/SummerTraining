@@ -2,6 +2,8 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="horizontal"
+    android:layout_marginTop="20dp"
+    android:layout_marginBottom="20dp"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
     <TextView
@@ -9,28 +11,39 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
+        android:textSize="25dp"
+        android:textColor="#000000"
         android:layout_marginLeft="15dp"/>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:orientation="horizontal"
         android:gravity="right">
-        <Button
+        <ImageButton
             android:id="@+id/activity_job_details_edit"
-            android:text="@string/JobDetails_Button_Edit"
+            android:src="@drawable/button_edit"
+            android:background="@color/transparent"
+            android:layout_marginRight="15dp"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-        <Button
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"/>
+        <ImageButton
             android:id="@+id/activity_job_details_start"
-            android:text="@string/JobDetails_Button_Start"
+            android:src="@drawable/button_start"
+            android:layout_marginRight="15dp"
+            android:background="@color/transparent"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-        <Button
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"/>
+        <ImageButton
             android:id="@+id/activity_job_details_delete"
-            android:text="delete"
+            android:layout_marginRight="15dp"
+            android:src="@drawable/button_delete"
+            android:background="@color/transparent"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"/>
     </LinearLayout>
 
 

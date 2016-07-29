@@ -153,8 +153,9 @@ public class AddJobActivity extends Activity {
         noSetJob.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent returnJobDetailsActivity = new Intent(AddJobActivity.this, JobDetailsAcitiviy.class);
-                startActivity(returnJobDetailsActivity);
+                //Intent returnJobDetailsActivity = new Intent(AddJobActivity.this, JobDetailsAcitiviy.class);
+                //startActivity(returnJobDetailsActivity);
+                finish();
             }
         });
     }
