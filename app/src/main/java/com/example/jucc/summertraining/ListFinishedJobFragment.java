@@ -30,6 +30,8 @@ import java.util.Map;
  * Use the {@link ListFinishedJobFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
+
+//列出已经完成任务的fragment
 public class ListFinishedJobFragment extends ListFragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER

@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+//成就界面
 public class AchievementActivity extends FragmentActivity implements View.OnClickListener{
 
     private Button button_return;
@@ -27,6 +28,7 @@ public class AchievementActivity extends FragmentActivity implements View.OnClic
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_achievement);
 
+        //一些变量的初始化
         fragmentManager = getSupportFragmentManager();
 
         button_return = (Button)findViewById(R.id.activity_achievement_return);
@@ -39,6 +41,7 @@ public class AchievementActivity extends FragmentActivity implements View.OnClic
         button_medium.setOnClickListener(this);
         button_big.setOnClickListener(this);
 
+        //默认加载小鱼成就界面
         FragmentTransaction transaction = fragmentManager.beginTransaction();
         hideFragments(transaction);
         littleFishFragment = new AchievementLittleFishFragment();
@@ -48,13 +51,12 @@ public class AchievementActivity extends FragmentActivity implements View.OnClic
 
     }
 
+    //点击事件
     @Override
     public void onClick(View v){
         switch (v.getId()){
             case R.id.activity_achievement_return:
                 finish();
-                //Intent returnMain = new Intent(AchievementActivity.this,MainActivity.class);
-                //startActivity(returnMain);
                 break;
             case R.id.activity_achievement_littlefish:
                 setTabSelection(0);
@@ -70,10 +72,9 @@ public class AchievementActivity extends FragmentActivity implements View.OnClic
         }
     }
 
+    //设置每个按钮点击之后显示出的fragment
     private void setTabSelection(int index)
     {
-        // 重置按钮
-        //resetBtn();
         // 开启一个Fragment事务
         FragmentTransaction transaction = fragmentManager.beginTransaction();
         // 先隐藏掉所有的Fragment，以防止有多个Fragment显示在界面上的情况
@@ -81,9 +82,6 @@ public class AchievementActivity extends FragmentActivity implements View.OnClic
         switch (index)
         {
             case 0:
-                // 当点击了消息tab时，改变控件的图片和文字颜色
-                //((ImageButton) mTabListFinishedJob.findViewById(R.id.fragment_list_finished_job_linearlayout))
-                //        .setImageResource(R.drawable.tab_weixin_pressed);
                 if (littleFishFragment == null)
                 {
                     // 如果MessageFragment为空，则创建一个并添加到界面上
@@ -96,9 +94,6 @@ public class AchievementActivity extends FragmentActivity implements View.OnClic
                 }
                 break;
             case 1:
-                // 当点击了消息tab时，改变控件的图片和文字颜色
-                //((ImageButton) mTabBtnFrd.findViewById(R.id.btn_tab_bottom_friend))
-                //       .setImageResource(R.drawable.tab_find_frd_pressed);
                 if (mediumFishFragment == null)
                 {
                     // 如果MessageFragment为空，则创建一个并添加到界面上
@@ -137,6 +132,7 @@ public class AchievementActivity extends FragmentActivity implements View.OnClic
         transaction.commit();
     }
 
+    //隐藏已有的fragment
     private void hideFragments(FragmentTransaction transaction)
     {
         if (littleFishFragment != null)

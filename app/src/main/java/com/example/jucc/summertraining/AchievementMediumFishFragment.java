@@ -30,13 +30,15 @@ import java.util.Map;
  * Use the {@link AchievementMediumFishFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
+
+//中鱼fragment界面
 public class AchievementMediumFishFragment extends ListFragment{
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
-    private List<Map<String, Object>> mData;
+    private List<Map<String, Object>> mData; //存取数据的list
     private MyAdapter adapter;
 
     // TODO: Rename and change types of parameters
@@ -80,6 +82,7 @@ public class AchievementMediumFishFragment extends ListFragment{
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
+        //获得数据，绑定adapter，显示
         mData = getData();
         adapter = new MyAdapter(getContext());
         setListAdapter(adapter);
@@ -126,11 +129,12 @@ public class AchievementMediumFishFragment extends ListFragment{
         void onFragmentInteraction(Uri uri);
     }
 
+    //获得中鱼数据
     private List<Map<String, Object>> getData() {
         List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
         DatabaseMethod dbMethod = DatabaseMethod.getInstance(getContext());
         List<Fish> myFish = dbMethod.achievementMid();
-        Log.e("DB","list:    "+myFish.size());//从数据库读取未完成的任务,以list的形式
+        Log.e("DB","list:    "+myFish.size());//从数据库读取中鱼的数据,以list的形式
         for(int i = 0; i < myFish.size(); i++){
             Map<String,Object> map = new HashMap<String,Object>();
             map.put("image",myFish.get(i).getId());
@@ -139,12 +143,6 @@ public class AchievementMediumFishFragment extends ListFragment{
             list.add(map);
         }
         return list;
-    }
-
-    //获取当前日期和时间
-    public String getCurrentTime(){
-        DatabaseMethod db =DatabaseMethod.getInstance(getContext());
-        return db.getStringSecond();
     }
 
     //listview中每个item的布局class

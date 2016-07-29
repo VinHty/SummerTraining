@@ -75,7 +75,7 @@ public class JobDetailsAcitiviy extends AppCompatActivity implements View.OnClic
             }
         });
 
-
+        //默认加载未完成任务
         FragmentTransaction transaction = fragmentManager.beginTransaction();
         hideFragments(transaction);
         mListUnFinishedJobFragment = new ListUnfinishedJobFragment();
@@ -83,9 +83,9 @@ public class JobDetailsAcitiviy extends AppCompatActivity implements View.OnClic
         transaction.show(mListUnFinishedJobFragment);
         transaction.commit();
 
-
     }
 
+    //点击事件
     @Override
     public void onClick(View v){
         switch ((v.getId()))
@@ -102,11 +102,9 @@ public class JobDetailsAcitiviy extends AppCompatActivity implements View.OnClic
 
     }
 
-
+    //加载fragment
     private void setTabSelection(int index)
     {
-        // 重置按钮
-        //resetBtn();
         // 开启一个Fragment事务
         FragmentTransaction transaction = fragmentManager.beginTransaction();
         // 先隐藏掉所有的Fragment，以防止有多个Fragment显示在界面上的情况
@@ -115,8 +113,6 @@ public class JobDetailsAcitiviy extends AppCompatActivity implements View.OnClic
         {
             case 0:
                 // 当点击了消息tab时，改变控件的图片和文字颜色
-                //((ImageButton) mTabListFinishedJob.findViewById(R.id.fragment_list_finished_job_linearlayout))
-                //        .setImageResource(R.drawable.tab_weixin_pressed);
                 if (mListFinishedJobFragment == null)
                 {
                     // 如果MessageFragment为空，则创建一个并添加到界面上
@@ -130,8 +126,6 @@ public class JobDetailsAcitiviy extends AppCompatActivity implements View.OnClic
                 break;
             case 1:
                 // 当点击了消息tab时，改变控件的图片和文字颜色
-                //((ImageButton) mTabBtnFrd.findViewById(R.id.btn_tab_bottom_friend))
-                 //       .setImageResource(R.drawable.tab_find_frd_pressed);
                 if (mListUnFinishedJobFragment == null)
                 {
                     // 如果MessageFragment为空，则创建一个并添加到界面上
@@ -146,22 +140,6 @@ public class JobDetailsAcitiviy extends AppCompatActivity implements View.OnClic
         }
         transaction.commit();
     }
-
-    /**
-     * 清除掉所有的选中状态。
-     */
-  /*  private void resetBtn()
-    {
-        ((ImageButton) mTabBtnWeixin.findViewById(R.id.btn_tab_bottom_weixin))
-                .setImageResource(R.drawable.tab_weixin_normal);
-        ((ImageButton) mTabBtnFrd.findViewById(R.id.btn_tab_bottom_friend))
-                .setImageResource(R.drawable.tab_find_frd_normal);
-        ((ImageButton) mTabBtnAddress.findViewById(R.id.btn_tab_bottom_contact))
-                .setImageResource(R.drawable.tab_address_normal);
-        ((ImageButton) mTabBtnSettings.findViewById(R.id.btn_tab_bottom_setting))
-                .setImageResource(R.drawable.tab_settings_normal);
-    }
-    */
 
     /**
      * 将所有的Fragment都置为隐藏状态。
