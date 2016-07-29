@@ -58,7 +58,7 @@ public class ShopFragment extends Fragment implements View.OnClickListener {
     public void setResources(String title, String description, String price, int id) {
         this.title.setText(title);
         this.description.setText(description);
-        this.price.setText(price);
+        this.price.setText("价格:"+price);
         this.img.setImageResource(id);
         if (checkIfHave() != 0) {
             purchase.setText("已拥有");
@@ -74,9 +74,9 @@ public class ShopFragment extends Fragment implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.purchase:
-                if (Integer.parseInt(method.getCoins()) >= Integer.parseInt(getPrice())) {
+        //Log.e(getClass().getSimpleName(),"on click");
+                if (Integer.parseInt(method.getCoins()) >= Integer.parseInt(getPrice().split(":")[1])) {
+                   // Log.e(getClass().getSimpleName(),"goumai fish");
                     Fish fish = createFish();
                     method.buyFish(fish);
                     new AlertDialog.Builder(getActivity()).setTitle("提示")//设置对话框标题
@@ -91,6 +91,9 @@ public class ShopFragment extends Fragment implements View.OnClickListener {
                                 }
 
                             }).show();//在按键响应事件中显示此对话框
+                    this.purchase.setText("已拥有");
+                    this.purchase.setOnClickListener(null);
+                    ((ShopActivity)getActivity()).getCoins().setText("金币:"+method.getCoins());
                 } else new AlertDialog.Builder(getActivity()).setTitle("提示")//设置对话框标题
                         .setMessage("您的金币不足")//设置显示的内容
                         .setPositiveButton("确定", new DialogInterface.OnClickListener() {//添加确定按钮
@@ -105,10 +108,10 @@ public class ShopFragment extends Fragment implements View.OnClickListener {
                         }).show();//在按键响应事件中显示此对话框
         }
 
-    }
+
 
     public Fish createFish() {
-        int price = Integer.parseInt(getPrice());
+        int price = Integer.parseInt(getPrice().split(":")[1]);
         return new Fish(getSpeciesID(), price);
     }
 

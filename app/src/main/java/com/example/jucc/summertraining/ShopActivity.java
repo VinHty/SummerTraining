@@ -23,8 +23,13 @@ public class ShopActivity extends AppCompatActivity {
     private ViewPager viewPager;
     private Button back;
     private DatabaseMethod method;
+
+    public TextView getCoins() {
+        return coins;
+    }
+
     private TextView coins;
-    public String[] description = {"我只是长得很蓝而已=￣ω￣=", "为近海底层结群性洄游鱼类\n栖息于泥质或泥沙底质的海区", "喜欢生活在平原上的暖和湖泊\n或水流缓慢的河川里\n分布在除澳洲和南美洲外的全世界。", "上世纪50年代由易伯鲁等30多位中科院水生所\n研究人员发现梁子湖中有一种鳊鱼是以往文献中没有的。\n他将它命名为团头鲂，俗称武昌鱼。", "温水性鱼类，适宜生长的水温为25—30℃\n能适应较肥沃的水体环境", "蝴蝶鱼由于体色艳丽，深受我国观赏鱼爱好者的青睐\n它们在我国沿海各地的水族馆中被大量饲养。"};
+    public String[] description = {"我只是长得很蓝而已=￣ω￣=", "近海底层结群性洄游鱼类,栖息于泥质或泥沙底质的海区", "喜欢生活在平原上的暖和湖泊或水流缓慢的河川里,分布在除澳洲和南美洲外的全世界。", "主要分布于长江中、下游的中型湖泊。比较适合于静水性生活.", "温水性鱼类，适宜生长的水温为25—30℃.能适应较肥沃的水体环境", "蝴蝶鱼由于体色艳丽，深受我国观赏鱼爱好者的青睐.它们在我国沿海各地的水族馆中被大量饲养。"};
     public static int times = 0;
     public int current = 0;
 
@@ -32,6 +37,7 @@ public class ShopActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_shop);
+
         method = DatabaseMethod.getInstance(this);
         findById();
         newFragmentAndFillList();
@@ -39,25 +45,6 @@ public class ShopActivity extends AppCompatActivity {
         fragmentAdapter = new FragmentAdapter(this.getSupportFragmentManager(), list);
         viewPager.setAdapter(fragmentAdapter);
         viewPager.setCurrentItem(0);
-        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
-            }
-
-            @Override
-            public void onPageSelected(int position) {
-                current = position;
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int state) {
-
-            }
-        });
-        Log.d(getClass().getSimpleName(), "fish list " + fishList.toString());
-
-
     }
 
     private void findById() {
@@ -81,7 +68,6 @@ public class ShopActivity extends AppCompatActivity {
         Fish fish = fishList.get(id);
         shopFragment.setResources(fish.getName(), description[id], String.valueOf(fish.getPrice()), fish.getId());
         coins.setText("金币:" + method.getCoins());
-        Log.e("zidingyi", "times is " + times + " current is " + current);
         times++;
     }
 

@@ -5,18 +5,24 @@
     android:orientation="horizontal">
 
     <TextView
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
         android:id="@+id/activity_app_usage_titel"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:gravity="left"/>
     <TextView
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
         android:id="@+id/activity_app_usage_time"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:gravity="center"/>
     <TextView
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
         android:id="@+id/activity_app_usage_percent"
         android:layout_width="0dp"
         android:layout_height="wrap_content"

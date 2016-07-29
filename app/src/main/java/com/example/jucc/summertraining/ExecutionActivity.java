@@ -214,9 +214,9 @@ public class ExecutionActivity extends Activity {
                     @Override
 
                     public void onClick(DialogInterface dialog, int which) {//响应事件
-                        Intent intent = new Intent();
-                        intent.setClass(ExecutionActivity.this,MainActivity.class);
-                        ExecutionActivity.this.startActivity(intent);
+//                        Intent intent = new Intent();
+//                        intent.setClass(ExecutionActivity.this,MainActivity.class);
+//                        ExecutionActivity.this.startActivity(intent);
                         finish();
                     }
 
@@ -238,12 +238,10 @@ public class ExecutionActivity extends Activity {
             quickJobGiveUp.updateAchievement(fishGiveUp);
 
         }
-
-
         //关闭Activity并且跳转到MainActivity
-        Intent intent = new Intent();
-        intent.setClass(ExecutionActivity.this,MainActivity.class);
-        ExecutionActivity.this.startActivity(intent);
+//        Intent intent = new Intent();
+//        intent.setClass(ExecutionActivity.this,MainActivity.class);
+//        ExecutionActivity.this.startActivity(intent);
         finish();
     }
 

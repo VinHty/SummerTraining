@@ -44,11 +44,6 @@ public class TodayFragment extends MyFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = super.onCreateView(inflater, container, savedInstanceState);
-        adapter = new SimpleAdapter(getContext(), list, R.layout.activity_app_usage_list_item, itemName, itemID);
-        readFromList(getActivity());
-        Log.d(getClass().getSimpleName(), list.toString());
-        listView.setAdapter(adapter);
-        ((AppUsageAmountActivity)getActivity()).insertUsage();
         return view;
 
     }
@@ -70,14 +65,23 @@ public class TodayFragment extends MyFragment {
     }
 
 
+    @Override
+    public void onStart() {
+        super.onStart();
+        readFromList(getActivity());
+        adapter = new SimpleAdapter(getContext(), list, R.layout.activity_app_usage_list_item, itemName, itemID);
+        Log.d(getClass().getSimpleName(), list.toString());
+        listView.setAdapter(adapter);
+        ((AppUsageAmountActivity)getActivity()).insertUsage();
+
+
+    }
+
     /*
-    /读取数据 并且存入list中
-     */
+        /读取数据 并且存入list中
+         */
     public void readFromList(Activity act) {
         if (getUsageStats(act) == null) {
-            Intent intent = new Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS);
-            startActivity(intent);
-            readFromList(act);
         } else {
             List<UsageStats> queryUsageStats = getUsageStats(act);
             PackageManager pm = getContext().getPackageManager();

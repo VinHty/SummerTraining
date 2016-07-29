@@ -114,13 +114,15 @@ public class AppUsageAmountActivity extends FragmentActivity {
         setContentView(R.layout.activity_app_usage_amount);
         //实例化数据库对象
         databaseMethod = DatabaseMethod.getInstance(this);
+        databaseMethod.increaseCoins(1200);
         //获取各种控件
         findById();
-        //
         init();
         initTabLineWidth();
         //如果不能获取用量信息，则调用系统设置，给app授权
-        if (hasModule(this)) {
+        if (TodayFragment.getUsageStats(this)==null) {
+            Intent intent = new Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS);
+            startActivity(intent);
         }
     }
 
