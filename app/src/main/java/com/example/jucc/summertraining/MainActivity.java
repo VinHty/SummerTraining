@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
@@ -213,8 +214,8 @@ public class MainActivity extends Activity implements CircleTimePiker.TimeAdapte
         ImageButton queryTiming = (ImageButton)mPopWindowView.findViewById(R.id.timing_query);
         queryTiming.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                //该功能只支持api22及以上功能，若版本低会弹出提醒
-                if(getAndroidSDKVersion()<=22){
+                //该功能只支持api21及以上功能，若版本低会弹出提醒
+                if(getAndroidSDKVersion()<21){
                     new AlertDialog.Builder(MainActivity.this).setTitle("提醒")//设置对话框标题
                             .setMessage("您的安卓版本较低，暂无法使用该功能")//设置显示的内容
                             .setPositiveButton("确定",new DialogInterface.OnClickListener() {//添加确定按钮
@@ -264,6 +265,7 @@ public class MainActivity extends Activity implements CircleTimePiker.TimeAdapte
         });
 
         popMenu = new PopupWindow(mPopWindowView,700,900 ,true);
+        popMenu.setBackgroundDrawable(new BitmapDrawable());
         popMenu.showAsDropDown(mPopWindowBtn);
     }
 

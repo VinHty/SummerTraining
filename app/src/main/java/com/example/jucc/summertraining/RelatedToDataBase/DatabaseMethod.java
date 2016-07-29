@@ -283,11 +283,10 @@ public class DatabaseMethod {
    /获得用户金币数量
     */
     public String getCoins() {
-        Cursor cursor = db.rawQuery("select * from account", null);
-        int coins = 0;
-        while (cursor.moveToNext()) {
+        Cursor cursor = db.rawQuery("select coins from account", null);
+        int coins=0;
+        if(cursor.moveToFirst()){
             coins = cursor.getInt(cursor.getColumnIndex("coins"));
-            Log.d(getClass().getSimpleName(),"coins are "+coins);
         }
         return String.valueOf(coins);
     }
@@ -300,9 +299,7 @@ public class DatabaseMethod {
     public void increaseCoins(int number) {
         int coins =Integer.parseInt( getCoins());
         int newNumber = number + coins;
-        Log.e("DB","newNum:   "+newNumber);
         db.execSQL("update account set coins =" + newNumber);
-        Log.e("DB","COIN:    "+getCoins());
     }
 
     /*
@@ -367,7 +364,7 @@ public class DatabaseMethod {
         int state = fish.getState();
         int times = getTimes(fish);
         int newTimes = times + 1;
-        db.execSQL("update achievement set times=" + newTimes + " where species=" + species + " and state = " + state);
+        db.execSQL("update achievement set times=" + newTimes + "where species=" + species + "and state = " + state);
 
 
     }
@@ -439,9 +436,10 @@ public class DatabaseMethod {
     }
 
 
-    public void insertRecords(){
-
-
+    public int isAvailable(int species){
+        Cursor cursor = db.rawQuery("select available from species where species="+species,null);
+        cursor.moveToFirst();
+        return cursor.getInt(cursor.getColumnIndex("available"));
     }
 
 
