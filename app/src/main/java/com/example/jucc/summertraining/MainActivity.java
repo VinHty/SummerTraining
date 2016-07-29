@@ -240,15 +240,15 @@ public class MainActivity extends Activity implements CircleTimePiker.TimeAdapte
                 }
             }
         });
-        //初始化查看设置按钮，点击后跳转到对应活动
-        ImageButton setting = (ImageButton) mPopWindowView.findViewById(R.id.setting);
-        setting.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                Intent intent = new Intent();
-                intent.setClass(MainActivity.this, SettingsActivity.class);
-                MainActivity.this.startActivity(intent);
-            }
-        });
+//        //初始化查看设置按钮，点击后跳转到对应活动
+//        ImageButton setting = (ImageButton) mPopWindowView.findViewById(R.id.setting);
+//        setting.setOnClickListener(new View.OnClickListener() {
+//            public void onClick(View v) {
+//                Intent intent = new Intent();
+//                intent.setClass(MainActivity.this, SettingsActivity.class);
+//                MainActivity.this.startActivity(intent);
+//            }
+//        });
         //初始化商店按钮，点击后跳转到对应活动
         ImageButton shop = (ImageButton) mPopWindowView.findViewById(R.id.shop);
         shop.setOnClickListener(new View.OnClickListener() {

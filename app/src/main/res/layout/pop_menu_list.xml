@@ -43,14 +43,14 @@
             android:background="@color/transparent"
             />
 
-        <ImageButton
-            android:id="@+id/setting"
-            android:layout_marginTop="15dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/setting"
-            android:background="@color/transparent"
-            />
+        <!--<ImageButton-->
+            <!--android:id="@+id/setting"-->
+            <!--android:layout_marginTop="15dp"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:src="@drawable/setting"-->
+            <!--android:background="@color/transparent"-->
+            <!--/>-->
 
 
 
