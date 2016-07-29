@@ -64,7 +64,7 @@ public class ExecutionActivity extends Activity {
         big=bundle.getInt("bigFish");
         fish=bundle.getInt("fish");
         fishState=(ImageButton) findViewById(R.id.fish_state);
-        fishState.setImageResource(small);
+        fishState.setImageResource(R.drawable.xiaoxiaoyu);
         //初始化进度条的变量值
         initVariable();
         //初始化时间选择器
@@ -159,7 +159,7 @@ public class ExecutionActivity extends Activity {
                     now=now+1;
                 Log.e("ss","small     " +small    );
                     switch (getState(now)){
-                        case 0:fishState.setImageResource(small);
+                        case 0:fishState.setImageResource(R.drawable.xiaoxiaoyu);
                             break;
                         case 1:fishState.setImageResource(small);
                             break;

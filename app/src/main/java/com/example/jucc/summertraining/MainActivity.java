@@ -35,7 +35,7 @@ public class MainActivity extends Activity implements CircleTimePiker.TimeAdapte
     public Bundle bundle = new Bundle();
     private PopupWindow popMenu;
 
-    private Button mPopWindowBtn;
+    private ImageButton mPopWindowBtn;
     private View mPopWindowView;
     private int[][] fish;
     private ImageButton selectFish;
@@ -121,7 +121,7 @@ public class MainActivity extends Activity implements CircleTimePiker.TimeAdapte
     @Override
     public void onPositionChange(int newPositoin, int oldPosition) {
 
-        circleSelectTv.setText("设定时长为" + newPositoin + "分钟");
+        circleSelectTv.setText( newPositoin +":00" );
 
         changeState(fish,newPositoin);
 
@@ -163,7 +163,7 @@ public class MainActivity extends Activity implements CircleTimePiker.TimeAdapte
                 MainActivity.this.startActivity(intent);
             }
         });
-        final Button menu1 = (Button) findViewById(R.id.pop_menu);
+        final ImageButton menu1 = (ImageButton) findViewById(R.id.pop_menu);
         menu1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -182,7 +182,7 @@ public class MainActivity extends Activity implements CircleTimePiker.TimeAdapte
         circleSelectTv = (TextView) findViewById(R.id.circleSelectTv);
         circleSelect.setAdapter(this);
         circleSelect.setOnSelectionChangeListener(this);
-        circleSelectTv.setText("设定时长为0分钟");
+        circleSelectTv.setText("0:00");
 
     }
 
@@ -197,11 +197,11 @@ public class MainActivity extends Activity implements CircleTimePiker.TimeAdapte
     }
 
     private void showPopWindow(){
-        mPopWindowBtn = (Button) findViewById(R.id.pop_menu);
+        mPopWindowBtn = (ImageButton) findViewById(R.id.pop_menu);
         mPopWindowView=LayoutInflater.from(MainActivity.this).inflate(R.layout.pop_menu_list, null);
         // 创建一个PopuWidow对象
         //初始化查看任务按钮，点击后跳转到对应活动
-        Button queryJob = (Button)mPopWindowView.findViewById(R.id.job_query);
+        ImageButton queryJob = (ImageButton)mPopWindowView.findViewById(R.id.job_query);
         queryJob.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Intent intent = new Intent();
@@ -210,7 +210,7 @@ public class MainActivity extends Activity implements CircleTimePiker.TimeAdapte
             }
         });
         //初始化查看手机使用情况按钮，点击后跳转到对应活动
-        Button queryTiming = (Button)mPopWindowView.findViewById(R.id.timing_query);
+        ImageButton queryTiming = (ImageButton)mPopWindowView.findViewById(R.id.timing_query);
         queryTiming.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 //该功能只支持api22及以上功能，若版本低会弹出提醒
@@ -237,7 +237,7 @@ public class MainActivity extends Activity implements CircleTimePiker.TimeAdapte
             }
         });
         //初始化查看设置按钮，点击后跳转到对应活动
-        Button setting = (Button)mPopWindowView.findViewById(R.id.setting);
+        ImageButton setting = (ImageButton)mPopWindowView.findViewById(R.id.setting);
         setting.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Intent intent = new Intent();
@@ -246,7 +246,7 @@ public class MainActivity extends Activity implements CircleTimePiker.TimeAdapte
             }
         });
         //初始化商店按钮，点击后跳转到对应活动
-        Button shop = (Button)mPopWindowView.findViewById(R.id.shop);
+        ImageButton shop = (ImageButton)mPopWindowView.findViewById(R.id.shop);
         shop.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Intent intent = new Intent();
@@ -254,7 +254,7 @@ public class MainActivity extends Activity implements CircleTimePiker.TimeAdapte
                 MainActivity.this.startActivity(intent);
             }
         });
-        Button achi = (Button)mPopWindowView.findViewById(R.id.achievement);
+        ImageButton achi = (ImageButton)mPopWindowView.findViewById(R.id.achievement);
         achi.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Intent intent = new Intent();
