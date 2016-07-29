@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.example.jucc.summertraining.Entity.Fish;
@@ -30,7 +31,7 @@ public class ShopActivity extends AppCompatActivity {
     //viewPager对象
     private ViewPager viewPager;
     //返回button对象
-    private Button back;
+    private ImageButton back;
     //数据库实例
     private DatabaseMethod method;
 
@@ -42,7 +43,7 @@ public class ShopActivity extends AppCompatActivity {
     //textview对象，显示金币
     private TextView coins;
     //每条鱼的描述
-    public String[] description = {"我只是长得很蓝而已/n=￣ω￣=", "近海底层结群性洄游鱼类,栖息于泥质或泥沙底质的海区", "喜欢生活在平原上的暖和湖泊或水流缓慢的河川里,分布在除澳洲和南美洲外的全世界。", "主要分布于长江中、下游的中型湖泊。比较适合于静水性生活.", "温水性鱼类，适宜生长的水温为25—30℃.能适应较肥沃的水体环境", "蝴蝶鱼由于体色艳丽，深受我国观赏鱼爱好者的青睐.它们在我国沿海各地的水族馆中被大量饲养。"};
+    public String[] description = {"我只是长得很蓝而已/n=￣ω￣=", "近海底层结群性洄游鱼类,栖息于泥质或泥沙底质的海区.", "喜欢生活在平原上的暖和湖泊或水流缓慢的河川里,分布在除澳洲和南美洲外的全世界。", "主要分布于长江中、下游的中型湖泊。比较适合于静水性生活.", "温水性鱼类，适宜生长的水温为25—30℃.能适应较肥沃的水体环境", "蝴蝶鱼由于体色艳丽，深受我国观赏鱼爱好者的青睐."};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,7 +69,7 @@ public class ShopActivity extends AppCompatActivity {
      */
     private void findById() {
         viewPager = (ViewPager) findViewById(R.id.viewPager);
-        back = (Button) findViewById(R.id.back);
+        back = (ImageButton) findViewById(R.id.back);
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
