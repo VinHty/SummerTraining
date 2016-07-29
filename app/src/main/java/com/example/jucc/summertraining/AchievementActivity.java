@@ -115,6 +115,17 @@ public class AchievementActivity extends FragmentActivity implements View.OnClic
                     transaction.show(bigFishFragment);
                 }
                 break;
+            default:  if (littleFishFragment == null)
+            {
+                // 如果MessageFragment为空，则创建一个并添加到界面上
+                littleFishFragment = new AchievementLittleFishFragment();
+                transaction.add(R.id.activity_achievement_content, littleFishFragment);
+            } else
+            {
+                // 如果MessageFragment不为空，则直接将它显示出来
+                transaction.show(littleFishFragment);
+            }
+                break;
         }
         transaction.commit();
     }

@@ -29,7 +29,8 @@
                 <FrameLayout
                     android:id="@+id/a"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="30dp">
 
                     <ImageButton
                         android:layout_height="wrap_content"
@@ -54,7 +55,7 @@
 
                 </FrameLayout>
                 <TextView
-                    android:layout_marginTop="50dp"
+                    android:layout_marginTop="30dp"
                     android:id="@+id/circleSelectTv"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

@@ -154,7 +154,7 @@ public class ExecutionActivity extends Activity {
                 //每秒对当前进度进行更新
                 long myminute = (millisUntilFinished / 1000) / 60;
                 long mysecond = millisUntilFinished / 1000 - myminute * 60;
-                time.setText("剩余时间"  + myminute + ":" + mysecond);
+                time.setText( myminute + ":" + mysecond);
                 int finish=new Long(millisUntilFinished).intValue();
                     now=now+1;
                 Log.e("ss","small     " +small    );
