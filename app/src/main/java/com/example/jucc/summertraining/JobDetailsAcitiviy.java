@@ -33,8 +33,8 @@ import java.util.Map;
 //当用户在主界面点击任务按钮的时候，跳转至该界面，即任务界面
 public class JobDetailsAcitiviy extends AppCompatActivity implements View.OnClickListener{
 
-    private Button button_return;
-    private Button button_add;
+    private ImageButton button_return;
+    private ImageButton button_add;
 
     private Button mTabListFinishedJob;
     private Button mTabListUnfinishedJob;
@@ -49,8 +49,8 @@ public class JobDetailsAcitiviy extends AppCompatActivity implements View.OnClic
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_job_details_acitiviy);
 
-        button_return = (Button)findViewById(R.id.activity_job_details_return);
-        button_add = (Button) findViewById(R.id.activity_job_details_add);
+        button_return = (ImageButton)findViewById(R.id.activity_job_details_return);
+        button_add = (ImageButton) findViewById(R.id.activity_job_details_add);
         fragmentManager = getSupportFragmentManager();
 
         mTabListFinishedJob = (Button)findViewById(R.id.fragment_list_finished_job_linearlayout) ;

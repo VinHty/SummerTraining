@@ -10,44 +10,50 @@
     tools:context="com.example.jucc.summertraining.JobDetailsAcitiviy"
     android:background="@drawable/bg">
 
-    <RelativeLayout
+    <LinearLayout
+        android:layout_marginTop="15dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
-        <Button
+        android:orientation="horizontal"
+        android:gravity="center_horizontal">
+        <ImageButton
             android:id="@+id/activity_job_details_return"
-            android:text="Return"
-            android:layout_alignParentLeft="true"
+            android:src="@drawable/button_return"
+            android:background="@color/transparent"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginRight="45dp"
             />
-        <Button
-            android:id="@+id/fragment_list_unfinished_job_linearlayout"
-            android:text="未完成任务"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_toEndOf="@+id/activity_job_details_return"
-            android:background="@drawable/btn_shape"
-            android:textColor="#ffffff"
-            android:textSize="15dp"/>
-        <Button
-            android:id="@+id/fragment_list_finished_job_linearlayout"
-            android:text="已完成任务"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_toStartOf="@+id/activity_job_details_add"
-            android:background="@drawable/btn_shape"
-            android:textColor="#ffffff"
-            android:textSize="15dp"/>
-        <Button
+
+
+            <Button
+                android:id="@+id/fragment_list_unfinished_job_linearlayout"
+                android:text="未完成任务"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/btn_shape"
+                android:textColor="#ffffff"
+                android:textSize="15dp"/>
+            <Button
+                android:id="@+id/fragment_list_finished_job_linearlayout"
+                android:text="已完成任务"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/btn_shape"
+                android:textColor="#ffffff"
+                android:textSize="15dp"/>
+
+
+
+        <ImageButton
             android:id="@+id/activity_job_details_add"
-            android:text="Add"
-            android:layout_alignParentRight="true"
+            android:background="@color/transparent"
+            android:layout_gravity="right"
+            android:src="@drawable/button_add"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-    </RelativeLayout>
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="45dp"/>
+    </LinearLayout>
 
     <android.support.v7.widget.ContentFrameLayout
         android:id="@+id/id_content"
