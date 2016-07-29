@@ -9,6 +9,7 @@
     <ListView
         android:gravity="center_horizontal"
         android:id="@id/android:list"
+        android:divider="@null"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent" />
 
