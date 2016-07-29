@@ -42,15 +42,12 @@ public class YesterdayFragment extends MyFragment {
         UseTimeList useList = method.getYesterdayList();
         List list = useList.getList();
         long totalTime = useList.getCount();
-        //Toast.makeText(getContext(),"total time is "+totalTime,Toast.LENGTH_SHORT).show();
         for (int a = 0; a < list.size(); a++) {
             UseTime useTime = (UseTime) list.get(a);
             HashMap<String, Object> map = new HashMap<>();
             String name = useTime.getAppName();
             long time = useTime.getUseTime();
-            // Toast.makeText(getContext(),"each app time is "+time,Toast.LENGTH_SHORT).show();
             long percent = time * 100 / totalTime;
-            // Toast.makeText(getContext(),"each app percent is "+percent,Toast.LENGTH_SHORT).show();
             map.put("title", name);
             map.put("time", time);
             map.put("percent", percent);

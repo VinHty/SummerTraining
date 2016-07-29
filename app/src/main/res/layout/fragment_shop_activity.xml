@@ -12,7 +12,9 @@
         android:layout_marginTop="28dp"
         android:layout_alignParentTop="true"
         android:layout_alignParentStart="true"
-        android:gravity="center" />
+        android:gravity="center"
+        android:textSize ="20dp"
+        android:textColor="#000000"/>
 
     <ImageView
         android:layout_width="wrap_content"
@@ -34,27 +36,32 @@
         android:gravity="center_vertical"
         android:lines="4"
         android:maxWidth="170dp"
+        android:textSize ="17dp"
+        android:textColor="#000000"
         />
 
 
+    <TextView
+        android:text="price"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="30dp"
+        android:layout_marginBottom="32dp"
+        android:id="@+id/price"
+        android:textSize ="17dp"
+        android:textColor="#000000"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true" />
 
     <Button
         android:text="购买"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/purchase"
-        android:layout_alignParentBottom="true"
+        android:background="@drawable/btn_shape"
+        android:layout_alignBaseline="@+id/price"
+        android:layout_alignBottom="@+id/price"
         android:layout_alignParentStart="true"
-        android:background="@drawable/btn_shape"/>
-
-    <TextView
-        android:text="price"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginEnd="17dp"
-        android:layout_marginBottom="12dp"
-        android:id="@+id/price" />
+        android:layout_marginStart="14dp" />
 
 </RelativeLayout>
