@@ -170,7 +170,7 @@ public class AchievementMediumFishFragment extends ListFragment{
         @Override
         public int getCount() {
             // TODO Auto-generated method stub
-            return mData.size();
+            return mData.size()/2;
         }
 
         @Override
@@ -208,18 +208,18 @@ public class AchievementMediumFishFragment extends ListFragment{
                 holder.leftimagerview.setImageResource((int)mData.get(0).get("image"));
                 Log.e("image resource is ","" + mData.get(0).get("image"));
                 holder.leftfishname.setText((String)mData.get(0).get("name"));
-                holder.leftfishamount.setText("has get: "+mData.get(0).get("amount"));
+                holder.leftfishamount.setText(mData.get(0).get("amount") + "/1000");
                 holder.rightimageview.setImageResource((int)mData.get(1).get("image"));
                 holder.rightfishname.setText((String)mData.get(1).get("name"));
-                holder.rightfishamount.setText("has get: "+mData.get(1).get("amount"));
+                holder.rightfishamount.setText(mData.get(1).get("amount") + "/1000");
             }else if(position == 1 || position == 2){
                 //设置listview中每行的文本信息
                 holder.leftimagerview.setImageResource((int)mData.get(2*position).get("image"));
                 holder.leftfishname.setText((String)mData.get(2*position).get("name"));
-                holder.leftfishamount.setText("has get: "+mData.get(2*position).get("amount"));
+                holder.leftfishamount.setText(mData.get(2*position).get("amount") + "/1000");
                 holder.rightimageview.setImageResource((int)mData.get(2*position+1).get("image"));
                 holder.rightfishname.setText((String)mData.get(2*position+1).get("name"));
-                holder.rightfishamount.setText("has get: "+mData.get(2*position+1).get("amount"));
+                holder.rightfishamount.setText(mData.get(2*position+1).get("amount") + "/1000");
             }
             return convertView;
         }

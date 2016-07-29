@@ -8,8 +8,9 @@
     <LinearLayout
         android:id="@+id/littlefish_leftlinearlayout"
         android:orientation="vertical"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:gravity="center">
 
         <ImageView
@@ -18,10 +19,14 @@
             android:layout_height="wrap_content" />
         <TextView
             android:id="@+id/littlefish_leftname"
+            android:textColor="#000000"
+            android:textSize="12dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
         <TextView
             android:id="@+id/littlefish_lefttextview"
+            android:textColor="#000000"
+            android:textSize="12dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
@@ -30,8 +35,9 @@
     <LinearLayout
         android:id="@+id/littlefish_rightlinearlayout"
         android:orientation="vertical"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:gravity="center">
 
         <ImageView
@@ -40,10 +46,14 @@
             android:layout_height="wrap_content" />
         <TextView
             android:id="@+id/littlefish_rightname"
+            android:textColor="#000000"
+            android:textSize="12dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
         <TextView
             android:id="@+id/littlefish_righttextview"
+            android:textColor="#000000"
+            android:textSize="12dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 

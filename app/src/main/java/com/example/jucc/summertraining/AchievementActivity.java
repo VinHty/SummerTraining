@@ -39,6 +39,12 @@ public class AchievementActivity extends FragmentActivity implements View.OnClic
         button_medium.setOnClickListener(this);
         button_big.setOnClickListener(this);
 
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+        hideFragments(transaction);
+        littleFishFragment = new AchievementLittleFishFragment();
+        transaction.add(R.id.activity_achievement_content, littleFishFragment);
+        transaction.show(littleFishFragment);
+        transaction.commit();
 
     }
 

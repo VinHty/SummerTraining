@@ -6,9 +6,11 @@
 
     <LinearLayout
         android:id="@+id/bigfish_leftlinearlayout"
+        android:layout_weight="1"
         android:orientation="vertical"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:gravity="bottom|center"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
         <ImageView
             android:id="@+id/bigfish_leftimageview"
@@ -16,10 +18,14 @@
             android:layout_height="wrap_content" />
         <TextView
             android:id="@+id/bigfish_leftname"
+            android:textColor="#000000"
+            android:textSize="18dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
         <TextView
             android:id="@+id/bigfish_lefttextview"
+            android:textColor="#000000"
+            android:textSize="18dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
@@ -27,9 +33,13 @@
 
     <LinearLayout
         android:id="@+id/bigfish_rightlinearlayout"
+        android:layout_weight="1"
+        android:gravity="bottom|center"
         android:orientation="vertical"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_marginBottom="0dp"
+        android:paddingBottom="0dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
         <ImageView
             android:id="@+id/bigfish_rightimageview"
@@ -37,10 +47,14 @@
             android:layout_height="wrap_content" />
         <TextView
             android:id="@+id/bigfish_rightname"
+            android:textColor="#000000"
+            android:textSize="18dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
         <TextView
             android:id="@+id/bigfish_righttextview"
+            android:textColor="#000000"
+            android:textSize="18dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 

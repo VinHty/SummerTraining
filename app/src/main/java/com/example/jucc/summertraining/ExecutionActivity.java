@@ -193,7 +193,7 @@ public class ExecutionActivity extends Activity {
                 quickJobFinish.increaseCoins(m);
                 vibrator = (Vibrator)getSystemService(Context.VIBRATOR_SERVICE);
                 long [] pattern = {100,400,100,400};   // 停止 开启 停止 开启
-                vibrator.vibrate(pattern,2);           //重复两次上面的pattern 如果只想震动一次，index设为-1
+                vibrator.vibrate(pattern,-1);           //重复两次上面的pattern 如果只想震动一次，index设为-1
           //      onStop();
                 new AlertDialog.Builder(ExecutionActivity.this).setTitle("成功")//设置对话框标题1
                         .setMessage("任务成功")//设置显示的内容
@@ -257,8 +257,5 @@ public class ExecutionActivity extends Activity {
         return state;
     }
 
-    public void onStop(){
-        super.onStop();
-        vibrator.cancel();
-    }
+
 }
