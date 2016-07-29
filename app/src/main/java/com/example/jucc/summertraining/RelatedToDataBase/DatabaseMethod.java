@@ -228,7 +228,7 @@ public class DatabaseMethod {
         if (isSuc == true) i = 1;
         Cursor cu = db.rawQuery("select start_time,job_name,is_suc,last_time from job where is_suc='" + i + "' order by start_time DESC ", null);
         while (cu.moveToNext()) {
-            jobs.add(new Job( cu.getString(cu.getColumnIndex("job_name")), cu.getString(cu.getColumnIndex("last_time")), cu.getString(cu.getColumnIndex("start_time")),cu.getInt(cu.getColumnIndex("is_suc"))));
+            jobs.add(new Job(cu.getString(cu.getColumnIndex("job_name")), cu.getString(cu.getColumnIndex("last_time")), cu.getString(cu.getColumnIndex("start_time")), cu.getInt(cu.getColumnIndex("is_suc"))));
         }
         cu.close();
         return jobs;
@@ -279,13 +279,13 @@ public class DatabaseMethod {
     }
 
     /*
-    Vin 增加于 2016-7-23 迭代2
+    VinHty 增加于 2016-7-23 迭代2
    /获得用户金币数量
     */
     public String getCoins() {
         Cursor cursor = db.rawQuery("select coins from account", null);
-        int coins=0;
-        if(cursor.moveToFirst()){
+        int coins = 0;
+        if (cursor.moveToFirst()) {
             coins = cursor.getInt(cursor.getColumnIndex("coins"));
         }
         return String.valueOf(coins);
@@ -297,7 +297,7 @@ public class DatabaseMethod {
     /@number 增加的数量
      */
     public void increaseCoins(int number) {
-        int coins =Integer.parseInt( getCoins());
+        int coins = Integer.parseInt(getCoins());
         int newNumber = number + coins;
         db.execSQL("update account set coins =" + newNumber);
     }
@@ -307,7 +307,7 @@ public class DatabaseMethod {
     @fish 鱼对象
      */
     public void buyFish(Fish fish) {
-        int coins =Integer.parseInt( getCoins());
+        int coins = Integer.parseInt(getCoins());
         int newNumber = coins - fish.getPrice();
         db.execSQL("update account set coins =" + newNumber);
         db.execSQL("update species set available =1 where species=" + fish.getSpecies());
@@ -323,7 +323,7 @@ public class DatabaseMethod {
         while (cursor.moveToNext()) {
             int species = cursor.getInt(cursor.getColumnIndex("species"));
             int price = cursor.getInt(cursor.getColumnIndex("price"));
-            int id=cursor.getInt(cursor.getColumnIndex("id"));
+            int id = cursor.getInt(cursor.getColumnIndex("id"));
             String name = cursor.getString(cursor.getColumnIndex("name"));
             Fish fish = new Fish(species, price);
             fish.setId(id);
@@ -335,14 +335,14 @@ public class DatabaseMethod {
 
     /*/
     获取用户可用的鱼的列表 包含 species,name,id,state
-    return 包含鱼的的list的list对象 每一个对象是一个包含3个state的鱼的list     */
+    return 基于fish对象的list列表     */
+
     public List<Fish> userAvailableFish() {
-//        db =
         Cursor cursor = db.rawQuery("select s.species as species,name,id,state  from species as s,achievement as a where available=1 and s.species=a.species order by species,state asc", null);
         List<Fish> list = new ArrayList<>();
         while (cursor.moveToNext()) {
             int species = cursor.getInt(cursor.getColumnIndex("species"));
-            String name =cursor.getString(cursor.getColumnIndex("name"));
+            String name = cursor.getString(cursor.getColumnIndex("name"));
             int id = cursor.getInt(cursor.getColumnIndex("id"));
             int state = cursor.getInt(cursor.getColumnIndex("state"));
             Fish fish = new Fish(species);
@@ -351,7 +351,6 @@ public class DatabaseMethod {
             fish.setState(state);
             list.add(fish);
         }
-
         return list;
     }
 
@@ -373,6 +372,7 @@ public class DatabaseMethod {
     基于fish种类获得完成次数
     @param fish 对象
      */
+
     public int getTimes(Fish fish) {
         int species = fish.getSpecies();
         int state = fish.getState();
@@ -381,12 +381,16 @@ public class DatabaseMethod {
         int times = cu.getInt(cu.getColumnIndex("times"));
         return times;
     }
+    /*
+    /获取state为0的鱼的list，获得其成就次数，图片id，鱼名字，种类。
+    返回值： 基于鱼的对象的list
+     */
 
-    public List<Fish> achievementSmall(){
+    public List<Fish> achievementSmall() {
         String sql = "select s.species as species,name,id,times from achievement as a,species as s where s.species=a.species and state=0";
-        Cursor cursor=db.rawQuery(sql,null);
-        List<Fish> list =new ArrayList<Fish>();
-        while (cursor.moveToNext()){
+        Cursor cursor = db.rawQuery(sql, null);
+        List<Fish> list = new ArrayList<Fish>();
+        while (cursor.moveToNext()) {
             int species = cursor.getInt(cursor.getColumnIndex("species"));
             String name = cursor.getString(cursor.getColumnIndex("name"));
             int id = cursor.getInt(cursor.getColumnIndex("id"));
@@ -397,14 +401,18 @@ public class DatabaseMethod {
             fish.setTimes(times);
             list.add(fish);
         }
-        Log.e("DB","list:    "+list.toString());
         return list;
     }
-    public List<Fish> achievementMid(){
+
+    /*
+   /获取state为1的鱼的list，获得其成就次数，图片id，鱼名字，种类。
+   返回值： 基于鱼的对象的list
+    */
+    public List<Fish> achievementMid() {
         String sql = "select s.species as species,name,id,times from achievement as a,species as s where s.species=a.species and state=1";
-        Cursor cursor=db.rawQuery(sql,null);
+        Cursor cursor = db.rawQuery(sql, null);
         List<Fish> list = new ArrayList<Fish>();
-        while (cursor.moveToNext()){
+        while (cursor.moveToNext()) {
             int species = cursor.getInt(cursor.getColumnIndex("species"));
             String name = cursor.getString(cursor.getColumnIndex("name"));
             int id = cursor.getInt(cursor.getColumnIndex("id"));
@@ -417,11 +425,16 @@ public class DatabaseMethod {
         }
         return list;
     }
-    public List<Fish> achievementBig(){
+
+    /*
+  /获取state为2的鱼的list，获得其成就次数，图片id，鱼名字，种类。
+  返回值： 基于鱼的对象的list
+   */
+    public List<Fish> achievementBig() {
         String sql = "select s.species as species,name,id,times from achievement as a,species as s where s.species=a.species and state=2";
-        Cursor cursor=db.rawQuery(sql,null);
+        Cursor cursor = db.rawQuery(sql, null);
         List<Fish> list = new ArrayList<Fish>();
-        while (cursor.moveToNext()){
+        while (cursor.moveToNext()) {
             int species = cursor.getInt(cursor.getColumnIndex("species"));
             String name = cursor.getString(cursor.getColumnIndex("name"));
             int id = cursor.getInt(cursor.getColumnIndex("id"));
@@ -435,9 +448,11 @@ public class DatabaseMethod {
         return list;
     }
 
-
-    public int isAvailable(int species){
-        Cursor cursor = db.rawQuery("select available from species where species="+species,null);
+    /*
+    /基于鱼的种类 判断是否可用 1可用 0不可用
+     */
+    public int isAvailable(int species) {
+        Cursor cursor = db.rawQuery("select available from species where species=" + species, null);
         cursor.moveToFirst();
         return cursor.getInt(cursor.getColumnIndex("available"));
     }

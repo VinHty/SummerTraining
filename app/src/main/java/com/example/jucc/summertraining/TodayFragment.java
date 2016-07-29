@@ -63,7 +63,9 @@ public class TodayFragment extends MyFragment {
         }
         return queryUsageStats;
     }
-
+    /*
+    /在activity获取到了权限之后，再调用fragment onStart方法，填充数据
+     */
 
     @Override
     public void onStart() {
@@ -73,8 +75,6 @@ public class TodayFragment extends MyFragment {
         Log.d(getClass().getSimpleName(), list.toString());
         listView.setAdapter(adapter);
         ((AppUsageAmountActivity)getActivity()).insertUsage();
-
-
     }
 
     /*
@@ -122,15 +122,11 @@ public class TodayFragment extends MyFragment {
     /更新数据 每次点击tab 删除现有的list里面的数据 然后重新获取消息装填
      */
     public void update() {
-        //   Log.d(getClass().getSimpleName(),list.get(9).toString());
-
         list.clear();
         Log.d(getClass().getSimpleName(), list.toString());
-
         readFromList(getActivity());
         Log.d(getClass().getSimpleName(), list.get(9).toString());
         Log.e(getClass().getSimpleName(), "list size is " + list.size());
-        //Toast.makeText(getContext(), "update executed", Toast.LENGTH_SHORT).show();
         adapter.notifyDataSetChanged();
     }
 }
