@@ -114,7 +114,7 @@ public class AppUsageAmountActivity extends FragmentActivity {
         setContentView(R.layout.activity_app_usage_amount);
         //实例化数据库对象
         databaseMethod = DatabaseMethod.getInstance(this);
-        databaseMethod.increaseCoins(1200);
+        //databaseMethod.increaseCoins(1200);
         //获取各种控件
         findById();
         init();

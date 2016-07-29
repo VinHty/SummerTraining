@@ -80,7 +80,7 @@ public class ExecutionActivity extends Activity {
         giveUp.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 new AlertDialog.Builder(ExecutionActivity.this).setTitle("放弃任务？")//设置对话框标题
-                        .setMessage("放弃任务将会记录为失败")//设置显示的内容
+                        .setMessage("放弃任务将会记录为失败并且扣除10金币，确定放弃吗？")//设置显示的内容
                         .setPositiveButton("确定",new DialogInterface.OnClickListener() {//添加确定按钮
 
 
@@ -233,6 +233,7 @@ public class ExecutionActivity extends Activity {
         //将任务完成情况存入数据库
         DatabaseMethod quickJobGiveUp=DatabaseMethod.getInstance(mContext);
         quickJobGiveUp.update_jobWhenFinish(timeStampJob,false);
+        quickJobGiveUp.increaseCoins(-10);
         if (state!=0){
             Fish fishGiveUp=new Fish(fish,state-1,false);
             quickJobGiveUp.updateAchievement(fishGiveUp);

@@ -61,12 +61,11 @@ public class ShopFragment extends Fragment implements View.OnClickListener {
         this.title.setText(title);
         this.description.setText(description);
         this.img.setImageResource(id);
+        this.price.setText("价格:" + price);
         //如果已拥有，则设定为拥有
         if (checkIfHave() != 0) {
             purchase.setText("已拥有");
             purchase.setOnClickListener(null);
-        } else {
-            this.price.setText("价格:" + price);
         }
 
     }

@@ -74,10 +74,10 @@ public class ShopActivity extends AppCompatActivity {
             public void onClick(View v) {
                 switch (v.getId()) {
                     case R.id.back:
-                        finish();
                         Intent intent = new Intent();
                         intent.setClass(ShopActivity.this, MainActivity.class);
                         ShopActivity.this.startActivity(intent);
+                        finish();
                         break;
                 }
             }
@@ -90,7 +90,7 @@ public class ShopActivity extends AppCompatActivity {
         int id = shopFragment.getSpeciesID();
         Fish fish = fishList.get(id);
         shopFragment.setResources(fish.getName(), description[id], String.valueOf(fish.getPrice()), fish.getId());
-        coins.setText("金币:" + method.getCoins());
+        coins.setText("金币:"+method.getCoins());
     }
 
     /*

@@ -253,6 +253,7 @@ public class MainActivity extends Activity implements CircleTimePiker.TimeAdapte
                 Intent intent = new Intent();
                 intent.setClass(MainActivity.this, ShopActivity.class);
                 MainActivity.this.startActivity(intent);
+                finish();
             }
         });
         ImageButton achi = (ImageButton)mPopWindowView.findViewById(R.id.achievement);
