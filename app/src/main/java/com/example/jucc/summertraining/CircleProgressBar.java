@@ -72,7 +72,6 @@ public class CircleProgressBar extends View {
     private int backColor;
 
 
-
     public static final int STROKE = 0;
     public static final int FILL = 1;
 
@@ -125,8 +124,8 @@ public class CircleProgressBar extends View {
         /**
          * 画最外层的大圆环
          */
-        int centre = getWidth()/2; //获取圆心的x坐标
-        int radius = (int) (centre - roundWidth/2); //圆环的半径
+        int centre = getWidth() / 2; //获取圆心的x坐标
+        int radius = (int) (centre - roundWidth / 2); //圆环的半径
         paint.setColor(roundColor); //设置圆环的颜色
         paint.setStyle(Paint.Style.STROKE); //设置空心
         paint.setStrokeWidth(roundWidth); //设置圆环的宽度
@@ -166,7 +165,7 @@ public class CircleProgressBar extends View {
                 + radius, centre + radius);  //用于定义的圆弧的形状和大小的界限
 
         switch (style) {
-            case STROKE:{
+            case STROKE: {
                 paint.setStyle(Paint.Style.STROKE);
 
                 /*第二个参数是进度开始的角度，-90表示从12点方向开始走进度，如果是0表示从三点钟方向走进度，依次类推
@@ -181,9 +180,9 @@ public class CircleProgressBar extends View {
                 canvas.drawArc(oval, startAngle, 360 * progress / max, false, paint);  //根据进度画圆弧
                 break;
             }
-            case FILL:{
+            case FILL: {
                 paint.setStyle(Paint.Style.FILL_AND_STROKE);
-                if(progress !=0)
+                if (progress != 0)
                     canvas.drawArc(oval, startAngle, 360 * progress / max, true, paint);  //根据进度画圆弧
                 break;
             }
@@ -198,10 +197,11 @@ public class CircleProgressBar extends View {
 
     /**
      * 设置进度的最大值
+     *
      * @param max
      */
     public synchronized void setMax(int max) {
-        if(max < 0){
+        if (max < 0) {
             throw new IllegalArgumentException("max not less than 0");
         }
         this.max = max;
@@ -209,6 +209,7 @@ public class CircleProgressBar extends View {
 
     /**
      * 获取进度.需要同步
+     *
      * @return
      */
     public synchronized float getProgress() {
@@ -218,16 +219,17 @@ public class CircleProgressBar extends View {
     /**
      * 设置进度，此为线程安全控件，由于考虑多线的问题，需要同步
      * 刷新界面调用postInvalidate()能在非UI线程刷新
+     *
      * @param progress
      */
     public synchronized void setProgress(float progress) {
-        if(progress < 0){
+        if (progress < 0) {
             throw new IllegalArgumentException("progress not less than 0");
         }
-        if(progress > max){
+        if (progress > max) {
             progress = max;
         }
-        if(progress <= max){
+        if (progress <= max) {
             this.progress = progress;
             postInvalidate();
         }
@@ -273,7 +275,6 @@ public class CircleProgressBar extends View {
     public void setRoundWidth(float roundWidth) {
         this.roundWidth = roundWidth;
     }
-
 
 
 }
