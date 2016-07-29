@@ -10,21 +10,34 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent">
         <Button
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="10dp"
             android:id="@+id/activity_list_finished_job_successful"
-            android:text="已成功任务"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:text="成\n功\n任\n务"
+            android:layout_width="40dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/btn_shape"
+            android:textColor="#ffffff"
+            android:textSize="18dp"/>
         <Button
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="10dp"
             android:id="@+id/activity_list_finished_job_failed"
-            android:text="失败任务"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:text="失\n败\n任\n务"
+            android:layout_width="40dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/btn_shape"
+            android:textColor="#ffffff"
+            android:textSize="18dp"/>
     </LinearLayout>
 
 
     <!-- TODO: Update blank fragment layout -->
     <ListView
         android:id="@id/android:list"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         />

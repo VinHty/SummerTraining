@@ -224,7 +224,7 @@ public class ListFinishedJobFragment extends ListFragment {
 
             //设置每行的文本信息
             holder.job_name.setText((String)mData.get(position).get("job_name"));
-            holder.startTime.setText("Start Time:" + (String)mData.get(position).get("startTime"));
+            holder.startTime.setText("开始时间:" + (String)mData.get(position).get("startTime"));
             return convertView;
         }
     }

@@ -19,6 +19,7 @@ import com.example.jucc.summertraining.Entity.Fish;
 import com.example.jucc.summertraining.RelatedToDataBase.DatabaseMethod;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Vin on 2016/7/23.
@@ -29,7 +30,10 @@ public class ShopFragment extends Fragment implements View.OnClickListener {
     private ImageView img;
     private Button purchase;
     private DatabaseMethod method;
-    int speciesID;
+
+    public int getSpeciesID() {
+        return getArguments().getInt("key");
+    }
 
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
@@ -47,16 +51,19 @@ public class ShopFragment extends Fragment implements View.OnClickListener {
                 Log.e(getClass().getSimpleName(), "click img");
             }
         });
-        ((ShopActivity)getActivity()).init(this);
+        ((ShopActivity) getActivity()).init(this);
         return view;
     }
 
-    public void setResources(String title, String description, String price, int id, int speciesID) {
+    public void setResources(String title, String description, String price, int id) {
         this.title.setText(title);
         this.description.setText(description);
         this.price.setText(price);
         this.img.setImageResource(id);
-        this.speciesID = speciesID;
+        if (checkIfHave() != 0) {
+            purchase.setText("已拥有");
+            purchase.setOnClickListener(null);
+        }
     }
 
 
@@ -69,7 +76,7 @@ public class ShopFragment extends Fragment implements View.OnClickListener {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.purchase:
-                if(Integer.parseInt(method.getCoins())>=Integer.parseInt(getPrice())) {
+                if (Integer.parseInt(method.getCoins()) >= Integer.parseInt(getPrice())) {
                     Fish fish = createFish();
                     method.buyFish(fish);
                     new AlertDialog.Builder(getActivity()).setTitle("提示")//设置对话框标题
@@ -84,11 +91,9 @@ public class ShopFragment extends Fragment implements View.OnClickListener {
                                 }
 
                             }).show();//在按键响应事件中显示此对话框
-                }
-                else  new AlertDialog.Builder(getActivity()).setTitle("提示")//设置对话框标题
+                } else new AlertDialog.Builder(getActivity()).setTitle("提示")//设置对话框标题
                         .setMessage("您的金币不足")//设置显示的内容
-                        .setPositiveButton("确定",new DialogInterface.OnClickListener() {//添加确定按钮
-
+                        .setPositiveButton("确定", new DialogInterface.OnClickListener() {//添加确定按钮
 
 
                             @Override
@@ -104,6 +109,11 @@ public class ShopFragment extends Fragment implements View.OnClickListener {
 
     public Fish createFish() {
         int price = Integer.parseInt(getPrice());
-        return new Fish(speciesID, price);
+        return new Fish(getSpeciesID(), price);
     }
+
+    public int checkIfHave() {
+        return method.isAvailable(getSpeciesID());
+    }
+
 }

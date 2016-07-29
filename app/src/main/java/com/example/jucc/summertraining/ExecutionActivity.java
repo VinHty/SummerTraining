@@ -64,7 +64,7 @@ public class ExecutionActivity extends Activity {
         big=bundle.getInt("bigFish");
         fish=bundle.getInt("fish");
         fishState=(ImageButton) findViewById(R.id.fish_state);
-        fishState.setImageResource(small);
+        fishState.setImageResource(R.drawable.xiaoxiaoyu);
         //初始化进度条的变量值
         initVariable();
         //初始化时间选择器
@@ -154,12 +154,12 @@ public class ExecutionActivity extends Activity {
                 //每秒对当前进度进行更新
                 long myminute = (millisUntilFinished / 1000) / 60;
                 long mysecond = millisUntilFinished / 1000 - myminute * 60;
-                time.setText("剩余时间"  + myminute + ":" + mysecond);
+                time.setText( myminute + ":" + mysecond);
                 int finish=new Long(millisUntilFinished).intValue();
                     now=now+1;
                 Log.e("ss","small     " +small    );
                     switch (getState(now)){
-                        case 0:fishState.setImageResource(small);
+                        case 0:fishState.setImageResource(R.drawable.xiaoxiaoyu);
                             break;
                         case 1:fishState.setImageResource(small);
                             break;

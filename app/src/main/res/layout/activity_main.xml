@@ -9,13 +9,15 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:fitsSystemWindows="true"
-        tools:context="com.example.jucc.summertraining.MainActivity">
+        tools:context="com.example.jucc.summertraining.MainActivity"
+        android:background="@drawable/bg">
 
-            <Button
+            <ImageButton
                 android:id="@+id/pop_menu"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="caidan"/>
+                android:src="@drawable/muen_06"
+                android:background="@color/transparent"/>
 
 
             <LinearLayout
@@ -27,7 +29,8 @@
                 <FrameLayout
                     android:id="@+id/a"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="30dp">
 
                     <ImageButton
                         android:layout_height="wrap_content"
@@ -52,18 +55,25 @@
 
                 </FrameLayout>
                 <TextView
+                    android:layout_marginTop="30dp"
                     android:id="@+id/circleSelectTv"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center_horizontal"
+                    android:textSize="40dp"
+                    android:textColor="#000000"
                     />
 
                 <Button
                     android:id="@+id/start_timing"
+                    android:layout_marginTop="50dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/start_timing"
+                    android:textColor="#ffffff"
+                    android:textSize="15dp"
                     android:layout_gravity="center_horizontal"
+                    android:background="@drawable/btn_shape"
                     />
 
 

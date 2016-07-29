@@ -5,7 +5,8 @@
     android:id="@+id/activity_shop"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.jucc.summertraining.ShopActivity">
+    tools:context="com.example.jucc.summertraining.ShopActivity"
+    android:background="@drawable/bg">
 
     <android.support.v4.view.ViewPager
         android:id="@+id/viewPager"
@@ -28,8 +29,9 @@
         android:id="@+id/back"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Button"
+        android:text="back"
         android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:background="@drawable/btn_shape"/>
 
 </RelativeLayout>

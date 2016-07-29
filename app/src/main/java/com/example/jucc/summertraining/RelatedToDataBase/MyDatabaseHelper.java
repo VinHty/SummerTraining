@@ -56,6 +56,7 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         db.execSQL("insert into species values(3,"+"'武昌鱼'"+",700,0)");
         db.execSQL("insert into species values(4,"+"'胖头鱼'"+",1000,0)");
         db.execSQL("insert into species values(5,"+"'蝴蝶鱼'"+",1200,0)");
+        db.execSQL("insert into account values(0)");
     }
 
 

@@ -7,7 +7,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.example.jucc.summertraining.JobDetailsAcitiviy">
+    tools:context="com.example.jucc.summertraining.JobDetailsAcitiviy"
+    android:background="@drawable/bg">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -18,21 +19,28 @@
             android:text="Return"
             android:layout_alignParentLeft="true"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            />
         <Button
             android:id="@+id/fragment_list_unfinished_job_linearlayout"
             android:text="未完成任务"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
-            android:layout_toEndOf="@+id/activity_job_details_return" />
+            android:layout_toEndOf="@+id/activity_job_details_return"
+            android:background="@drawable/btn_shape"
+            android:textColor="#ffffff"
+            android:textSize="15dp"/>
         <Button
             android:id="@+id/fragment_list_finished_job_linearlayout"
             android:text="已完成任务"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
-            android:layout_toStartOf="@+id/activity_job_details_add" />
+            android:layout_toStartOf="@+id/activity_job_details_add"
+            android:background="@drawable/btn_shape"
+            android:textColor="#ffffff"
+            android:textSize="15dp"/>
         <Button
             android:id="@+id/activity_job_details_add"
             android:text="Add"

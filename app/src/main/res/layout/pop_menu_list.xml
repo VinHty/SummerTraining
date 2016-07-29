@@ -6,41 +6,48 @@
     android:layout_height="match_parent">
 
 
-        <Button
+        <ImageButton
             android:id="@+id/job_query"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="计划"
+            android:src="@drawable/renwu"
+            android:background="@color/transparent"
 
             />
 
-        <Button
+        <ImageButton
             android:id="@+id/timing_query"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="查看时间"
+            android:src="@drawable/chakan"
+            android:background="@color/transparent"
             />
 
-        <Button
+        <ImageButton
             android:id="@+id/shop"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="商店"
+            android:src="@drawable/shop"
+            android:background="@color/transparent"
             />
 
-        <Button
-            android:id="@+id/setting"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="设置"
-            />
-
-        <Button
+        <ImageButton
             android:id="@+id/achievement"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="成就"
+            android:src="@drawable/chengjiu"
+            android:background="@color/transparent"
             />
+
+        <ImageButton
+            android:id="@+id/setting"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/setting"
+            android:background="@color/transparent"
+            />
+
+
 
 
 
